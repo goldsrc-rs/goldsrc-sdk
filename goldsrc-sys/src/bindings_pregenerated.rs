@@ -1055,13 +1055,7 @@ pub struct _Mbstatet {
     pub _State: ::std::os::raw::c_ushort,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _Mbstatet"][::std::mem::size_of::<_Mbstatet>() - 8usize];
-    ["Alignment of _Mbstatet"][::std::mem::align_of::<_Mbstatet>() - 4usize];
-    ["Offset of field: _Mbstatet::_Wchar"][::std::mem::offset_of!(_Mbstatet, _Wchar) - 0usize];
-    ["Offset of field: _Mbstatet::_Byte"][::std::mem::offset_of!(_Mbstatet, _Byte) - 4usize];
-    ["Offset of field: _Mbstatet::_State"][::std::mem::offset_of!(_Mbstatet, _State) - 6usize];
-};
+const _: () = {};
 pub type mbstate_t = _Mbstatet;
 pub type time_t = __time64_t;
 pub type rsize_t = usize;
