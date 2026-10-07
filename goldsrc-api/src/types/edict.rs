@@ -61,7 +61,7 @@ impl EDict {
     /// handle type, so it lives behind the `unsafe-sys` feature that only the
     /// backends enable.
     #[cfg(all(not(target_arch = "wasm32"), feature = "unsafe-sys"))]
-    pub unsafe fn from_raw(index: i32, edict: *mut goldsrc_sys::edict_t) -> Self {
+    pub unsafe fn from_raw(index: i32, edict: *mut goldsrc_spi::edict_t) -> Self {
         debug_assert!(!edict.is_null(), "EDict::from_raw called with null pointer");
         let serial = if edict.is_null() {
             0
@@ -106,9 +106,9 @@ impl EDict {
             // SAFETY: We check ptr != 0 and generation match above.
             // We only read `serialnumber` and `free` — plain i32 fields.
             let current_serial =
-                unsafe { (*(self.ptr as *const goldsrc_sys::edict_t)).serialnumber };
+                unsafe { (*(self.ptr as *const goldsrc_spi::edict_t)).serialnumber };
             current_serial == self.serial
-                && !(unsafe { (*(self.ptr as *const goldsrc_sys::edict_t)).free } != 0)
+                && !(unsafe { (*(self.ptr as *const goldsrc_spi::edict_t)).free } != 0)
         }
         #[cfg(not(feature = "unsafe-sys"))]
         {
@@ -126,7 +126,7 @@ impl EDict {
     /// The returned pointer is only valid until the next server frame or any
     /// engine call that may free entities.
     #[cfg(all(not(target_arch = "wasm32"), feature = "unsafe-sys"))]
-    pub fn as_ptr(self) -> Option<*mut goldsrc_sys::edict_t> {
+    pub fn as_ptr(self) -> Option<*mut goldsrc_spi::edict_t> {
         self.raw_ptr()
     }
 
@@ -135,9 +135,9 @@ impl EDict {
     /// Internal variant used by the safe accessors below; callers must treat
     /// the pointer as valid only for the current engine call.
     #[cfg(all(not(target_arch = "wasm32"), feature = "unsafe-sys"))]
-    fn raw_ptr(self) -> Option<*mut goldsrc_sys::edict_t> {
+    fn raw_ptr(self) -> Option<*mut goldsrc_spi::edict_t> {
         if self.is_valid() {
-            Some(self.ptr as *mut goldsrc_sys::edict_t)
+            Some(self.ptr as *mut goldsrc_spi::edict_t)
         } else {
             None
         }
@@ -705,7 +705,7 @@ mod tests {
     #[cfg(feature = "unsafe-sys")]
     #[test]
     fn map_generation_invalidation() {
-        let mut raw_edict: goldsrc_sys::edict_t = unsafe { std::mem::zeroed() };
+        let mut raw_edict: goldsrc_spi::edict_t = unsafe { std::mem::zeroed() };
         raw_edict.serialnumber = 42;
         raw_edict.free = 0;
 

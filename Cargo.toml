@@ -1,9 +1,9 @@
 [workspace]
 members = [
-    "goldsrc",
-    "goldsrc-api",
     "goldsrc-spi",
+    "goldsrc-api",
     "goldsrc-macros",
+    "goldsrc",
     "examples/test_chat",
     "examples/test_ecs",
     "examples/test_hud",
@@ -11,10 +11,10 @@ members = [
     "examples/test_menu",
 ]
 default-members = [
-    "goldsrc",
-    "goldsrc-api",
     "goldsrc-spi",
+    "goldsrc-api",
     "goldsrc-macros",
+    "goldsrc",
 ]
 resolver = "3"
 

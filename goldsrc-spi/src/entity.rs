@@ -19,3 +19,14 @@ pub trait EntitySpawner: Send + Sync {
     /// Dispatches spawn call on the entity (`pfnSpawn`).
     fn dispatch_spawn(&self, index: i32) -> i32;
 }
+
+/// Minimal C-ABI compatible memory representation of an entity dictionary slot (`edict_t`).
+/// Enables pointer-level validation and memory checks across the engine boundary without depending on HLSDK C++ headers.
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct edict_t {
+    /// Non-zero if this edict slot is currently unallocated/free.
+    pub free: i32,
+    /// Engine serial number incremented upon every slot re-use.
+    pub serialnumber: i32,
+}

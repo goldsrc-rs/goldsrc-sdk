@@ -43,7 +43,7 @@ impl Entity {
     /// # Safety
     /// The caller must ensure that `edict` is a valid pointer to an entity in the engine.
     #[cfg(all(not(target_arch = "wasm32"), feature = "unsafe-sys"))]
-    pub unsafe fn from_raw(index: i32, edict: *mut goldsrc_sys::edict_t) -> Self {
+    pub unsafe fn from_raw(index: i32, edict: *mut goldsrc_spi::edict_t) -> Self {
         // SAFETY: propagated from caller.
         Self {
             index,
@@ -124,7 +124,7 @@ impl Entity {
 
     /// Returns the raw `edict_t` pointer, or null if the handle is stale.
     #[cfg(all(not(target_arch = "wasm32"), feature = "unsafe-sys"))]
-    pub fn as_ptr(&self) -> *mut goldsrc_sys::edict_t {
+    pub fn as_ptr(&self) -> *mut goldsrc_spi::edict_t {
         self.inner.as_ptr().unwrap_or(std::ptr::null_mut())
     }
 

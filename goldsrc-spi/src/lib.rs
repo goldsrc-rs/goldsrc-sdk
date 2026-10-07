@@ -17,7 +17,7 @@ pub use engine::{
     Engine, EngineConsole, EngineCvars, EngineEntities, EngineExtensions, EngineMessages,
     EnginePhysics, EnginePrecache, EngineSound, MessageBuilder, MessageDest, TraceResult,
 };
-pub use entity::EntitySpawner;
+pub use entity::{EntitySpawner, edict_t};
 pub use extension::EngineExtension;
 pub use identity::{
     AuthIdentity, AuthState, AuthSubject, PlayerGuid, PlayerIdentity, PlayerSessionToken, SteamId,
