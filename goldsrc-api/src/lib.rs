@@ -53,6 +53,8 @@ pub mod requirements;
 pub mod rules;
 /// Compile-time specifications, logical combinators, and state-guarded refinement.
 pub mod spec;
+/// Unified cross-platform storage abstraction and key-value persistence.
+pub mod storage;
 /// Text encoding utilities and chat color escape code converters.
 pub mod text;
 /// Discrete tick and continuous duration task scheduling abstractions.

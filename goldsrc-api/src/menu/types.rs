@@ -386,6 +386,28 @@ impl MenuItem {
         }
     }
 
+    /// Creates an interactive action item using a semantic string action name.
+    ///
+    /// Computes a deterministic numeric ID from the action name while retaining the string
+    /// for named callback dispatch and debugging.
+    pub fn action<T: Into<ItemTitle>, S: Into<String>>(title: T, action_name: S) -> Self {
+        let act = action_name.into();
+        let mut hasher = std::collections::hash_map::DefaultHasher::new();
+        std::hash::Hash::hash(&act, &mut hasher);
+        let id = (std::hash::Hasher::finish(&hasher) & 0x7FFF_FFFF) as u32;
+        Self {
+            title: title.into(),
+            kind: ItemKind::Action {
+                id,
+                action_name: act,
+            },
+            conditions: Vec::new(),
+            deny_policy: DenyPolicy::default(),
+            keep_open: false,
+            cooldown: None,
+        }
+    }
+
     /// Creates an action item with an explicit action name.
     pub fn with_action<T: Into<ItemTitle>, S: Into<String>>(title: T, id: u32, action: S) -> Self {
         Self {

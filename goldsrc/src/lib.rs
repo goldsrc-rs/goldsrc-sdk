@@ -301,6 +301,10 @@ pub mod cvar {
     pub use goldsrc_api::cvar::*;
 }
 
+pub mod storage {
+    pub use goldsrc_api::storage::*;
+}
+
 pub mod extension;
 pub mod reapi;
 
@@ -357,6 +361,7 @@ pub mod prelude {
     pub use crate::hud_api as hud;
     pub use crate::menu_api;
     pub use crate::modifiers_api as modifiers;
+    pub use crate::storage;
     pub use crate::task;
     pub use crate::tr;
     pub use crate::{
@@ -420,7 +425,7 @@ mod tests {
         pub enabled: bool,
         #[cvar(name = "vip_bonus_hp", flags = crate::CvarFlags::ARCHIVE | crate::CvarFlags::SERVER, range = 1..=100, description = "Bonus HP")]
         pub bonus_hp: i32,
-        #[cvar(name = "vip_tag", flags = "server", description = "VIP Tag")]
+        #[cvar(name = "vip_tag", flags = crate::CvarFlags::SERVER, description = "VIP Tag")]
         pub tag: String,
     }
 
