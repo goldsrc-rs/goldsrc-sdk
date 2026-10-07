@@ -1,0 +1,265 @@
+package goldsrc:engine;
+
+interface api {
+    record vector3 {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+
+    /// Logs a message to the server console.
+    host-log: func(msg: string);
+
+    /// Returns current monotonic server host uptime in seconds.
+    host-time: func() -> f32;
+
+    /// Checks if an entity index is valid.
+    host-entity-is-valid: func(index: s32) -> bool;
+
+    /// Retrieves an entity's classname.
+    host-entity-classname: func(index: s32) -> option<string>;
+
+    /// Gets an entity's health.
+    host-entity-health: func(index: s32) -> f32;
+
+    /// Sets an entity's health.
+    host-entity-set-health: func(index: s32, health: f32);
+
+    /// Gets an entity's origin (position).
+    host-entity-origin: func(index: s32) -> vector3;
+
+    /// Sets an entity's origin.
+    host-entity-set-origin: func(index: s32, pos: vector3);
+
+    /// Gets an entity's velocity.
+    host-entity-velocity: func(index: s32) -> vector3;
+
+    /// Sets an entity's velocity.
+    host-entity-set-velocity: func(index: s32, vel: vector3);
+
+    /// Gets an entity's angles (pitch, yaw, roll).
+    host-entity-angles: func(index: s32) -> vector3;
+
+    /// Sets an entity's angles.
+    host-entity-set-angles: func(index: s32, angles: vector3);
+
+    /// Spawns a new entity by classname.
+    host-create-named-entity: func(classname: string) -> option<s32>;
+
+    /// Removes an entity from the world.
+    host-remove-entity: func(index: s32);
+
+    /// Drops an entity to the floor beneath it.
+    host-drop-to-floor: func(index: s32) -> s32;
+
+    /// Sets a key-value attribute on an entity (dispatched via pfnKeyValue).
+    host-entity-key-value: func(index: s32, key: string, value: string) -> bool;
+
+    /// Retrieves a player's name.
+    host-player-name: func(index: s32) -> option<string>;
+
+    /// Retrieves a player's preferred language code (from setinfo _lang or server default).
+    host-player-lang: func(index: s32) -> option<string>;
+    
+    /// Retrieves a player's team slot (0=Unassigned, 1=T, 2=CT, 3=Spectator).
+    host-player-team: func(index: s32) -> s32;
+
+    /// Gets a player's armor value.
+    host-player-armorvalue: func(index: s32) -> f32;
+
+    /// Sets a player's armor value.
+    host-player-set-armorvalue: func(index: s32, armor: f32);
+
+    /// Retrieves a player's SteamID / AuthID string (e.g. "STEAM_0:1:12345678").
+    host-player-auth-id: func(index: s32) -> option<string>;
+
+    /// Retrieves a player's IP address string without port (e.g. "192.168.1.100").
+    host-player-ip: func(index: s32) -> option<string>;
+
+    /// Retrieves a player's server-assigned UserID integer.
+    host-player-user-id: func(index: s32) -> s32;
+
+    /// Sets player voice listening permission (muting/unmuting receiver from hearing sender).
+    host-player-set-listening: func(receiver: s32, sender: s32, listen: bool) -> bool;
+
+    /// Sets a player's max movement speed (e.g. 0.0 to freeze, 250.0 standard).
+    host-player-set-maxspeed: func(index: s32, speed: f32);
+
+    /// --- Engine Console & Command Execution API ---
+
+    /// Enqueues command string into server console buffer (pfnServerCommand).
+    host-server-command: func(command: string);
+
+    /// Sends an engine command for client-side evaluation (pfnClientCommand).
+    host-client-command: func(player-index: s32, command: string);
+
+    /// Applies a declarative game mode or match preset atomically (Infrastructure as Code).
+    host-config-exec: func(preset-path: string) -> result<bool, string>;
+
+    /// --- Cvar API ---
+
+    /// Gets a console variable value as a float.
+    host-cvar-get-float: func(name: string) -> f32;
+
+    /// Sets a console variable value as a float.
+    host-cvar-set-float: func(name: string, val: f32);
+
+    /// Gets a console variable value as a string.
+    host-cvar-get-string: func(name: string) -> option<string>;
+
+    /// Sets a console variable value as a string.
+    host-cvar-set-string: func(name: string, val: string);
+
+    /// --- Precache & Sound API ---
+
+    /// Precaches a model and returns its resource index.
+    host-precache-model: func(path: string) -> s32;
+
+    /// Precaches a sound and returns its resource index.
+    host-precache-sound: func(path: string) -> s32;
+
+    /// Precaches a generic asset.
+    host-precache-generic: func(path: string) -> s32;
+
+    /// Emits a dynamic sound from an entity.
+    host-emit-sound: func(
+        entity: s32,
+        channel: s32,
+        sample: string,
+        volume: f32,
+        attenuation: f32,
+        sound-flags: s32,
+        pitch: s32
+    );
+
+    /// Sends a chat message to a specific player.
+    host-print-chat: func(player-index: s32, message: string);
+
+    /// Prints a center notification message to a player.
+    host-print-center: func(player-index: s32, message: string);
+
+    /// Prints a console message to a player's game console.
+    host-print-console: func(player-index: s32, message: string);
+
+    /// Prints a developer notification message to a player (top-left developer/con_notify area).
+    host-print-notify: func(player-index: s32, message: string);
+
+    /// Runs the real GameDLL's DispatchSpawn for an entity by index.
+    host-dispatch-spawn: func(index: s32) -> s32;
+
+    /// Forces the real GameDLL's Touch between two entities (item delivery).
+    host-dispatch-touch: func(touched: s32, other: s32);
+
+    /// Displays a raw ShowMenu dialog to a player with given key slot bitmask and timeout.
+    host-show-menu: func(player-index: s32, keys-mask: s32, timeout: s32, text: string);
+
+    /// Sends a classic 4-channel HUD message to a player (or -1 for all).
+    host-send-hud-message: func(
+        player-index: s32,
+        channel: s32,
+        x: f32,
+        y: f32,
+        r: s32,
+        g: s32,
+        b: s32,
+        a: s32,
+        effect: s32,
+        fade-in: f32,
+        fade-out: f32,
+        hold-time: f32,
+        text: string
+    );
+
+    /// Sends a Director HUD (DHUD) message to a player (or -1 for all).
+    host-send-dhud-message: func(
+        player-index: s32,
+        x: f32,
+        y: f32,
+        r: s32,
+        g: s32,
+        b: s32,
+        a: s32,
+        effect: s32,
+        fade-in: f32,
+        fade-out: f32,
+        hold-time: f32,
+        text: string
+    );
+
+    /// --- Capability & Auth API ---
+
+    /// Registers a new capability in the global system.
+    host-register-capability: func(name: string, description: string) -> bool;
+
+    /// Checks if a player has a specific capability.
+    host-has-capability: func(player-index: s32, name: string) -> bool;
+
+    /// Grants a capability to a player dynamically.
+    host-grant-capability: func(player-index: s32, name: string) -> bool;
+
+    /// Revokes a capability from a player dynamically.
+    host-revoke-capability: func(player-index: s32, name: string) -> bool;
+
+    /// --- Storage & State API ---
+
+    /// Gets a binary blob from the named bucket by key.
+    host-storage-get: func(bucket: string, key: string) -> option<list<u8>>;
+
+    /// Stores a binary blob into the named bucket by key.
+    host-storage-set: func(bucket: string, key: string, val: list<u8>) -> bool;
+
+    /// Deletes a key from the named bucket.
+    host-storage-delete: func(bucket: string, key: string) -> bool;
+
+    /// Atomically increments/decrements a 64-bit integer in the named bucket.
+    host-storage-fetch-add: func(bucket: string, key: string, delta: s64) -> s64;
+
+    /// --- Localization (i18n) API ---
+
+    /// Translates a dictionary key for the target player or server language.
+    host-translate: func(dict: string, lang: string, key: string) -> string;
+
+    /// --- Placeholder API ---
+
+    /// Registers a custom placeholder in the host engine.
+    host-register-placeholder: func(name: string, description: string) -> bool;
+
+    /// --- Extension Subsystem API ---
+
+    /// Checks if a named engine extension is available (optionally matching a SemVer constraint).
+    host-is-extension-available: func(name: string, version-req: option<string>) -> bool;
+
+    /// Retrieves the semantic version string of a named extension if registered and active.
+    host-get-extension-version: func(name: string) -> option<string>;
+}
+
+world goldsrc-plugin {
+    import api;
+
+    /// Invoked once when the plugin is loaded by the engine.
+    export on-load: func();
+
+    /// Invoked once before the plugin is unloaded or reloaded.
+    export on-unload: func();
+
+    /// Invoked on every frame tick (StartFrame).
+    export on-frame: func();
+
+    /// Invoked when a subscribed event is fired.
+    export on-event: func(name: string, payload: list<u8>);
+
+    /// Invoked when a registered command is executed.
+    /// `caller` is the 1-based player index, or 0 for server console.
+    /// Returns `true` if the command was handled (consumed).
+    export on-command: func(name: string, caller: s32, args: string) -> bool;
+
+    /// Invoked to resolve a custom placeholder registered by this plugin.
+    export on-placeholder: func(name: string, caller: s32, param: string) -> option<string>;
+
+    /// Invoked when a player sends a chat message.
+    /// Returns Some(formatted_text) to broadcast, or None to suppress.
+    export on-chat: func(sender: s32, text: string, is-team: bool) -> option<string>;
+
+    /// Retrieves a TOML string containing the plugin's metadata.
+    export get-metadata: func() -> string;
+}
