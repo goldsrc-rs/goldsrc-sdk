@@ -346,7 +346,7 @@ pub use goldsrc_api::{
 pub use goldsrc_macros as macros;
 pub use goldsrc_macros::{
     ConfigModel, bundle, command, command_prefix, event, menu_action, on_frame, on_load, on_unload,
-    permission, permissions, plugin, requires, role, system,
+    permission, permissions, plugin, requires, role,
 };
 
 /// Convenient prelude module for plugin authors.
@@ -380,7 +380,7 @@ pub mod prelude {
     };
     pub use crate::{
         bundle, chat_broadcast, chat_print, command, command_prefix, event, extension, menu_action,
-        on_frame, on_load, on_unload, plugin, reapi, role, system,
+        on_frame, on_load, on_unload, plugin, reapi, role,
     };
     pub use crate::{log_debug, log_err, log_info, log_warn};
 }

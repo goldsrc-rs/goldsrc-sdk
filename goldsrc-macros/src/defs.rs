@@ -29,20 +29,6 @@ pub struct CommandDefInfo {
     pub requires: Vec<String>,
 }
 
-/// Information about a registered ECS system definition.
-#[derive(Clone)]
-pub struct SystemDefInfo {
-    pub stage: String,
-    pub phase: String,
-    pub before: Vec<String>,
-    pub after: Vec<String>,
-    pub ident: syn::Ident,
-    pub inputs_len: usize,
-    pub target_ty_name: String,
-    pub refined_specs: Vec<syn::Type>,
-    pub takes_refined_directly: bool,
-}
-
 /// Constant names for method marker attributes recognized by `#[plugin]`.
 pub mod markers {
     pub const ON_LOAD: &str = "on_load";
@@ -52,7 +38,5 @@ pub mod markers {
     pub const PERMISSION: &str = "permission";
     pub const EVENT: &str = "event";
     pub const COMMAND: &str = "command";
-    pub const SYSTEM: &str = "system";
     pub const MENU_ACTION: &str = "menu_action";
-    pub const REFINED: &str = "refined";
 }
