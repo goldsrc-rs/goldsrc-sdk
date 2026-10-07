@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "goldsrc-sys",
     "goldsrc-spi",
     "goldsrc-api",
     "goldsrc-macros",
@@ -11,6 +12,7 @@ members = [
     "examples/test_menu",
 ]
 default-members = [
+    "goldsrc-sys",
     "goldsrc-spi",
     "goldsrc-api",
     "goldsrc-macros",
@@ -27,6 +29,7 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/goldsrc-rs/goldsrc-sdk"
 
 [workspace.dependencies]
+goldsrc-sys = { path = "goldsrc-sys", version = "0.20.0" }
 goldsrc = { path = "goldsrc", version = "0.20.0" }
 goldsrc-api = { path = "goldsrc-api", version = "0.20.0" }
 goldsrc-spi = { path = "goldsrc-spi", version = "0.20.0" }
