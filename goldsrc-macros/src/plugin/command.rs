@@ -141,30 +141,32 @@ pub fn parse_command(
         }
     });
 
-    let name = if !command_prefix.is_empty()
-        && !raw_name.starts_with(command_prefix)
-        && !raw_name.starts_with('/')
-        && !raw_name.starts_with('!')
-    {
-        format!("{}{}", command_prefix, raw_name)
+    let clean_raw_name = raw_name.trim_start_matches(['/', '!']).to_string();
+
+    let name = if !command_prefix.is_empty() && !clean_raw_name.starts_with(command_prefix) {
+        format!("{}{}", command_prefix, clean_raw_name)
     } else {
-        raw_name
+        clean_raw_name
     };
 
-    let aliases = cmd_aliases
-        .into_iter()
-        .map(|a| {
-            if !command_prefix.is_empty()
-                && !a.starts_with(command_prefix)
-                && !a.starts_with('/')
-                && !a.starts_with('!')
-            {
-                format!("{}{}", command_prefix, a)
-            } else {
-                a
-            }
-        })
-        .collect();
+    let mut aliases = Vec::new();
+    for a in cmd_aliases {
+        let clean_alias = a.trim_start_matches(['/', '!']).to_string();
+        if clean_alias.is_empty() || clean_alias == name || aliases.contains(&clean_alias) {
+            continue;
+        }
+
+        let final_alias = if !command_prefix.is_empty() && !clean_alias.starts_with(command_prefix)
+        {
+            format!("{}{}", command_prefix, clean_alias)
+        } else {
+            clean_alias
+        };
+
+        if !aliases.contains(&final_alias) && final_alias != name {
+            aliases.push(final_alias);
+        }
+    }
 
     let description = match cmd_description {
         Some(d) if !d.is_empty() => d,
@@ -428,7 +430,7 @@ mod tests {
         assert_eq!(cmd_def.name, "grs_slay");
         assert_eq!(cmd_def.description, "Slay a player instantly.");
         assert_eq!(cmd_def.usage, "<target>");
-        // Normal alias receives prefix, chat slash command remains untouched
-        assert_eq!(cmd_def.aliases, vec!["grs_s", "/slay"]);
+        // Normal alias receives prefix, chat slash trigger is normalized and deduplicated
+        assert_eq!(cmd_def.aliases, vec!["grs_s"]);
     }
 }
