@@ -363,11 +363,6 @@ pub struct color24 {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of color24"][::std::mem::size_of::<color24>() - 3usize];
-    ["Alignment of color24"][::std::mem::align_of::<color24>() - 1usize];
-    ["Offset of field: color24::r"][::std::mem::offset_of!(color24, r) - 0usize];
-    ["Offset of field: color24::g"][::std::mem::offset_of!(color24, g) - 1usize];
-    ["Offset of field: color24::b"][::std::mem::offset_of!(color24, b) - 2usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -379,12 +374,6 @@ pub struct colorVec {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of colorVec"][::std::mem::size_of::<colorVec>() - 16usize];
-    ["Alignment of colorVec"][::std::mem::align_of::<colorVec>() - 4usize];
-    ["Offset of field: colorVec::r"][::std::mem::offset_of!(colorVec, r) - 0usize];
-    ["Offset of field: colorVec::g"][::std::mem::offset_of!(colorVec, g) - 4usize];
-    ["Offset of field: colorVec::b"][::std::mem::offset_of!(colorVec, b) - 8usize];
-    ["Offset of field: colorVec::a"][::std::mem::offset_of!(colorVec, a) - 12usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -396,12 +385,6 @@ pub struct PackedColorVec {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of PackedColorVec"][::std::mem::size_of::<PackedColorVec>() - 8usize];
-    ["Alignment of PackedColorVec"][::std::mem::align_of::<PackedColorVec>() - 2usize];
-    ["Offset of field: PackedColorVec::r"][::std::mem::offset_of!(PackedColorVec, r) - 0usize];
-    ["Offset of field: PackedColorVec::g"][::std::mem::offset_of!(PackedColorVec, g) - 2usize];
-    ["Offset of field: PackedColorVec::b"][::std::mem::offset_of!(PackedColorVec, b) - 4usize];
-    ["Offset of field: PackedColorVec::a"][::std::mem::offset_of!(PackedColorVec, a) - 6usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -411,10 +394,6 @@ pub struct link_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of link_s"][::std::mem::size_of::<link_s>() - 16usize];
-    ["Alignment of link_s"][::std::mem::align_of::<link_s>() - 8usize];
-    ["Offset of field: link_s::prev"][::std::mem::offset_of!(link_s, prev) - 0usize];
-    ["Offset of field: link_s::next"][::std::mem::offset_of!(link_s, next) - 8usize];
 };
 pub type link_t = link_s;
 pub type edict_t = edict_s;
@@ -426,10 +405,6 @@ pub struct plane_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of plane_t"][::std::mem::size_of::<plane_t>() - 16usize];
-    ["Alignment of plane_t"][::std::mem::align_of::<plane_t>() - 4usize];
-    ["Offset of field: plane_t::normal"][::std::mem::offset_of!(plane_t, normal) - 0usize];
-    ["Offset of field: plane_t::dist"][::std::mem::offset_of!(plane_t, dist) - 12usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -446,17 +421,6 @@ pub struct trace_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of trace_t"][::std::mem::size_of::<trace_t>() - 64usize];
-    ["Alignment of trace_t"][::std::mem::align_of::<trace_t>() - 8usize];
-    ["Offset of field: trace_t::allsolid"][::std::mem::offset_of!(trace_t, allsolid) - 0usize];
-    ["Offset of field: trace_t::startsolid"][::std::mem::offset_of!(trace_t, startsolid) - 4usize];
-    ["Offset of field: trace_t::inopen"][::std::mem::offset_of!(trace_t, inopen) - 8usize];
-    ["Offset of field: trace_t::inwater"][::std::mem::offset_of!(trace_t, inwater) - 12usize];
-    ["Offset of field: trace_t::fraction"][::std::mem::offset_of!(trace_t, fraction) - 16usize];
-    ["Offset of field: trace_t::endpos"][::std::mem::offset_of!(trace_t, endpos) - 20usize];
-    ["Offset of field: trace_t::plane"][::std::mem::offset_of!(trace_t, plane) - 32usize];
-    ["Offset of field: trace_t::ent"][::std::mem::offset_of!(trace_t, ent) - 48usize];
-    ["Offset of field: trace_t::hitgroup"][::std::mem::offset_of!(trace_t, hitgroup) - 56usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -495,67 +459,6 @@ pub struct globalvars_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of globalvars_t"][::std::mem::size_of::<globalvars_t>() - 192usize];
-    ["Alignment of globalvars_t"][::std::mem::align_of::<globalvars_t>() - 8usize];
-    ["Offset of field: globalvars_t::time"][::std::mem::offset_of!(globalvars_t, time) - 0usize];
-    ["Offset of field: globalvars_t::frametime"]
-        [::std::mem::offset_of!(globalvars_t, frametime) - 4usize];
-    ["Offset of field: globalvars_t::force_retouch"]
-        [::std::mem::offset_of!(globalvars_t, force_retouch) - 8usize];
-    ["Offset of field: globalvars_t::mapname"]
-        [::std::mem::offset_of!(globalvars_t, mapname) - 12usize];
-    ["Offset of field: globalvars_t::startspot"]
-        [::std::mem::offset_of!(globalvars_t, startspot) - 16usize];
-    ["Offset of field: globalvars_t::deathmatch"]
-        [::std::mem::offset_of!(globalvars_t, deathmatch) - 20usize];
-    ["Offset of field: globalvars_t::coop"][::std::mem::offset_of!(globalvars_t, coop) - 24usize];
-    ["Offset of field: globalvars_t::teamplay"]
-        [::std::mem::offset_of!(globalvars_t, teamplay) - 28usize];
-    ["Offset of field: globalvars_t::serverflags"]
-        [::std::mem::offset_of!(globalvars_t, serverflags) - 32usize];
-    ["Offset of field: globalvars_t::found_secrets"]
-        [::std::mem::offset_of!(globalvars_t, found_secrets) - 36usize];
-    ["Offset of field: globalvars_t::v_forward"]
-        [::std::mem::offset_of!(globalvars_t, v_forward) - 40usize];
-    ["Offset of field: globalvars_t::v_up"][::std::mem::offset_of!(globalvars_t, v_up) - 52usize];
-    ["Offset of field: globalvars_t::v_right"]
-        [::std::mem::offset_of!(globalvars_t, v_right) - 64usize];
-    ["Offset of field: globalvars_t::trace_allsolid"]
-        [::std::mem::offset_of!(globalvars_t, trace_allsolid) - 76usize];
-    ["Offset of field: globalvars_t::trace_startsolid"]
-        [::std::mem::offset_of!(globalvars_t, trace_startsolid) - 80usize];
-    ["Offset of field: globalvars_t::trace_fraction"]
-        [::std::mem::offset_of!(globalvars_t, trace_fraction) - 84usize];
-    ["Offset of field: globalvars_t::trace_endpos"]
-        [::std::mem::offset_of!(globalvars_t, trace_endpos) - 88usize];
-    ["Offset of field: globalvars_t::trace_plane_normal"]
-        [::std::mem::offset_of!(globalvars_t, trace_plane_normal) - 100usize];
-    ["Offset of field: globalvars_t::trace_plane_dist"]
-        [::std::mem::offset_of!(globalvars_t, trace_plane_dist) - 112usize];
-    ["Offset of field: globalvars_t::trace_ent"]
-        [::std::mem::offset_of!(globalvars_t, trace_ent) - 120usize];
-    ["Offset of field: globalvars_t::trace_inopen"]
-        [::std::mem::offset_of!(globalvars_t, trace_inopen) - 128usize];
-    ["Offset of field: globalvars_t::trace_inwater"]
-        [::std::mem::offset_of!(globalvars_t, trace_inwater) - 132usize];
-    ["Offset of field: globalvars_t::trace_hitgroup"]
-        [::std::mem::offset_of!(globalvars_t, trace_hitgroup) - 136usize];
-    ["Offset of field: globalvars_t::trace_flags"]
-        [::std::mem::offset_of!(globalvars_t, trace_flags) - 140usize];
-    ["Offset of field: globalvars_t::msg_entity"]
-        [::std::mem::offset_of!(globalvars_t, msg_entity) - 144usize];
-    ["Offset of field: globalvars_t::cdAudioTrack"]
-        [::std::mem::offset_of!(globalvars_t, cdAudioTrack) - 148usize];
-    ["Offset of field: globalvars_t::maxClients"]
-        [::std::mem::offset_of!(globalvars_t, maxClients) - 152usize];
-    ["Offset of field: globalvars_t::maxEntities"]
-        [::std::mem::offset_of!(globalvars_t, maxEntities) - 156usize];
-    ["Offset of field: globalvars_t::pStringBase"]
-        [::std::mem::offset_of!(globalvars_t, pStringBase) - 160usize];
-    ["Offset of field: globalvars_t::pSaveData"]
-        [::std::mem::offset_of!(globalvars_t, pSaveData) - 168usize];
-    ["Offset of field: globalvars_t::vecLandmarkOffset"]
-        [::std::mem::offset_of!(globalvars_t, vecLandmarkOffset) - 176usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -686,195 +589,6 @@ pub struct entvars_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of entvars_s"][::std::mem::size_of::<entvars_s>() - 720usize];
-    ["Alignment of entvars_s"][::std::mem::align_of::<entvars_s>() - 8usize];
-    ["Offset of field: entvars_s::classname"]
-        [::std::mem::offset_of!(entvars_s, classname) - 0usize];
-    ["Offset of field: entvars_s::globalname"]
-        [::std::mem::offset_of!(entvars_s, globalname) - 4usize];
-    ["Offset of field: entvars_s::origin"][::std::mem::offset_of!(entvars_s, origin) - 8usize];
-    ["Offset of field: entvars_s::oldorigin"]
-        [::std::mem::offset_of!(entvars_s, oldorigin) - 20usize];
-    ["Offset of field: entvars_s::velocity"][::std::mem::offset_of!(entvars_s, velocity) - 32usize];
-    ["Offset of field: entvars_s::basevelocity"]
-        [::std::mem::offset_of!(entvars_s, basevelocity) - 44usize];
-    ["Offset of field: entvars_s::clbasevelocity"]
-        [::std::mem::offset_of!(entvars_s, clbasevelocity) - 56usize];
-    ["Offset of field: entvars_s::movedir"][::std::mem::offset_of!(entvars_s, movedir) - 68usize];
-    ["Offset of field: entvars_s::angles"][::std::mem::offset_of!(entvars_s, angles) - 80usize];
-    ["Offset of field: entvars_s::avelocity"]
-        [::std::mem::offset_of!(entvars_s, avelocity) - 92usize];
-    ["Offset of field: entvars_s::punchangle"]
-        [::std::mem::offset_of!(entvars_s, punchangle) - 104usize];
-    ["Offset of field: entvars_s::v_angle"][::std::mem::offset_of!(entvars_s, v_angle) - 116usize];
-    ["Offset of field: entvars_s::endpos"][::std::mem::offset_of!(entvars_s, endpos) - 128usize];
-    ["Offset of field: entvars_s::startpos"]
-        [::std::mem::offset_of!(entvars_s, startpos) - 140usize];
-    ["Offset of field: entvars_s::impacttime"]
-        [::std::mem::offset_of!(entvars_s, impacttime) - 152usize];
-    ["Offset of field: entvars_s::starttime"]
-        [::std::mem::offset_of!(entvars_s, starttime) - 156usize];
-    ["Offset of field: entvars_s::fixangle"]
-        [::std::mem::offset_of!(entvars_s, fixangle) - 160usize];
-    ["Offset of field: entvars_s::idealpitch"]
-        [::std::mem::offset_of!(entvars_s, idealpitch) - 164usize];
-    ["Offset of field: entvars_s::pitch_speed"]
-        [::std::mem::offset_of!(entvars_s, pitch_speed) - 168usize];
-    ["Offset of field: entvars_s::ideal_yaw"]
-        [::std::mem::offset_of!(entvars_s, ideal_yaw) - 172usize];
-    ["Offset of field: entvars_s::yaw_speed"]
-        [::std::mem::offset_of!(entvars_s, yaw_speed) - 176usize];
-    ["Offset of field: entvars_s::modelindex"]
-        [::std::mem::offset_of!(entvars_s, modelindex) - 180usize];
-    ["Offset of field: entvars_s::model"][::std::mem::offset_of!(entvars_s, model) - 184usize];
-    ["Offset of field: entvars_s::viewmodel"]
-        [::std::mem::offset_of!(entvars_s, viewmodel) - 188usize];
-    ["Offset of field: entvars_s::weaponmodel"]
-        [::std::mem::offset_of!(entvars_s, weaponmodel) - 192usize];
-    ["Offset of field: entvars_s::absmin"][::std::mem::offset_of!(entvars_s, absmin) - 196usize];
-    ["Offset of field: entvars_s::absmax"][::std::mem::offset_of!(entvars_s, absmax) - 208usize];
-    ["Offset of field: entvars_s::mins"][::std::mem::offset_of!(entvars_s, mins) - 220usize];
-    ["Offset of field: entvars_s::maxs"][::std::mem::offset_of!(entvars_s, maxs) - 232usize];
-    ["Offset of field: entvars_s::size"][::std::mem::offset_of!(entvars_s, size) - 244usize];
-    ["Offset of field: entvars_s::ltime"][::std::mem::offset_of!(entvars_s, ltime) - 256usize];
-    ["Offset of field: entvars_s::nextthink"]
-        [::std::mem::offset_of!(entvars_s, nextthink) - 260usize];
-    ["Offset of field: entvars_s::movetype"]
-        [::std::mem::offset_of!(entvars_s, movetype) - 264usize];
-    ["Offset of field: entvars_s::solid"][::std::mem::offset_of!(entvars_s, solid) - 268usize];
-    ["Offset of field: entvars_s::skin"][::std::mem::offset_of!(entvars_s, skin) - 272usize];
-    ["Offset of field: entvars_s::body"][::std::mem::offset_of!(entvars_s, body) - 276usize];
-    ["Offset of field: entvars_s::effects"][::std::mem::offset_of!(entvars_s, effects) - 280usize];
-    ["Offset of field: entvars_s::gravity"][::std::mem::offset_of!(entvars_s, gravity) - 284usize];
-    ["Offset of field: entvars_s::friction"]
-        [::std::mem::offset_of!(entvars_s, friction) - 288usize];
-    ["Offset of field: entvars_s::light_level"]
-        [::std::mem::offset_of!(entvars_s, light_level) - 292usize];
-    ["Offset of field: entvars_s::sequence"]
-        [::std::mem::offset_of!(entvars_s, sequence) - 296usize];
-    ["Offset of field: entvars_s::gaitsequence"]
-        [::std::mem::offset_of!(entvars_s, gaitsequence) - 300usize];
-    ["Offset of field: entvars_s::frame"][::std::mem::offset_of!(entvars_s, frame) - 304usize];
-    ["Offset of field: entvars_s::animtime"]
-        [::std::mem::offset_of!(entvars_s, animtime) - 308usize];
-    ["Offset of field: entvars_s::framerate"]
-        [::std::mem::offset_of!(entvars_s, framerate) - 312usize];
-    ["Offset of field: entvars_s::controller"]
-        [::std::mem::offset_of!(entvars_s, controller) - 316usize];
-    ["Offset of field: entvars_s::blending"]
-        [::std::mem::offset_of!(entvars_s, blending) - 320usize];
-    ["Offset of field: entvars_s::scale"][::std::mem::offset_of!(entvars_s, scale) - 324usize];
-    ["Offset of field: entvars_s::rendermode"]
-        [::std::mem::offset_of!(entvars_s, rendermode) - 328usize];
-    ["Offset of field: entvars_s::renderamt"]
-        [::std::mem::offset_of!(entvars_s, renderamt) - 332usize];
-    ["Offset of field: entvars_s::rendercolor"]
-        [::std::mem::offset_of!(entvars_s, rendercolor) - 336usize];
-    ["Offset of field: entvars_s::renderfx"]
-        [::std::mem::offset_of!(entvars_s, renderfx) - 348usize];
-    ["Offset of field: entvars_s::health"][::std::mem::offset_of!(entvars_s, health) - 352usize];
-    ["Offset of field: entvars_s::frags"][::std::mem::offset_of!(entvars_s, frags) - 356usize];
-    ["Offset of field: entvars_s::weapons"][::std::mem::offset_of!(entvars_s, weapons) - 360usize];
-    ["Offset of field: entvars_s::takedamage"]
-        [::std::mem::offset_of!(entvars_s, takedamage) - 364usize];
-    ["Offset of field: entvars_s::deadflag"]
-        [::std::mem::offset_of!(entvars_s, deadflag) - 368usize];
-    ["Offset of field: entvars_s::view_ofs"]
-        [::std::mem::offset_of!(entvars_s, view_ofs) - 372usize];
-    ["Offset of field: entvars_s::button"][::std::mem::offset_of!(entvars_s, button) - 384usize];
-    ["Offset of field: entvars_s::impulse"][::std::mem::offset_of!(entvars_s, impulse) - 388usize];
-    ["Offset of field: entvars_s::chain"][::std::mem::offset_of!(entvars_s, chain) - 392usize];
-    ["Offset of field: entvars_s::dmg_inflictor"]
-        [::std::mem::offset_of!(entvars_s, dmg_inflictor) - 400usize];
-    ["Offset of field: entvars_s::enemy"][::std::mem::offset_of!(entvars_s, enemy) - 408usize];
-    ["Offset of field: entvars_s::aiment"][::std::mem::offset_of!(entvars_s, aiment) - 416usize];
-    ["Offset of field: entvars_s::owner"][::std::mem::offset_of!(entvars_s, owner) - 424usize];
-    ["Offset of field: entvars_s::groundentity"]
-        [::std::mem::offset_of!(entvars_s, groundentity) - 432usize];
-    ["Offset of field: entvars_s::spawnflags"]
-        [::std::mem::offset_of!(entvars_s, spawnflags) - 440usize];
-    ["Offset of field: entvars_s::flags"][::std::mem::offset_of!(entvars_s, flags) - 444usize];
-    ["Offset of field: entvars_s::colormap"]
-        [::std::mem::offset_of!(entvars_s, colormap) - 448usize];
-    ["Offset of field: entvars_s::team"][::std::mem::offset_of!(entvars_s, team) - 452usize];
-    ["Offset of field: entvars_s::max_health"]
-        [::std::mem::offset_of!(entvars_s, max_health) - 456usize];
-    ["Offset of field: entvars_s::teleport_time"]
-        [::std::mem::offset_of!(entvars_s, teleport_time) - 460usize];
-    ["Offset of field: entvars_s::armortype"]
-        [::std::mem::offset_of!(entvars_s, armortype) - 464usize];
-    ["Offset of field: entvars_s::armorvalue"]
-        [::std::mem::offset_of!(entvars_s, armorvalue) - 468usize];
-    ["Offset of field: entvars_s::waterlevel"]
-        [::std::mem::offset_of!(entvars_s, waterlevel) - 472usize];
-    ["Offset of field: entvars_s::watertype"]
-        [::std::mem::offset_of!(entvars_s, watertype) - 476usize];
-    ["Offset of field: entvars_s::target"][::std::mem::offset_of!(entvars_s, target) - 480usize];
-    ["Offset of field: entvars_s::targetname"]
-        [::std::mem::offset_of!(entvars_s, targetname) - 484usize];
-    ["Offset of field: entvars_s::netname"][::std::mem::offset_of!(entvars_s, netname) - 488usize];
-    ["Offset of field: entvars_s::message"][::std::mem::offset_of!(entvars_s, message) - 492usize];
-    ["Offset of field: entvars_s::dmg_take"]
-        [::std::mem::offset_of!(entvars_s, dmg_take) - 496usize];
-    ["Offset of field: entvars_s::dmg_save"]
-        [::std::mem::offset_of!(entvars_s, dmg_save) - 500usize];
-    ["Offset of field: entvars_s::dmg"][::std::mem::offset_of!(entvars_s, dmg) - 504usize];
-    ["Offset of field: entvars_s::dmgtime"][::std::mem::offset_of!(entvars_s, dmgtime) - 508usize];
-    ["Offset of field: entvars_s::noise"][::std::mem::offset_of!(entvars_s, noise) - 512usize];
-    ["Offset of field: entvars_s::noise1"][::std::mem::offset_of!(entvars_s, noise1) - 516usize];
-    ["Offset of field: entvars_s::noise2"][::std::mem::offset_of!(entvars_s, noise2) - 520usize];
-    ["Offset of field: entvars_s::noise3"][::std::mem::offset_of!(entvars_s, noise3) - 524usize];
-    ["Offset of field: entvars_s::speed"][::std::mem::offset_of!(entvars_s, speed) - 528usize];
-    ["Offset of field: entvars_s::air_finished"]
-        [::std::mem::offset_of!(entvars_s, air_finished) - 532usize];
-    ["Offset of field: entvars_s::pain_finished"]
-        [::std::mem::offset_of!(entvars_s, pain_finished) - 536usize];
-    ["Offset of field: entvars_s::radsuit_finished"]
-        [::std::mem::offset_of!(entvars_s, radsuit_finished) - 540usize];
-    ["Offset of field: entvars_s::pContainingEntity"]
-        [::std::mem::offset_of!(entvars_s, pContainingEntity) - 544usize];
-    ["Offset of field: entvars_s::playerclass"]
-        [::std::mem::offset_of!(entvars_s, playerclass) - 552usize];
-    ["Offset of field: entvars_s::maxspeed"]
-        [::std::mem::offset_of!(entvars_s, maxspeed) - 556usize];
-    ["Offset of field: entvars_s::fov"][::std::mem::offset_of!(entvars_s, fov) - 560usize];
-    ["Offset of field: entvars_s::weaponanim"]
-        [::std::mem::offset_of!(entvars_s, weaponanim) - 564usize];
-    ["Offset of field: entvars_s::pushmsec"]
-        [::std::mem::offset_of!(entvars_s, pushmsec) - 568usize];
-    ["Offset of field: entvars_s::bInDuck"][::std::mem::offset_of!(entvars_s, bInDuck) - 572usize];
-    ["Offset of field: entvars_s::flTimeStepSound"]
-        [::std::mem::offset_of!(entvars_s, flTimeStepSound) - 576usize];
-    ["Offset of field: entvars_s::flSwimTime"]
-        [::std::mem::offset_of!(entvars_s, flSwimTime) - 580usize];
-    ["Offset of field: entvars_s::flDuckTime"]
-        [::std::mem::offset_of!(entvars_s, flDuckTime) - 584usize];
-    ["Offset of field: entvars_s::iStepLeft"]
-        [::std::mem::offset_of!(entvars_s, iStepLeft) - 588usize];
-    ["Offset of field: entvars_s::flFallVelocity"]
-        [::std::mem::offset_of!(entvars_s, flFallVelocity) - 592usize];
-    ["Offset of field: entvars_s::gamestate"]
-        [::std::mem::offset_of!(entvars_s, gamestate) - 596usize];
-    ["Offset of field: entvars_s::oldbuttons"]
-        [::std::mem::offset_of!(entvars_s, oldbuttons) - 600usize];
-    ["Offset of field: entvars_s::groupinfo"]
-        [::std::mem::offset_of!(entvars_s, groupinfo) - 604usize];
-    ["Offset of field: entvars_s::iuser1"][::std::mem::offset_of!(entvars_s, iuser1) - 608usize];
-    ["Offset of field: entvars_s::iuser2"][::std::mem::offset_of!(entvars_s, iuser2) - 612usize];
-    ["Offset of field: entvars_s::iuser3"][::std::mem::offset_of!(entvars_s, iuser3) - 616usize];
-    ["Offset of field: entvars_s::iuser4"][::std::mem::offset_of!(entvars_s, iuser4) - 620usize];
-    ["Offset of field: entvars_s::fuser1"][::std::mem::offset_of!(entvars_s, fuser1) - 624usize];
-    ["Offset of field: entvars_s::fuser2"][::std::mem::offset_of!(entvars_s, fuser2) - 628usize];
-    ["Offset of field: entvars_s::fuser3"][::std::mem::offset_of!(entvars_s, fuser3) - 632usize];
-    ["Offset of field: entvars_s::fuser4"][::std::mem::offset_of!(entvars_s, fuser4) - 636usize];
-    ["Offset of field: entvars_s::vuser1"][::std::mem::offset_of!(entvars_s, vuser1) - 640usize];
-    ["Offset of field: entvars_s::vuser2"][::std::mem::offset_of!(entvars_s, vuser2) - 652usize];
-    ["Offset of field: entvars_s::vuser3"][::std::mem::offset_of!(entvars_s, vuser3) - 664usize];
-    ["Offset of field: entvars_s::vuser4"][::std::mem::offset_of!(entvars_s, vuser4) - 676usize];
-    ["Offset of field: entvars_s::euser1"][::std::mem::offset_of!(entvars_s, euser1) - 688usize];
-    ["Offset of field: entvars_s::euser2"][::std::mem::offset_of!(entvars_s, euser2) - 696usize];
-    ["Offset of field: entvars_s::euser3"][::std::mem::offset_of!(entvars_s, euser3) - 704usize];
-    ["Offset of field: entvars_s::euser4"][::std::mem::offset_of!(entvars_s, euser4) - 712usize];
 };
 pub type entvars_t = entvars_s;
 #[repr(C)]
@@ -892,19 +606,6 @@ pub struct edict_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of edict_s"][::std::mem::size_of::<edict_s>() - 864usize];
-    ["Alignment of edict_s"][::std::mem::align_of::<edict_s>() - 8usize];
-    ["Offset of field: edict_s::free"][::std::mem::offset_of!(edict_s, free) - 0usize];
-    ["Offset of field: edict_s::serialnumber"]
-        [::std::mem::offset_of!(edict_s, serialnumber) - 4usize];
-    ["Offset of field: edict_s::area"][::std::mem::offset_of!(edict_s, area) - 8usize];
-    ["Offset of field: edict_s::headnode"][::std::mem::offset_of!(edict_s, headnode) - 24usize];
-    ["Offset of field: edict_s::num_leafs"][::std::mem::offset_of!(edict_s, num_leafs) - 28usize];
-    ["Offset of field: edict_s::leafnums"][::std::mem::offset_of!(edict_s, leafnums) - 32usize];
-    ["Offset of field: edict_s::freetime"][::std::mem::offset_of!(edict_s, freetime) - 128usize];
-    ["Offset of field: edict_s::pvPrivateData"]
-        [::std::mem::offset_of!(edict_s, pvPrivateData) - 136usize];
-    ["Offset of field: edict_s::v"][::std::mem::offset_of!(edict_s, v) - 144usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -924,27 +625,6 @@ pub struct usercmd_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of usercmd_s"][::std::mem::size_of::<usercmd_s>() - 52usize];
-    ["Alignment of usercmd_s"][::std::mem::align_of::<usercmd_s>() - 4usize];
-    ["Offset of field: usercmd_s::lerp_msec"]
-        [::std::mem::offset_of!(usercmd_s, lerp_msec) - 0usize];
-    ["Offset of field: usercmd_s::msec"][::std::mem::offset_of!(usercmd_s, msec) - 2usize];
-    ["Offset of field: usercmd_s::viewangles"]
-        [::std::mem::offset_of!(usercmd_s, viewangles) - 4usize];
-    ["Offset of field: usercmd_s::forwardmove"]
-        [::std::mem::offset_of!(usercmd_s, forwardmove) - 16usize];
-    ["Offset of field: usercmd_s::sidemove"][::std::mem::offset_of!(usercmd_s, sidemove) - 20usize];
-    ["Offset of field: usercmd_s::upmove"][::std::mem::offset_of!(usercmd_s, upmove) - 24usize];
-    ["Offset of field: usercmd_s::lightlevel"]
-        [::std::mem::offset_of!(usercmd_s, lightlevel) - 28usize];
-    ["Offset of field: usercmd_s::buttons"][::std::mem::offset_of!(usercmd_s, buttons) - 30usize];
-    ["Offset of field: usercmd_s::impulse"][::std::mem::offset_of!(usercmd_s, impulse) - 32usize];
-    ["Offset of field: usercmd_s::weaponselect"]
-        [::std::mem::offset_of!(usercmd_s, weaponselect) - 33usize];
-    ["Offset of field: usercmd_s::impact_index"]
-        [::std::mem::offset_of!(usercmd_s, impact_index) - 36usize];
-    ["Offset of field: usercmd_s::impact_position"]
-        [::std::mem::offset_of!(usercmd_s, impact_position) - 40usize];
 };
 pub type usercmd_t = usercmd_s;
 pub type uint8 = ::std::os::raw::c_uchar;
@@ -1019,16 +699,6 @@ pub struct __crt_locale_data_public {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __crt_locale_data_public"]
-        [::std::mem::size_of::<__crt_locale_data_public>() - 16usize];
-    ["Alignment of __crt_locale_data_public"]
-        [::std::mem::align_of::<__crt_locale_data_public>() - 8usize];
-    ["Offset of field: __crt_locale_data_public::_locale_pctype"]
-        [::std::mem::offset_of!(__crt_locale_data_public, _locale_pctype) - 0usize];
-    ["Offset of field: __crt_locale_data_public::_locale_mb_cur_max"]
-        [::std::mem::offset_of!(__crt_locale_data_public, _locale_mb_cur_max) - 8usize];
-    ["Offset of field: __crt_locale_data_public::_locale_lc_codepage"]
-        [::std::mem::offset_of!(__crt_locale_data_public, _locale_lc_codepage) - 12usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1038,13 +708,6 @@ pub struct __crt_locale_pointers {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __crt_locale_pointers"][::std::mem::size_of::<__crt_locale_pointers>() - 16usize];
-    ["Alignment of __crt_locale_pointers"]
-        [::std::mem::align_of::<__crt_locale_pointers>() - 8usize];
-    ["Offset of field: __crt_locale_pointers::locinfo"]
-        [::std::mem::offset_of!(__crt_locale_pointers, locinfo) - 0usize];
-    ["Offset of field: __crt_locale_pointers::mbcinfo"]
-        [::std::mem::offset_of!(__crt_locale_pointers, mbcinfo) - 8usize];
 };
 pub type _locale_t = *mut __crt_locale_pointers;
 #[repr(C)]
@@ -1066,10 +729,6 @@ pub struct _iobuf {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _iobuf"][::std::mem::size_of::<_iobuf>() - 8usize];
-    ["Alignment of _iobuf"][::std::mem::align_of::<_iobuf>() - 8usize];
-    ["Offset of field: _iobuf::_Placeholder"]
-        [::std::mem::offset_of!(_iobuf, _Placeholder) - 0usize];
 };
 pub type FILE = _iobuf;
 unsafe extern "C" {
@@ -1752,10 +1411,6 @@ pub struct _resourceinfo_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _resourceinfo_t"][::std::mem::size_of::<_resourceinfo_t>() - 4usize];
-    ["Alignment of _resourceinfo_t"][::std::mem::align_of::<_resourceinfo_t>() - 4usize];
-    ["Offset of field: _resourceinfo_t::size"]
-        [::std::mem::offset_of!(_resourceinfo_t, size) - 0usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1764,10 +1419,6 @@ pub struct resourceinfo_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of resourceinfo_s"][::std::mem::size_of::<resourceinfo_s>() - 32usize];
-    ["Alignment of resourceinfo_s"][::std::mem::align_of::<resourceinfo_s>() - 4usize];
-    ["Offset of field: resourceinfo_s::info"]
-        [::std::mem::offset_of!(resourceinfo_s, info) - 0usize];
 };
 pub type resourceinfo_t = resourceinfo_s;
 #[repr(C)]
@@ -1779,11 +1430,6 @@ pub struct MD5Context_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of MD5Context_t"][::std::mem::size_of::<MD5Context_t>() - 88usize];
-    ["Alignment of MD5Context_t"][::std::mem::align_of::<MD5Context_t>() - 4usize];
-    ["Offset of field: MD5Context_t::buf"][::std::mem::offset_of!(MD5Context_t, buf) - 0usize];
-    ["Offset of field: MD5Context_t::bits"][::std::mem::offset_of!(MD5Context_t, bits) - 16usize];
-    ["Offset of field: MD5Context_t::in_"][::std::mem::offset_of!(MD5Context_t, in_) - 24usize];
 };
 pub type CRC32_t = uint32;
 unsafe extern "C" {
@@ -1874,23 +1520,6 @@ pub struct resource_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of resource_s"][::std::mem::size_of::<resource_s>() - 144usize];
-    ["Alignment of resource_s"][::std::mem::align_of::<resource_s>() - 8usize];
-    ["Offset of field: resource_s::szFileName"]
-        [::std::mem::offset_of!(resource_s, szFileName) - 0usize];
-    ["Offset of field: resource_s::type_"][::std::mem::offset_of!(resource_s, type_) - 64usize];
-    ["Offset of field: resource_s::nIndex"][::std::mem::offset_of!(resource_s, nIndex) - 68usize];
-    ["Offset of field: resource_s::nDownloadSize"]
-        [::std::mem::offset_of!(resource_s, nDownloadSize) - 72usize];
-    ["Offset of field: resource_s::ucFlags"][::std::mem::offset_of!(resource_s, ucFlags) - 76usize];
-    ["Offset of field: resource_s::rgucMD5_hash"]
-        [::std::mem::offset_of!(resource_s, rgucMD5_hash) - 77usize];
-    ["Offset of field: resource_s::playernum"]
-        [::std::mem::offset_of!(resource_s, playernum) - 93usize];
-    ["Offset of field: resource_s::rguc_reserved"]
-        [::std::mem::offset_of!(resource_s, rguc_reserved) - 94usize];
-    ["Offset of field: resource_s::pNext"][::std::mem::offset_of!(resource_s, pNext) - 128usize];
-    ["Offset of field: resource_s::pPrev"][::std::mem::offset_of!(resource_s, pPrev) - 136usize];
 };
 pub type resource_t = resource_s;
 #[repr(C)]
@@ -1907,24 +1536,6 @@ pub struct customization_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of customization_s"][::std::mem::size_of::<customization_s>() - 192usize];
-    ["Alignment of customization_s"][::std::mem::align_of::<customization_s>() - 8usize];
-    ["Offset of field: customization_s::bInUse"]
-        [::std::mem::offset_of!(customization_s, bInUse) - 0usize];
-    ["Offset of field: customization_s::resource"]
-        [::std::mem::offset_of!(customization_s, resource) - 8usize];
-    ["Offset of field: customization_s::bTranslated"]
-        [::std::mem::offset_of!(customization_s, bTranslated) - 152usize];
-    ["Offset of field: customization_s::nUserData1"]
-        [::std::mem::offset_of!(customization_s, nUserData1) - 156usize];
-    ["Offset of field: customization_s::nUserData2"]
-        [::std::mem::offset_of!(customization_s, nUserData2) - 160usize];
-    ["Offset of field: customization_s::pInfo"]
-        [::std::mem::offset_of!(customization_s, pInfo) - 168usize];
-    ["Offset of field: customization_s::pBuffer"]
-        [::std::mem::offset_of!(customization_s, pBuffer) - 176usize];
-    ["Offset of field: customization_s::pNext"]
-        [::std::mem::offset_of!(customization_s, pNext) - 184usize];
 };
 pub type customization_t = customization_s;
 unsafe extern "C" {
@@ -1957,13 +1568,6 @@ pub struct cvar_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cvar_s"][::std::mem::size_of::<cvar_s>() - 32usize];
-    ["Alignment of cvar_s"][::std::mem::align_of::<cvar_s>() - 8usize];
-    ["Offset of field: cvar_s::name"][::std::mem::offset_of!(cvar_s, name) - 0usize];
-    ["Offset of field: cvar_s::string"][::std::mem::offset_of!(cvar_s, string) - 8usize];
-    ["Offset of field: cvar_s::flags"][::std::mem::offset_of!(cvar_s, flags) - 16usize];
-    ["Offset of field: cvar_s::value"][::std::mem::offset_of!(cvar_s, value) - 20usize];
-    ["Offset of field: cvar_s::next"][::std::mem::offset_of!(cvar_s, next) - 24usize];
 };
 pub type cvar_t = cvar_s;
 #[repr(C)]
@@ -1989,42 +1593,6 @@ pub struct client_textmessage_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of client_textmessage_s"][::std::mem::size_of::<client_textmessage_s>() - 56usize];
-    ["Alignment of client_textmessage_s"][::std::mem::align_of::<client_textmessage_s>() - 8usize];
-    ["Offset of field: client_textmessage_s::effect"]
-        [::std::mem::offset_of!(client_textmessage_s, effect) - 0usize];
-    ["Offset of field: client_textmessage_s::r1"]
-        [::std::mem::offset_of!(client_textmessage_s, r1) - 4usize];
-    ["Offset of field: client_textmessage_s::g1"]
-        [::std::mem::offset_of!(client_textmessage_s, g1) - 5usize];
-    ["Offset of field: client_textmessage_s::b1"]
-        [::std::mem::offset_of!(client_textmessage_s, b1) - 6usize];
-    ["Offset of field: client_textmessage_s::a1"]
-        [::std::mem::offset_of!(client_textmessage_s, a1) - 7usize];
-    ["Offset of field: client_textmessage_s::r2"]
-        [::std::mem::offset_of!(client_textmessage_s, r2) - 8usize];
-    ["Offset of field: client_textmessage_s::g2"]
-        [::std::mem::offset_of!(client_textmessage_s, g2) - 9usize];
-    ["Offset of field: client_textmessage_s::b2"]
-        [::std::mem::offset_of!(client_textmessage_s, b2) - 10usize];
-    ["Offset of field: client_textmessage_s::a2"]
-        [::std::mem::offset_of!(client_textmessage_s, a2) - 11usize];
-    ["Offset of field: client_textmessage_s::x"]
-        [::std::mem::offset_of!(client_textmessage_s, x) - 12usize];
-    ["Offset of field: client_textmessage_s::y"]
-        [::std::mem::offset_of!(client_textmessage_s, y) - 16usize];
-    ["Offset of field: client_textmessage_s::fadein"]
-        [::std::mem::offset_of!(client_textmessage_s, fadein) - 20usize];
-    ["Offset of field: client_textmessage_s::fadeout"]
-        [::std::mem::offset_of!(client_textmessage_s, fadeout) - 24usize];
-    ["Offset of field: client_textmessage_s::holdtime"]
-        [::std::mem::offset_of!(client_textmessage_s, holdtime) - 28usize];
-    ["Offset of field: client_textmessage_s::fxtime"]
-        [::std::mem::offset_of!(client_textmessage_s, fxtime) - 32usize];
-    ["Offset of field: client_textmessage_s::pName"]
-        [::std::mem::offset_of!(client_textmessage_s, pName) - 40usize];
-    ["Offset of field: client_textmessage_s::pMessage"]
-        [::std::mem::offset_of!(client_textmessage_s, pMessage) - 48usize];
 };
 pub type client_textmessage_t = client_textmessage_s;
 pub const sequenceModifierBits_SEQUENCE_MODIFIER_EFFECT_BIT: sequenceModifierBits = 2;
@@ -2080,15 +1648,6 @@ pub struct sequenceCommandMapping_ {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of sequenceCommandMapping_"][::std::mem::size_of::<sequenceCommandMapping_>() - 24usize];
-    ["Alignment of sequenceCommandMapping_"]
-        [::std::mem::align_of::<sequenceCommandMapping_>() - 8usize];
-    ["Offset of field: sequenceCommandMapping_::commandEnum"]
-        [::std::mem::offset_of!(sequenceCommandMapping_, commandEnum) - 0usize];
-    ["Offset of field: sequenceCommandMapping_::commandName"]
-        [::std::mem::offset_of!(sequenceCommandMapping_, commandName) - 8usize];
-    ["Offset of field: sequenceCommandMapping_::commandType"]
-        [::std::mem::offset_of!(sequenceCommandMapping_, commandType) - 16usize];
 };
 pub type sequenceCommandLine_s = sequenceCommandLine_;
 #[repr(C)]
@@ -2110,34 +1669,6 @@ pub struct sequenceCommandLine_ {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of sequenceCommandLine_"][::std::mem::size_of::<sequenceCommandLine_>() - 136usize];
-    ["Alignment of sequenceCommandLine_"][::std::mem::align_of::<sequenceCommandLine_>() - 8usize];
-    ["Offset of field: sequenceCommandLine_::commandType"]
-        [::std::mem::offset_of!(sequenceCommandLine_, commandType) - 0usize];
-    ["Offset of field: sequenceCommandLine_::clientMessage"]
-        [::std::mem::offset_of!(sequenceCommandLine_, clientMessage) - 8usize];
-    ["Offset of field: sequenceCommandLine_::speakerName"]
-        [::std::mem::offset_of!(sequenceCommandLine_, speakerName) - 64usize];
-    ["Offset of field: sequenceCommandLine_::listenerName"]
-        [::std::mem::offset_of!(sequenceCommandLine_, listenerName) - 72usize];
-    ["Offset of field: sequenceCommandLine_::soundFileName"]
-        [::std::mem::offset_of!(sequenceCommandLine_, soundFileName) - 80usize];
-    ["Offset of field: sequenceCommandLine_::sentenceName"]
-        [::std::mem::offset_of!(sequenceCommandLine_, sentenceName) - 88usize];
-    ["Offset of field: sequenceCommandLine_::fireTargetNames"]
-        [::std::mem::offset_of!(sequenceCommandLine_, fireTargetNames) - 96usize];
-    ["Offset of field: sequenceCommandLine_::killTargetNames"]
-        [::std::mem::offset_of!(sequenceCommandLine_, killTargetNames) - 104usize];
-    ["Offset of field: sequenceCommandLine_::delay"]
-        [::std::mem::offset_of!(sequenceCommandLine_, delay) - 112usize];
-    ["Offset of field: sequenceCommandLine_::repeatCount"]
-        [::std::mem::offset_of!(sequenceCommandLine_, repeatCount) - 116usize];
-    ["Offset of field: sequenceCommandLine_::textChannel"]
-        [::std::mem::offset_of!(sequenceCommandLine_, textChannel) - 120usize];
-    ["Offset of field: sequenceCommandLine_::modifierBitField"]
-        [::std::mem::offset_of!(sequenceCommandLine_, modifierBitField) - 124usize];
-    ["Offset of field: sequenceCommandLine_::nextCommandLine"]
-        [::std::mem::offset_of!(sequenceCommandLine_, nextCommandLine) - 128usize];
 };
 pub type sequenceEntry_s = sequenceEntry_;
 #[repr(C)]
@@ -2151,18 +1682,6 @@ pub struct sequenceEntry_ {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of sequenceEntry_"][::std::mem::size_of::<sequenceEntry_>() - 40usize];
-    ["Alignment of sequenceEntry_"][::std::mem::align_of::<sequenceEntry_>() - 8usize];
-    ["Offset of field: sequenceEntry_::fileName"]
-        [::std::mem::offset_of!(sequenceEntry_, fileName) - 0usize];
-    ["Offset of field: sequenceEntry_::entryName"]
-        [::std::mem::offset_of!(sequenceEntry_, entryName) - 8usize];
-    ["Offset of field: sequenceEntry_::firstCommand"]
-        [::std::mem::offset_of!(sequenceEntry_, firstCommand) - 16usize];
-    ["Offset of field: sequenceEntry_::nextEntry"]
-        [::std::mem::offset_of!(sequenceEntry_, nextEntry) - 24usize];
-    ["Offset of field: sequenceEntry_::isGlobal"]
-        [::std::mem::offset_of!(sequenceEntry_, isGlobal) - 32usize];
 };
 pub type sentenceEntry_s = sentenceEntry_;
 #[repr(C)]
@@ -2175,16 +1694,6 @@ pub struct sentenceEntry_ {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of sentenceEntry_"][::std::mem::size_of::<sentenceEntry_>() - 24usize];
-    ["Alignment of sentenceEntry_"][::std::mem::align_of::<sentenceEntry_>() - 8usize];
-    ["Offset of field: sentenceEntry_::data"]
-        [::std::mem::offset_of!(sentenceEntry_, data) - 0usize];
-    ["Offset of field: sentenceEntry_::nextEntry"]
-        [::std::mem::offset_of!(sentenceEntry_, nextEntry) - 8usize];
-    ["Offset of field: sentenceEntry_::isGlobal"]
-        [::std::mem::offset_of!(sentenceEntry_, isGlobal) - 16usize];
-    ["Offset of field: sentenceEntry_::index"]
-        [::std::mem::offset_of!(sentenceEntry_, index) - 20usize];
 };
 pub type sentenceGroupEntry_s = sentenceGroupEntry_;
 #[repr(C)]
@@ -2197,16 +1706,6 @@ pub struct sentenceGroupEntry_ {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of sentenceGroupEntry_"][::std::mem::size_of::<sentenceGroupEntry_>() - 32usize];
-    ["Alignment of sentenceGroupEntry_"][::std::mem::align_of::<sentenceGroupEntry_>() - 8usize];
-    ["Offset of field: sentenceGroupEntry_::groupName"]
-        [::std::mem::offset_of!(sentenceGroupEntry_, groupName) - 0usize];
-    ["Offset of field: sentenceGroupEntry_::numSentences"]
-        [::std::mem::offset_of!(sentenceGroupEntry_, numSentences) - 8usize];
-    ["Offset of field: sentenceGroupEntry_::firstSentence"]
-        [::std::mem::offset_of!(sentenceGroupEntry_, firstSentence) - 16usize];
-    ["Offset of field: sentenceGroupEntry_::nextEntry"]
-        [::std::mem::offset_of!(sentenceGroupEntry_, nextEntry) - 24usize];
 };
 unsafe extern "C" {
     pub fn SequenceGet(
@@ -2259,27 +1758,6 @@ pub struct TraceResult {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of TraceResult"][::std::mem::size_of::<TraceResult>() - 64usize];
-    ["Alignment of TraceResult"][::std::mem::align_of::<TraceResult>() - 8usize];
-    ["Offset of field: TraceResult::fAllSolid"]
-        [::std::mem::offset_of!(TraceResult, fAllSolid) - 0usize];
-    ["Offset of field: TraceResult::fStartSolid"]
-        [::std::mem::offset_of!(TraceResult, fStartSolid) - 4usize];
-    ["Offset of field: TraceResult::fInOpen"]
-        [::std::mem::offset_of!(TraceResult, fInOpen) - 8usize];
-    ["Offset of field: TraceResult::fInWater"]
-        [::std::mem::offset_of!(TraceResult, fInWater) - 12usize];
-    ["Offset of field: TraceResult::flFraction"]
-        [::std::mem::offset_of!(TraceResult, flFraction) - 16usize];
-    ["Offset of field: TraceResult::vecEndPos"]
-        [::std::mem::offset_of!(TraceResult, vecEndPos) - 20usize];
-    ["Offset of field: TraceResult::flPlaneDist"]
-        [::std::mem::offset_of!(TraceResult, flPlaneDist) - 32usize];
-    ["Offset of field: TraceResult::vecPlaneNormal"]
-        [::std::mem::offset_of!(TraceResult, vecPlaneNormal) - 36usize];
-    ["Offset of field: TraceResult::pHit"][::std::mem::offset_of!(TraceResult, pHit) - 48usize];
-    ["Offset of field: TraceResult::iHitgroup"]
-        [::std::mem::offset_of!(TraceResult, iHitgroup) - 56usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2295,20 +1773,6 @@ pub struct CDStatus {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of CDStatus"][::std::mem::size_of::<CDStatus>() - 32usize];
-    ["Alignment of CDStatus"][::std::mem::align_of::<CDStatus>() - 4usize];
-    ["Offset of field: CDStatus::fPlaying"][::std::mem::offset_of!(CDStatus, fPlaying) - 0usize];
-    ["Offset of field: CDStatus::fWasPlaying"]
-        [::std::mem::offset_of!(CDStatus, fWasPlaying) - 4usize];
-    ["Offset of field: CDStatus::fInitialized"]
-        [::std::mem::offset_of!(CDStatus, fInitialized) - 8usize];
-    ["Offset of field: CDStatus::fEnabled"][::std::mem::offset_of!(CDStatus, fEnabled) - 12usize];
-    ["Offset of field: CDStatus::fPlayLooping"]
-        [::std::mem::offset_of!(CDStatus, fPlayLooping) - 16usize];
-    ["Offset of field: CDStatus::cdvolume"][::std::mem::offset_of!(CDStatus, cdvolume) - 20usize];
-    ["Offset of field: CDStatus::fCDRom"][::std::mem::offset_of!(CDStatus, fCDRom) - 24usize];
-    ["Offset of field: CDStatus::fPlayTrack"]
-        [::std::mem::offset_of!(CDStatus, fPlayTrack) - 28usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2945,324 +2409,6 @@ pub struct enginefuncs_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of enginefuncs_s"][::std::mem::size_of::<enginefuncs_s>() - 1264usize];
-    ["Alignment of enginefuncs_s"][::std::mem::align_of::<enginefuncs_s>() - 8usize];
-    ["Offset of field: enginefuncs_s::pfnPrecacheModel"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPrecacheModel) - 0usize];
-    ["Offset of field: enginefuncs_s::pfnPrecacheSound"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPrecacheSound) - 8usize];
-    ["Offset of field: enginefuncs_s::pfnSetModel"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetModel) - 16usize];
-    ["Offset of field: enginefuncs_s::pfnModelIndex"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnModelIndex) - 24usize];
-    ["Offset of field: enginefuncs_s::pfnModelFrames"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnModelFrames) - 32usize];
-    ["Offset of field: enginefuncs_s::pfnSetSize"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetSize) - 40usize];
-    ["Offset of field: enginefuncs_s::pfnChangeLevel"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnChangeLevel) - 48usize];
-    ["Offset of field: enginefuncs_s::pfnGetSpawnParms"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetSpawnParms) - 56usize];
-    ["Offset of field: enginefuncs_s::pfnSaveSpawnParms"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSaveSpawnParms) - 64usize];
-    ["Offset of field: enginefuncs_s::pfnVecToYaw"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnVecToYaw) - 72usize];
-    ["Offset of field: enginefuncs_s::pfnVecToAngles"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnVecToAngles) - 80usize];
-    ["Offset of field: enginefuncs_s::pfnMoveToOrigin"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnMoveToOrigin) - 88usize];
-    ["Offset of field: enginefuncs_s::pfnChangeYaw"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnChangeYaw) - 96usize];
-    ["Offset of field: enginefuncs_s::pfnChangePitch"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnChangePitch) - 104usize];
-    ["Offset of field: enginefuncs_s::pfnFindEntityByString"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFindEntityByString) - 112usize];
-    ["Offset of field: enginefuncs_s::pfnGetEntityIllum"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetEntityIllum) - 120usize];
-    ["Offset of field: enginefuncs_s::pfnFindEntityInSphere"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFindEntityInSphere) - 128usize];
-    ["Offset of field: enginefuncs_s::pfnFindClientInPVS"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFindClientInPVS) - 136usize];
-    ["Offset of field: enginefuncs_s::pfnEntitiesInPVS"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEntitiesInPVS) - 144usize];
-    ["Offset of field: enginefuncs_s::pfnMakeVectors"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnMakeVectors) - 152usize];
-    ["Offset of field: enginefuncs_s::pfnAngleVectors"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnAngleVectors) - 160usize];
-    ["Offset of field: enginefuncs_s::pfnCreateEntity"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCreateEntity) - 168usize];
-    ["Offset of field: enginefuncs_s::pfnRemoveEntity"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnRemoveEntity) - 176usize];
-    ["Offset of field: enginefuncs_s::pfnCreateNamedEntity"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCreateNamedEntity) - 184usize];
-    ["Offset of field: enginefuncs_s::pfnMakeStatic"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnMakeStatic) - 192usize];
-    ["Offset of field: enginefuncs_s::pfnEntIsOnFloor"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEntIsOnFloor) - 200usize];
-    ["Offset of field: enginefuncs_s::pfnDropToFloor"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDropToFloor) - 208usize];
-    ["Offset of field: enginefuncs_s::pfnWalkMove"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWalkMove) - 216usize];
-    ["Offset of field: enginefuncs_s::pfnSetOrigin"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetOrigin) - 224usize];
-    ["Offset of field: enginefuncs_s::pfnEmitSound"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEmitSound) - 232usize];
-    ["Offset of field: enginefuncs_s::pfnEmitAmbientSound"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEmitAmbientSound) - 240usize];
-    ["Offset of field: enginefuncs_s::pfnTraceLine"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceLine) - 248usize];
-    ["Offset of field: enginefuncs_s::pfnTraceToss"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceToss) - 256usize];
-    ["Offset of field: enginefuncs_s::pfnTraceMonsterHull"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceMonsterHull) - 264usize];
-    ["Offset of field: enginefuncs_s::pfnTraceHull"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceHull) - 272usize];
-    ["Offset of field: enginefuncs_s::pfnTraceModel"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceModel) - 280usize];
-    ["Offset of field: enginefuncs_s::pfnTraceTexture"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceTexture) - 288usize];
-    ["Offset of field: enginefuncs_s::pfnTraceSphere"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTraceSphere) - 296usize];
-    ["Offset of field: enginefuncs_s::pfnGetAimVector"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetAimVector) - 304usize];
-    ["Offset of field: enginefuncs_s::pfnServerCommand"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnServerCommand) - 312usize];
-    ["Offset of field: enginefuncs_s::pfnServerExecute"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnServerExecute) - 320usize];
-    ["Offset of field: enginefuncs_s::pfnClientCommand"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnClientCommand) - 328usize];
-    ["Offset of field: enginefuncs_s::pfnParticleEffect"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnParticleEffect) - 336usize];
-    ["Offset of field: enginefuncs_s::pfnLightStyle"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnLightStyle) - 344usize];
-    ["Offset of field: enginefuncs_s::pfnDecalIndex"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDecalIndex) - 352usize];
-    ["Offset of field: enginefuncs_s::pfnPointContents"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPointContents) - 360usize];
-    ["Offset of field: enginefuncs_s::pfnMessageBegin"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnMessageBegin) - 368usize];
-    ["Offset of field: enginefuncs_s::pfnMessageEnd"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnMessageEnd) - 376usize];
-    ["Offset of field: enginefuncs_s::pfnWriteByte"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteByte) - 384usize];
-    ["Offset of field: enginefuncs_s::pfnWriteChar"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteChar) - 392usize];
-    ["Offset of field: enginefuncs_s::pfnWriteShort"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteShort) - 400usize];
-    ["Offset of field: enginefuncs_s::pfnWriteLong"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteLong) - 408usize];
-    ["Offset of field: enginefuncs_s::pfnWriteAngle"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteAngle) - 416usize];
-    ["Offset of field: enginefuncs_s::pfnWriteCoord"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteCoord) - 424usize];
-    ["Offset of field: enginefuncs_s::pfnWriteString"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteString) - 432usize];
-    ["Offset of field: enginefuncs_s::pfnWriteEntity"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnWriteEntity) - 440usize];
-    ["Offset of field: enginefuncs_s::pfnCVarRegister"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCVarRegister) - 448usize];
-    ["Offset of field: enginefuncs_s::pfnCVarGetFloat"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCVarGetFloat) - 456usize];
-    ["Offset of field: enginefuncs_s::pfnCVarGetString"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCVarGetString) - 464usize];
-    ["Offset of field: enginefuncs_s::pfnCVarSetFloat"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCVarSetFloat) - 472usize];
-    ["Offset of field: enginefuncs_s::pfnCVarSetString"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCVarSetString) - 480usize];
-    ["Offset of field: enginefuncs_s::pfnAlertMessage"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnAlertMessage) - 488usize];
-    ["Offset of field: enginefuncs_s::pfnEngineFprintf"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEngineFprintf) - 496usize];
-    ["Offset of field: enginefuncs_s::pfnPvAllocEntPrivateData"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPvAllocEntPrivateData) - 504usize];
-    ["Offset of field: enginefuncs_s::pfnPvEntPrivateData"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPvEntPrivateData) - 512usize];
-    ["Offset of field: enginefuncs_s::pfnFreeEntPrivateData"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFreeEntPrivateData) - 520usize];
-    ["Offset of field: enginefuncs_s::pfnSzFromIndex"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSzFromIndex) - 528usize];
-    ["Offset of field: enginefuncs_s::pfnAllocString"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnAllocString) - 536usize];
-    ["Offset of field: enginefuncs_s::pfnGetVarsOfEnt"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetVarsOfEnt) - 544usize];
-    ["Offset of field: enginefuncs_s::pfnPEntityOfEntOffset"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPEntityOfEntOffset) - 552usize];
-    ["Offset of field: enginefuncs_s::pfnEntOffsetOfPEntity"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEntOffsetOfPEntity) - 560usize];
-    ["Offset of field: enginefuncs_s::pfnIndexOfEdict"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnIndexOfEdict) - 568usize];
-    ["Offset of field: enginefuncs_s::pfnPEntityOfEntIndex"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPEntityOfEntIndex) - 576usize];
-    ["Offset of field: enginefuncs_s::pfnFindEntityByVars"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFindEntityByVars) - 584usize];
-    ["Offset of field: enginefuncs_s::pfnGetModelPtr"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetModelPtr) - 592usize];
-    ["Offset of field: enginefuncs_s::pfnRegUserMsg"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnRegUserMsg) - 600usize];
-    ["Offset of field: enginefuncs_s::pfnAnimationAutomove"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnAnimationAutomove) - 608usize];
-    ["Offset of field: enginefuncs_s::pfnGetBonePosition"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetBonePosition) - 616usize];
-    ["Offset of field: enginefuncs_s::pfnFunctionFromName"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFunctionFromName) - 624usize];
-    ["Offset of field: enginefuncs_s::pfnNameForFunction"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnNameForFunction) - 632usize];
-    ["Offset of field: enginefuncs_s::pfnClientPrintf"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnClientPrintf) - 640usize];
-    ["Offset of field: enginefuncs_s::pfnServerPrint"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnServerPrint) - 648usize];
-    ["Offset of field: enginefuncs_s::pfnCmd_Args"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCmd_Args) - 656usize];
-    ["Offset of field: enginefuncs_s::pfnCmd_Argv"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCmd_Argv) - 664usize];
-    ["Offset of field: enginefuncs_s::pfnCmd_Argc"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCmd_Argc) - 672usize];
-    ["Offset of field: enginefuncs_s::pfnGetAttachment"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetAttachment) - 680usize];
-    ["Offset of field: enginefuncs_s::pfnCRC32_Init"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCRC32_Init) - 688usize];
-    ["Offset of field: enginefuncs_s::pfnCRC32_ProcessBuffer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCRC32_ProcessBuffer) - 696usize];
-    ["Offset of field: enginefuncs_s::pfnCRC32_ProcessByte"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCRC32_ProcessByte) - 704usize];
-    ["Offset of field: enginefuncs_s::pfnCRC32_Final"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCRC32_Final) - 712usize];
-    ["Offset of field: enginefuncs_s::pfnRandomLong"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnRandomLong) - 720usize];
-    ["Offset of field: enginefuncs_s::pfnRandomFloat"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnRandomFloat) - 728usize];
-    ["Offset of field: enginefuncs_s::pfnSetView"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetView) - 736usize];
-    ["Offset of field: enginefuncs_s::pfnTime"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnTime) - 744usize];
-    ["Offset of field: enginefuncs_s::pfnCrosshairAngle"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCrosshairAngle) - 752usize];
-    ["Offset of field: enginefuncs_s::pfnLoadFileForMe"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnLoadFileForMe) - 760usize];
-    ["Offset of field: enginefuncs_s::pfnFreeFile"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFreeFile) - 768usize];
-    ["Offset of field: enginefuncs_s::pfnEndSection"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnEndSection) - 776usize];
-    ["Offset of field: enginefuncs_s::pfnCompareFileTime"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCompareFileTime) - 784usize];
-    ["Offset of field: enginefuncs_s::pfnGetGameDir"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetGameDir) - 792usize];
-    ["Offset of field: enginefuncs_s::pfnCvar_RegisterVariable"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCvar_RegisterVariable) - 800usize];
-    ["Offset of field: enginefuncs_s::pfnFadeClientVolume"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnFadeClientVolume) - 808usize];
-    ["Offset of field: enginefuncs_s::pfnSetClientMaxspeed"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetClientMaxspeed) - 816usize];
-    ["Offset of field: enginefuncs_s::pfnCreateFakeClient"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCreateFakeClient) - 824usize];
-    ["Offset of field: enginefuncs_s::pfnRunPlayerMove"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnRunPlayerMove) - 832usize];
-    ["Offset of field: enginefuncs_s::pfnNumberOfEntities"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnNumberOfEntities) - 840usize];
-    ["Offset of field: enginefuncs_s::pfnGetInfoKeyBuffer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetInfoKeyBuffer) - 848usize];
-    ["Offset of field: enginefuncs_s::pfnInfoKeyValue"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnInfoKeyValue) - 856usize];
-    ["Offset of field: enginefuncs_s::pfnSetKeyValue"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetKeyValue) - 864usize];
-    ["Offset of field: enginefuncs_s::pfnSetClientKeyValue"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetClientKeyValue) - 872usize];
-    ["Offset of field: enginefuncs_s::pfnIsMapValid"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnIsMapValid) - 880usize];
-    ["Offset of field: enginefuncs_s::pfnStaticDecal"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnStaticDecal) - 888usize];
-    ["Offset of field: enginefuncs_s::pfnPrecacheGeneric"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPrecacheGeneric) - 896usize];
-    ["Offset of field: enginefuncs_s::pfnGetPlayerUserId"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetPlayerUserId) - 904usize];
-    ["Offset of field: enginefuncs_s::pfnBuildSoundMsg"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnBuildSoundMsg) - 912usize];
-    ["Offset of field: enginefuncs_s::pfnIsDedicatedServer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnIsDedicatedServer) - 920usize];
-    ["Offset of field: enginefuncs_s::pfnCVarGetPointer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCVarGetPointer) - 928usize];
-    ["Offset of field: enginefuncs_s::pfnGetPlayerWONId"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetPlayerWONId) - 936usize];
-    ["Offset of field: enginefuncs_s::pfnInfo_RemoveKey"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnInfo_RemoveKey) - 944usize];
-    ["Offset of field: enginefuncs_s::pfnGetPhysicsKeyValue"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetPhysicsKeyValue) - 952usize];
-    ["Offset of field: enginefuncs_s::pfnSetPhysicsKeyValue"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetPhysicsKeyValue) - 960usize];
-    ["Offset of field: enginefuncs_s::pfnGetPhysicsInfoString"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetPhysicsInfoString) - 968usize];
-    ["Offset of field: enginefuncs_s::pfnPrecacheEvent"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPrecacheEvent) - 976usize];
-    ["Offset of field: enginefuncs_s::pfnPlaybackEvent"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnPlaybackEvent) - 984usize];
-    ["Offset of field: enginefuncs_s::pfnSetFatPVS"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetFatPVS) - 992usize];
-    ["Offset of field: enginefuncs_s::pfnSetFatPAS"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetFatPAS) - 1000usize];
-    ["Offset of field: enginefuncs_s::pfnCheckVisibility"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCheckVisibility) - 1008usize];
-    ["Offset of field: enginefuncs_s::pfnDeltaSetField"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDeltaSetField) - 1016usize];
-    ["Offset of field: enginefuncs_s::pfnDeltaUnsetField"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDeltaUnsetField) - 1024usize];
-    ["Offset of field: enginefuncs_s::pfnDeltaAddEncoder"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDeltaAddEncoder) - 1032usize];
-    ["Offset of field: enginefuncs_s::pfnGetCurrentPlayer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetCurrentPlayer) - 1040usize];
-    ["Offset of field: enginefuncs_s::pfnCanSkipPlayer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCanSkipPlayer) - 1048usize];
-    ["Offset of field: enginefuncs_s::pfnDeltaFindField"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDeltaFindField) - 1056usize];
-    ["Offset of field: enginefuncs_s::pfnDeltaSetFieldByIndex"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDeltaSetFieldByIndex) - 1064usize];
-    ["Offset of field: enginefuncs_s::pfnDeltaUnsetFieldByIndex"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnDeltaUnsetFieldByIndex) - 1072usize];
-    ["Offset of field: enginefuncs_s::pfnSetGroupMask"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSetGroupMask) - 1080usize];
-    ["Offset of field: enginefuncs_s::pfnCreateInstancedBaseline"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCreateInstancedBaseline) - 1088usize];
-    ["Offset of field: enginefuncs_s::pfnCvar_DirectSet"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCvar_DirectSet) - 1096usize];
-    ["Offset of field: enginefuncs_s::pfnForceUnmodified"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnForceUnmodified) - 1104usize];
-    ["Offset of field: enginefuncs_s::pfnGetPlayerStats"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetPlayerStats) - 1112usize];
-    ["Offset of field: enginefuncs_s::pfnAddServerCommand"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnAddServerCommand) - 1120usize];
-    ["Offset of field: enginefuncs_s::pfnVoice_GetClientListening"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnVoice_GetClientListening) - 1128usize];
-    ["Offset of field: enginefuncs_s::pfnVoice_SetClientListening"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnVoice_SetClientListening) - 1136usize];
-    ["Offset of field: enginefuncs_s::pfnGetPlayerAuthId"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetPlayerAuthId) - 1144usize];
-    ["Offset of field: enginefuncs_s::pfnSequenceGet"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSequenceGet) - 1152usize];
-    ["Offset of field: enginefuncs_s::pfnSequencePickSentence"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnSequencePickSentence) - 1160usize];
-    ["Offset of field: enginefuncs_s::pfnGetFileSize"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetFileSize) - 1168usize];
-    ["Offset of field: enginefuncs_s::pfnGetApproxWavePlayLen"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetApproxWavePlayLen) - 1176usize];
-    ["Offset of field: enginefuncs_s::pfnIsCareerMatch"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnIsCareerMatch) - 1184usize];
-    ["Offset of field: enginefuncs_s::pfnGetLocalizedStringLength"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetLocalizedStringLength) - 1192usize];
-    ["Offset of field: enginefuncs_s::pfnRegisterTutorMessageShown"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnRegisterTutorMessageShown) - 1200usize];
-    ["Offset of field: enginefuncs_s::pfnGetTimesTutorMessageShown"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnGetTimesTutorMessageShown) - 1208usize];
-    ["Offset of field: enginefuncs_s::pfnProcessTutorMessageDecayBuffer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnProcessTutorMessageDecayBuffer) - 1216usize];
-    ["Offset of field: enginefuncs_s::pfnConstructTutorMessageDecayBuffer"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnConstructTutorMessageDecayBuffer) - 1224usize];
-    ["Offset of field: enginefuncs_s::pfnResetTutorMessageDecayData"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnResetTutorMessageDecayData) - 1232usize];
-    ["Offset of field: enginefuncs_s::pfnQueryClientCvarValue"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnQueryClientCvarValue) - 1240usize];
-    ["Offset of field: enginefuncs_s::pfnQueryClientCvarValue2"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnQueryClientCvarValue2) - 1248usize];
-    ["Offset of field: enginefuncs_s::pfnCheckParm"]
-        [::std::mem::offset_of!(enginefuncs_s, pfnCheckParm) - 1256usize];
 };
 pub type enginefuncs_t = enginefuncs_s;
 #[repr(C)]
@@ -3275,16 +2421,6 @@ pub struct KeyValueData_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of KeyValueData_s"][::std::mem::size_of::<KeyValueData_s>() - 32usize];
-    ["Alignment of KeyValueData_s"][::std::mem::align_of::<KeyValueData_s>() - 8usize];
-    ["Offset of field: KeyValueData_s::szClassName"]
-        [::std::mem::offset_of!(KeyValueData_s, szClassName) - 0usize];
-    ["Offset of field: KeyValueData_s::szKeyName"]
-        [::std::mem::offset_of!(KeyValueData_s, szKeyName) - 8usize];
-    ["Offset of field: KeyValueData_s::szValue"]
-        [::std::mem::offset_of!(KeyValueData_s, szValue) - 16usize];
-    ["Offset of field: KeyValueData_s::fHandled"]
-        [::std::mem::offset_of!(KeyValueData_s, fHandled) - 24usize];
 };
 pub type KeyValueData = KeyValueData_s;
 #[repr(C)]
@@ -3297,15 +2433,6 @@ pub struct LEVELLIST {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of LEVELLIST"][::std::mem::size_of::<LEVELLIST>() - 88usize];
-    ["Alignment of LEVELLIST"][::std::mem::align_of::<LEVELLIST>() - 8usize];
-    ["Offset of field: LEVELLIST::mapName"][::std::mem::offset_of!(LEVELLIST, mapName) - 0usize];
-    ["Offset of field: LEVELLIST::landmarkName"]
-        [::std::mem::offset_of!(LEVELLIST, landmarkName) - 32usize];
-    ["Offset of field: LEVELLIST::pentLandmark"]
-        [::std::mem::offset_of!(LEVELLIST, pentLandmark) - 64usize];
-    ["Offset of field: LEVELLIST::vecLandmarkOrigin"]
-        [::std::mem::offset_of!(LEVELLIST, vecLandmarkOrigin) - 72usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3319,16 +2446,6 @@ pub struct ENTITYTABLE {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of ENTITYTABLE"][::std::mem::size_of::<ENTITYTABLE>() - 32usize];
-    ["Alignment of ENTITYTABLE"][::std::mem::align_of::<ENTITYTABLE>() - 8usize];
-    ["Offset of field: ENTITYTABLE::id"][::std::mem::offset_of!(ENTITYTABLE, id) - 0usize];
-    ["Offset of field: ENTITYTABLE::pent"][::std::mem::offset_of!(ENTITYTABLE, pent) - 8usize];
-    ["Offset of field: ENTITYTABLE::location"]
-        [::std::mem::offset_of!(ENTITYTABLE, location) - 16usize];
-    ["Offset of field: ENTITYTABLE::size"][::std::mem::offset_of!(ENTITYTABLE, size) - 20usize];
-    ["Offset of field: ENTITYTABLE::flags"][::std::mem::offset_of!(ENTITYTABLE, flags) - 24usize];
-    ["Offset of field: ENTITYTABLE::classname"]
-        [::std::mem::offset_of!(ENTITYTABLE, classname) - 28usize];
 };
 pub type SAVERESTOREDATA = saverestore_s;
 #[repr(C)]
@@ -3354,41 +2471,6 @@ pub struct saverestore_s {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of saverestore_s"][::std::mem::size_of::<saverestore_s>() - 1544usize];
-    ["Alignment of saverestore_s"][::std::mem::align_of::<saverestore_s>() - 8usize];
-    ["Offset of field: saverestore_s::pBaseData"]
-        [::std::mem::offset_of!(saverestore_s, pBaseData) - 0usize];
-    ["Offset of field: saverestore_s::pCurrentData"]
-        [::std::mem::offset_of!(saverestore_s, pCurrentData) - 8usize];
-    ["Offset of field: saverestore_s::size"][::std::mem::offset_of!(saverestore_s, size) - 16usize];
-    ["Offset of field: saverestore_s::bufferSize"]
-        [::std::mem::offset_of!(saverestore_s, bufferSize) - 20usize];
-    ["Offset of field: saverestore_s::tokenSize"]
-        [::std::mem::offset_of!(saverestore_s, tokenSize) - 24usize];
-    ["Offset of field: saverestore_s::tokenCount"]
-        [::std::mem::offset_of!(saverestore_s, tokenCount) - 28usize];
-    ["Offset of field: saverestore_s::pTokens"]
-        [::std::mem::offset_of!(saverestore_s, pTokens) - 32usize];
-    ["Offset of field: saverestore_s::currentIndex"]
-        [::std::mem::offset_of!(saverestore_s, currentIndex) - 40usize];
-    ["Offset of field: saverestore_s::tableCount"]
-        [::std::mem::offset_of!(saverestore_s, tableCount) - 44usize];
-    ["Offset of field: saverestore_s::connectionCount"]
-        [::std::mem::offset_of!(saverestore_s, connectionCount) - 48usize];
-    ["Offset of field: saverestore_s::pTable"]
-        [::std::mem::offset_of!(saverestore_s, pTable) - 56usize];
-    ["Offset of field: saverestore_s::levelList"]
-        [::std::mem::offset_of!(saverestore_s, levelList) - 64usize];
-    ["Offset of field: saverestore_s::fUseLandmark"]
-        [::std::mem::offset_of!(saverestore_s, fUseLandmark) - 1472usize];
-    ["Offset of field: saverestore_s::szLandmarkName"]
-        [::std::mem::offset_of!(saverestore_s, szLandmarkName) - 1476usize];
-    ["Offset of field: saverestore_s::vecLandmarkOffset"]
-        [::std::mem::offset_of!(saverestore_s, vecLandmarkOffset) - 1496usize];
-    ["Offset of field: saverestore_s::time"]
-        [::std::mem::offset_of!(saverestore_s, time) - 1508usize];
-    ["Offset of field: saverestore_s::szCurrentMapName"]
-        [::std::mem::offset_of!(saverestore_s, szCurrentMapName) - 1512usize];
 };
 pub const _fieldtypes_FIELD_FLOAT: _fieldtypes = 0;
 pub const _fieldtypes_FIELD_STRING: _fieldtypes = 1;
@@ -3422,18 +2504,6 @@ pub struct TYPEDESCRIPTION {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of TYPEDESCRIPTION"][::std::mem::size_of::<TYPEDESCRIPTION>() - 24usize];
-    ["Alignment of TYPEDESCRIPTION"][::std::mem::align_of::<TYPEDESCRIPTION>() - 8usize];
-    ["Offset of field: TYPEDESCRIPTION::fieldType"]
-        [::std::mem::offset_of!(TYPEDESCRIPTION, fieldType) - 0usize];
-    ["Offset of field: TYPEDESCRIPTION::fieldName"]
-        [::std::mem::offset_of!(TYPEDESCRIPTION, fieldName) - 8usize];
-    ["Offset of field: TYPEDESCRIPTION::fieldOffset"]
-        [::std::mem::offset_of!(TYPEDESCRIPTION, fieldOffset) - 16usize];
-    ["Offset of field: TYPEDESCRIPTION::fieldSize"]
-        [::std::mem::offset_of!(TYPEDESCRIPTION, fieldSize) - 20usize];
-    ["Offset of field: TYPEDESCRIPTION::flags"]
-        [::std::mem::offset_of!(TYPEDESCRIPTION, flags) - 22usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3611,108 +2681,6 @@ pub struct DLL_FUNCTIONS {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of DLL_FUNCTIONS"][::std::mem::size_of::<DLL_FUNCTIONS>() - 400usize];
-    ["Alignment of DLL_FUNCTIONS"][::std::mem::align_of::<DLL_FUNCTIONS>() - 8usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnGameInit"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnGameInit) - 0usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSpawn"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSpawn) - 8usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnThink"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnThink) - 16usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnUse"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnUse) - 24usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnTouch"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnTouch) - 32usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnBlocked"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnBlocked) - 40usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnKeyValue"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnKeyValue) - 48usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSave"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSave) - 56usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnRestore"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnRestore) - 64usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSetAbsBox"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSetAbsBox) - 72usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSaveWriteFields"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSaveWriteFields) - 80usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSaveReadFields"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSaveReadFields) - 88usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSaveGlobalState"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSaveGlobalState) - 96usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnRestoreGlobalState"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnRestoreGlobalState) - 104usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnResetGlobalState"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnResetGlobalState) - 112usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnClientConnect"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnClientConnect) - 120usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnClientDisconnect"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnClientDisconnect) - 128usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnClientKill"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnClientKill) - 136usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnClientPutInServer"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnClientPutInServer) - 144usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnClientCommand"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnClientCommand) - 152usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnClientUserInfoChanged"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnClientUserInfoChanged) - 160usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnServerActivate"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnServerActivate) - 168usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnServerDeactivate"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnServerDeactivate) - 176usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnPlayerPreThink"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnPlayerPreThink) - 184usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnPlayerPostThink"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnPlayerPostThink) - 192usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnStartFrame"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnStartFrame) - 200usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnParmsNewLevel"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnParmsNewLevel) - 208usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnParmsChangeLevel"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnParmsChangeLevel) - 216usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnGetGameDescription"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnGetGameDescription) - 224usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnPlayerCustomization"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnPlayerCustomization) - 232usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSpectatorConnect"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSpectatorConnect) - 240usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSpectatorDisconnect"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSpectatorDisconnect) - 248usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSpectatorThink"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSpectatorThink) - 256usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSys_Error"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSys_Error) - 264usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnPM_Move"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnPM_Move) - 272usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnPM_Init"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnPM_Init) - 280usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnPM_FindTextureType"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnPM_FindTextureType) - 288usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnSetupVisibility"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnSetupVisibility) - 296usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnUpdateClientData"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnUpdateClientData) - 304usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnAddToFullPack"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnAddToFullPack) - 312usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnCreateBaseline"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnCreateBaseline) - 320usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnRegisterEncoders"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnRegisterEncoders) - 328usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnGetWeaponData"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnGetWeaponData) - 336usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnCmdStart"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnCmdStart) - 344usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnCmdEnd"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnCmdEnd) - 352usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnConnectionlessPacket"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnConnectionlessPacket) - 360usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnGetHullBounds"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnGetHullBounds) - 368usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnCreateInstancedBaselines"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnCreateInstancedBaselines) - 376usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnInconsistentFile"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnInconsistentFile) - 384usize];
-    ["Offset of field: DLL_FUNCTIONS::pfnAllowLagCompensation"]
-        [::std::mem::offset_of!(DLL_FUNCTIONS, pfnAllowLagCompensation) - 392usize];
 };
 unsafe extern "C" {
     pub static mut gEntityInterface: DLL_FUNCTIONS;
@@ -3742,18 +2710,6 @@ pub struct NEW_DLL_FUNCTIONS {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of NEW_DLL_FUNCTIONS"][::std::mem::size_of::<NEW_DLL_FUNCTIONS>() - 40usize];
-    ["Alignment of NEW_DLL_FUNCTIONS"][::std::mem::align_of::<NEW_DLL_FUNCTIONS>() - 8usize];
-    ["Offset of field: NEW_DLL_FUNCTIONS::pfnOnFreeEntPrivateData"]
-        [::std::mem::offset_of!(NEW_DLL_FUNCTIONS, pfnOnFreeEntPrivateData) - 0usize];
-    ["Offset of field: NEW_DLL_FUNCTIONS::pfnGameShutdown"]
-        [::std::mem::offset_of!(NEW_DLL_FUNCTIONS, pfnGameShutdown) - 8usize];
-    ["Offset of field: NEW_DLL_FUNCTIONS::pfnShouldCollide"]
-        [::std::mem::offset_of!(NEW_DLL_FUNCTIONS, pfnShouldCollide) - 16usize];
-    ["Offset of field: NEW_DLL_FUNCTIONS::pfnCvarValue"]
-        [::std::mem::offset_of!(NEW_DLL_FUNCTIONS, pfnCvarValue) - 24usize];
-    ["Offset of field: NEW_DLL_FUNCTIONS::pfnCvarValue2"]
-        [::std::mem::offset_of!(NEW_DLL_FUNCTIONS, pfnCvarValue2) - 32usize];
 };
 pub type NEW_DLL_FUNCTIONS_FN = ::std::option::Option<
     unsafe extern "C" fn(
