@@ -343,9 +343,9 @@ pub use goldsrc_api::{
     SpectatingPlayer, Spectator, Team, TeamTarget, TypedBlackboard, ValidationResult, Vector3,
     Velocity, VipCaps, VisualDeny, clear_commands, clear_events, clear_menu_actions,
     clear_placeholders, client_command, config_exec, dispatch_command, dispatch_event,
-    dispatch_local_placeholder, dispatch_menu_action, register_command, register_menu_action_id,
-    register_menu_action_name, register_placeholder, server_command, split_command_args,
-    subscribe_event, use_command_interceptor,
+    dispatch_local_placeholder, dispatch_menu_action, hud_broadcast, register_command,
+    register_menu_action_id, register_menu_action_name, register_placeholder, server_command,
+    split_command_args, subscribe_event, use_command_interceptor,
 };
 pub use goldsrc_macros as macros;
 pub use goldsrc_macros::{
@@ -380,7 +380,7 @@ pub mod prelude {
         PrintTarget, Prop, PropGet, PropSet, RefineExt, Refined, RenderedMenuPage, SlotAction,
         Solid, SolidEntity, Spawned, SpawnedEntity, Spec, SpecError, SpectatingPlayer, Spectator,
         Team, TeamTarget, TypedBlackboard, ValidationResult, Vector3, Velocity, VipCaps,
-        VisualDeny, action, client_command, config_exec, prop, server_command,
+        VisualDeny, action, client_command, config_exec, hud_broadcast, prop, server_command,
         use_command_interceptor,
     };
     pub use crate::{

@@ -6,6 +6,12 @@ pub use action::SendHud;
 pub use effects::{FadeFlags, ScreenFade, ScreenFadeBuilder, ScreenShake, ScreenShakeBuilder};
 pub use types::{HudColor, HudCoord, HudEffect, HudKind, HudMessage, HudMessageBuilder};
 
+/// Broadcasts a screen HUD or DHUD message to all connected players (-1 broadcast slot).
+pub fn hud_broadcast(msg: &HudMessage) {
+    let broadcast_target = crate::client::Player::new(-1);
+    broadcast_target.act(SendHud::new(msg));
+}
+
 /// Maximum number of distinct HUD channels in GoldSrc (1..=4).
 pub const MAX_HUD_CHANNELS: usize = 4;
 

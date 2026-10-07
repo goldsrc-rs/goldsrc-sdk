@@ -24,7 +24,7 @@ impl<'a> Action<Player> for SendHud<'a> {
 
     #[inline(always)]
     fn execute(self, player: &Player) -> Self::Output {
-        if !player.is_valid() {
+        if player.index != -1 && !player.is_valid() {
             return;
         }
 

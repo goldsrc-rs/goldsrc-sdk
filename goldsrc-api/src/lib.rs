@@ -99,7 +99,7 @@ pub use event::{
 pub use gamedata::{GameData, MemorySignature, VTableFunc};
 pub use hud::{
     FadeFlags, HudColor, HudCoord, HudEffect, HudKind, HudMessage, HudMessageBuilder, ScreenFade,
-    ScreenFadeBuilder, ScreenShake, ScreenShakeBuilder,
+    ScreenFadeBuilder, ScreenShake, ScreenShakeBuilder, hud_broadcast,
 };
 pub use menu::{
     AntiSpamAction, ClassicMenuRenderer, Condition, DenyAction, DenyPolicy, DhudMenuRenderer,
