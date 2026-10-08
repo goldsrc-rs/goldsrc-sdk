@@ -5,6 +5,7 @@
 //! On native targets (such as host tests, unit testing, or CLI tools), an in-memory
 //! thread-safe registry is utilized transparently without requiring `#[cfg(target_arch = "wasm32")]`.
 
+#[cfg(not(target_arch = "wasm32"))]
 use std::sync::{LazyLock, RwLock};
 
 #[cfg(not(target_arch = "wasm32"))]
