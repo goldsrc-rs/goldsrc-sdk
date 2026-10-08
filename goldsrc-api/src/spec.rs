@@ -198,6 +198,18 @@ impl<'a, Target, S: Spec<Target>> Refined<'a, Target, S> {
         })
     }
 
+    /// Constructs a refined witness guard without evaluating [`Spec::check`].
+    ///
+    /// # Safety
+    /// The caller must ensure that `S::check(&target)` would succeed.
+    #[inline(always)]
+    pub unsafe fn new_unchecked(target: Target) -> Self {
+        Self {
+            inner: target,
+            _marker: PhantomData,
+        }
+    }
+
     /// Consumes this witness token, returning the underlying target.
     #[inline(always)]
     pub fn into_inner(self) -> Target {

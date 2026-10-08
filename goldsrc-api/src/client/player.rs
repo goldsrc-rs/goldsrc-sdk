@@ -185,6 +185,10 @@ impl Player {
     /// Creates a `Player` handle for `index`.
     #[cfg(target_arch = "wasm32")]
     pub fn new(index: i32) -> Self {
+        debug_assert!(
+            (1..=32).contains(&index),
+            "Player index must be in range 1..=32, got {index}. For server console operations use Server::console()"
+        );
         Self {
             index,
             _marker: std::marker::PhantomData,
@@ -194,6 +198,10 @@ impl Player {
     /// Creates a `Player` handle for `index` with backing edict resolved via host engine if available.
     #[cfg(not(target_arch = "wasm32"))]
     pub fn new(index: i32) -> Self {
+        debug_assert!(
+            (1..=32).contains(&index),
+            "Player index must be in range 1..=32, got {index}. For server console operations use Server::console()"
+        );
         if let Ok(lock) = PLAYER_RESOLVER_HOOK.read()
             && let Some(resolver) = *lock
             && let Some(player) = resolver(index)

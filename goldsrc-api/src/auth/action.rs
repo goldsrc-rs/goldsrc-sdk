@@ -18,6 +18,19 @@ impl<'a> Action<Player> for CheckCapability<'a> {
     }
 }
 
+/// Zero-cost authorization capability check action using compile-time token.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CheckCapabilityToken(pub crate::CapabilityToken);
+
+impl Action<Player> for CheckCapabilityToken {
+    type Output = bool;
+
+    #[inline(always)]
+    fn execute(self, player: &Player) -> Self::Output {
+        crate::auth::Auth::has_capability_token(player.index, self.0)
+    }
+}
+
 /// Grants a dynamic authorization capability to the player.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GrantCapability {

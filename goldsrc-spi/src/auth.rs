@@ -21,6 +21,7 @@ pub enum HandshakeDecision {
 }
 
 /// Network context provided to an [`AuthProvider`] during connection handshake.
+#[repr(C, align(64))]
 #[derive(Debug, Clone)]
 pub struct HandshakeContext<'a> {
     /// Slot index assigned to the connecting client (1..=32).
@@ -35,8 +36,13 @@ pub struct HandshakeContext<'a> {
     pub userinfo: &'a str,
 }
 
+impl<'a> stitch_core::Blackboard for HandshakeContext<'a> {}
+
+use stitch_macros::port;
+
 /// Service Provider Interface for authenticating connecting clients.
-pub trait AuthProvider: Send + Sync {
+#[port]
+pub trait AuthPort: Send + Sync {
     /// Unique identifier of this provider (e.g. "steam", "reunion", "discord").
     fn name(&self) -> &'static str;
 
@@ -48,6 +54,9 @@ pub trait AuthProvider: Send + Sync {
     /// Evaluates incoming client connection handshake credentials.
     fn handle_handshake(&self, ctx: &HandshakeContext<'_>) -> HandshakeDecision;
 }
+
+/// Backward compatibility alias for [`AuthPort`].
+pub use AuthPort as AuthProvider;
 
 #[cfg(test)]
 mod tests {

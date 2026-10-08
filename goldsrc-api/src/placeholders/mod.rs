@@ -225,15 +225,15 @@ pub struct PlaceholderMetadata {
 
 /// Trait implemented by native and WASM placeholder providers.
 pub trait PlaceholderHandler: Send + Sync {
-    /// Evaluates the placeholder function for a given caller and parsed call arguments.
-    fn evaluate(&self, caller: Player, call: &PlaceholderCall) -> String;
+    /// Evaluates the placeholder function for an optional caller and parsed call arguments.
+    fn evaluate(&self, caller: Option<Player>, call: &PlaceholderCall) -> String;
 }
 
 impl<F> PlaceholderHandler for F
 where
-    F: Fn(Player, &PlaceholderCall) -> String + Send + Sync,
+    F: Fn(Option<Player>, &PlaceholderCall) -> String + Send + Sync,
 {
-    fn evaluate(&self, caller: Player, call: &PlaceholderCall) -> String {
+    fn evaluate(&self, caller: Option<Player>, call: &PlaceholderCall) -> String {
         self(caller, call)
     }
 }

@@ -1,5 +1,9 @@
 //! Engine control functions, server command execution, and configuration presets.
 
+#[path = "engine/server.rs"]
+pub mod server;
+pub use server::{Server, ServerConsole};
+
 #[cfg(target_arch = "wasm32")]
 use crate::bindings::goldsrc::engine::api as host_api;
 

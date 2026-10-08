@@ -23,8 +23,7 @@ pub fn expand_plugin(mut attr: PluginAttr, mut input_impl: ItemImpl) -> TokenStr
     let mut on_unload_fn = quote! {};
     let mut on_frame_fn = quote! {};
     let mut event_handlers: Vec<EventHandler> = Vec::new();
-    let mut registered_events: std::collections::HashSet<Option<String>> =
-        std::collections::HashSet::new();
+    let mut registered_events: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     let mut command_registrations = Vec::new();
     let mut command_defs: Vec<CommandDefInfo> = Vec::new();

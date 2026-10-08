@@ -2,6 +2,7 @@
 
 pub mod ext;
 pub mod player;
+pub mod players;
 pub mod property;
 pub mod slot;
 pub mod spec;
@@ -13,6 +14,7 @@ pub use goldsrc_spi::identity::{
     AuthIdentity, AuthState, AuthSubject, PlayerGuid, PlayerIdentity, PlayerSessionToken, SteamId,
 };
 pub use player::Player;
+pub use players::Players;
 pub use property::{Lang, Name};
 pub use slot::PlayerSlot;
 pub use spec::{

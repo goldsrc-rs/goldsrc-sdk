@@ -15,6 +15,12 @@ pub trait EngineExtensions: Send + Sync {
         None
     }
 
+    /// Returns `true` if the specified 64-bit feature token is registered and active.
+    fn has_feature(&self, token: u64) -> bool {
+        let _ = token;
+        false
+    }
+
     /// Returns a list of all registered extensions: `(name, version, is_active)`.
     fn list_extensions(&self) -> Vec<(&'static str, String, bool)> {
         Vec::new()

@@ -22,7 +22,7 @@ impl TestChatPlugin {
 
         // 2. Register custom placeholder: {kills}
         register_placeholder("kills", "Player kills counter", |caller, _| {
-            format!("{}", caller.index * 5)
+            format!("{}", caller.map(|p| p.index).unwrap_or(0) * 5)
         });
 
         // 3. Register long text placeholder to test automatic multi-packet chunk splitting (>180 bytes)

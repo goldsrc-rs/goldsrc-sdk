@@ -99,6 +99,8 @@ pub trait PlayerExt: ClientExt {
     fn give_item(&self, item: impl Into<String>) -> Option<i32>;
     /// Checks if the player has the specified capability.
     fn has_capability(&self, name: &str) -> bool;
+    /// Checks if the player has the specified capability identified by a compile-time token.
+    fn has_capability_token(&self, token: crate::CapabilityToken) -> bool;
     /// Grants a capability to the player dynamically.
     fn grant_capability(&self, name: impl Into<String>) -> bool;
     /// Revokes a capability from the player dynamically.
@@ -427,6 +429,11 @@ impl PlayerExt for Player {
     #[inline(always)]
     fn has_capability(&self, name: &str) -> bool {
         self.act(CheckCapability(name))
+    }
+
+    #[inline(always)]
+    fn has_capability_token(&self, token: crate::CapabilityToken) -> bool {
+        self.act(crate::auth::CheckCapabilityToken(token))
     }
 
     #[inline(always)]

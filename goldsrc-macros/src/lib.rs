@@ -88,7 +88,7 @@ pub fn on_frame(_attr: TokenStream, _item: TokenStream) -> TokenStream {
     marker_outside_plugin("on_frame")
 }
 
-/// Marker attribute for event handlers (`#[event("event_name")]`).
+/// Marker attribute for event handlers (`#[event(EngineEvent::RoundStart)]` or `#[event(RoundStart)]`).
 #[proc_macro_attribute]
 pub fn event(_attr: TokenStream, _item: TokenStream) -> TokenStream {
     marker_outside_plugin("event")

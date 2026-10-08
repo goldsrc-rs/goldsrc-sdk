@@ -85,8 +85,11 @@ impl std::ops::BitAndAssign for CvarFlags {
     }
 }
 
+use stitch_macros::port;
+
 /// Abstract cvar operations required for engine synchronization.
-pub trait CvarEngine: Send + Sync {
+#[port]
+pub trait CvarPort: Send + Sync {
     /// Read a cvar value as a floating-point number.
     fn cvar_get_float(&self, name: &str) -> f32;
 
@@ -102,3 +105,6 @@ pub trait CvarEngine: Send + Sync {
     /// Registers an engine console variable with the given name, default string value, and behavior flags.
     fn cvar_register(&self, name: &str, default_value: &str, flags: CvarFlags) -> bool;
 }
+
+/// Backward compatibility alias for [`CvarPort`].
+pub use CvarPort as CvarEngine;

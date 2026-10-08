@@ -313,7 +313,7 @@ pub fn drain_main_tasks(max_tasks: usize) -> usize {
         // Validate session binding if present
         if let Some(token) = task.bound {
             use goldsrc_api::ClientExt;
-            let current_token = goldsrc_api::client::Player::new(token.slot).session_token();
+            let current_token = goldsrc_api::client::Player::new(token.slot()).session_token();
             if current_token != Some(token) {
                 // Session expired or player reconnected; skip task
                 continue;

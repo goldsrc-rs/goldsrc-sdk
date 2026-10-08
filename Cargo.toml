@@ -42,13 +42,23 @@ serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 toml = "1.1"
 thiserror = "2.0"
 log = "0.4.33"
+stitch-core = { git = "https://github.com/ulquiorracode/stitch-rs.git", branch = "main", default-features = false }
+stitch-macros = { git = "https://github.com/ulquiorracode/stitch-rs.git", branch = "main" }
 
 [profile.dev]
 opt-level = 0
 debug = 1
+overflow-checks = true
 
 [profile.release]
 lto = "thin"
 opt-level = "z"
 strip = "debuginfo"
 codegen-units = 16
+overflow-checks = true
+
+[patch."https://github.com/ulquiorracode/stitch-rs.git"]
+stitch-core = { path = "../../stitch-rs/crates/stitch-core" }
+stitch-macros = { path = "../../stitch-rs/crates/stitch-macros" }
+stitch-rs = { path = "../../stitch-rs" }
+

@@ -32,16 +32,16 @@ impl MenuActionRegistry {
 
     /// Dispatches an action event by ID and/or name to the registered callback.
     pub fn dispatch(&self, caller: Player, id: Option<u32>, action_name: Option<&str>) {
+        if let Some(name) = action_name.filter(|s| !s.is_empty())
+            && let Some(h) = self.by_name.get(name)
+        {
+            h(caller, Some(name));
+            return;
+        }
         if let Some(id) = id
             && let Some(h) = self.by_id.get(&id)
         {
             h(caller, action_name);
-            return;
-        }
-        if let Some(name) = action_name
-            && let Some(h) = self.by_name.get(name)
-        {
-            h(caller, Some(name));
         }
     }
 

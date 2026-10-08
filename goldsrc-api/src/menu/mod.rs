@@ -18,8 +18,8 @@ pub use builder::{MenuBuilder, MenuPageBuilder};
 pub use renderer::{ClassicMenuRenderer, DhudMenuRenderer, MenuRenderer, strip_goldsrc_colors};
 pub use types::{
     AntiSpamAction, Condition, DenyAction, DenyPolicy, ExitBehavior, Feedback, ItemKind, ItemTitle,
-    Menu, MenuContext, MenuItem, MenuRendererKind, MenuStyle, RenderedMenuPage, SlotAction,
-    VisualDeny,
+    Menu, MenuContext, MenuItem, MenuKeys, MenuRendererKind, MenuStyle, RenderedMenuPage,
+    SlotAction, VisualDeny,
 };
 
 /// Standard maximum number of menu slots per page (1..=10).

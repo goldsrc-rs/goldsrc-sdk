@@ -108,9 +108,13 @@ impl World {
             .entry(type_id)
             .or_insert_with(|| Box::new(ComponentStorage::<T>::new()));
 
-        let storage = storage
-            .downcast_mut::<ComponentStorage<T>>()
-            .expect("TypeId mismatch in ECS storage");
+        let Some(storage) = storage.downcast_mut::<ComponentStorage<T>>() else {
+            log::error!(
+                "TypeId mismatch in ECS storage for type {:?}",
+                std::any::type_name::<T>()
+            );
+            return;
+        };
 
         storage.insert(entity, component);
     }
@@ -119,9 +123,7 @@ impl World {
     pub fn get<T: 'static>(&self, entity: EntityId) -> Option<&T> {
         let type_id = TypeId::of::<T>();
         let storage = self.storages.get(&type_id)?;
-        let storage = storage
-            .downcast_ref::<ComponentStorage<T>>()
-            .expect("TypeId mismatch in ECS storage");
+        let storage = storage.downcast_ref::<ComponentStorage<T>>()?;
         storage.get(entity)
     }
 
@@ -129,9 +131,7 @@ impl World {
     pub fn get_mut<T: 'static>(&mut self, entity: EntityId) -> Option<&mut T> {
         let type_id = TypeId::of::<T>();
         let storage = self.storages.get_mut(&type_id)?;
-        let storage = storage
-            .downcast_mut::<ComponentStorage<T>>()
-            .expect("TypeId mismatch in ECS storage");
+        let storage = storage.downcast_mut::<ComponentStorage<T>>()?;
         storage.get_mut(entity)
     }
 
@@ -139,9 +139,7 @@ impl World {
     pub fn remove<T: 'static>(&mut self, entity: EntityId) -> Option<T> {
         let type_id = TypeId::of::<T>();
         let storage = self.storages.get_mut(&type_id)?;
-        let storage = storage
-            .downcast_mut::<ComponentStorage<T>>()
-            .expect("TypeId mismatch in ECS storage");
+        let storage = storage.downcast_mut::<ComponentStorage<T>>()?;
         storage.remove(entity)
     }
 
