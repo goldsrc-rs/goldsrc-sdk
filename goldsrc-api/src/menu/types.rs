@@ -5,6 +5,7 @@ use std::sync::Arc;
 
 /// Context passed to dynamic menu item formatters and conditions during page evaluation.
 #[derive(Debug, Clone)]
+#[repr(C, align(64))]
 pub struct MenuContext {
     pub player_index: i32,
     pub round_number: u32,

@@ -20,6 +20,7 @@ impl<'a> Action<Player> for CheckCapability<'a> {
 
 /// Zero-cost authorization capability check action using compile-time token.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct CheckCapabilityToken(pub crate::CapabilityToken);
 
 impl Action<Player> for CheckCapabilityToken {
