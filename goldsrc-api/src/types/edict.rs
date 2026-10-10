@@ -108,7 +108,7 @@ impl EDict {
             let current_serial =
                 unsafe { (*(self.ptr as *const goldsrc_sys::edict_t)).serialnumber };
             current_serial == self.serial
-                && !(unsafe { (*(self.ptr as *const goldsrc_sys::edict_t)).free } != 0)
+                && (unsafe { (*(self.ptr as *const goldsrc_sys::edict_t)).free } == 0)
         }
         #[cfg(not(feature = "unsafe-sys"))]
         {

@@ -17,10 +17,22 @@ use crate::client::{Client, ClientExt, Player};
 pub struct PlayerSlot(pub i32);
 
 impl PlayerSlot {
+    /// Maximum client slot capacity supported by GoldSrc engine architecture.
+    pub const MAX_SLOTS: i32 = 32;
+
+    /// Valid range of player slot indices in GoldSrc (1..=32).
+    pub const VALID_RANGE: std::ops::RangeInclusive<i32> = 1..=Self::MAX_SLOTS;
+
     /// Creates a new `PlayerSlot` from a 1-based client index.
     #[inline(always)]
     pub const fn new(index: i32) -> Self {
         Self(index)
+    }
+
+    /// Returns an iterator over all possible player slots (1..=32).
+    #[inline]
+    pub fn all() -> impl Iterator<Item = Self> {
+        (1..=Self::MAX_SLOTS).map(Self)
     }
 
     /// Returns the raw 1-based slot index (1..=32).
@@ -32,7 +44,7 @@ impl PlayerSlot {
     /// Returns `true` if this slot index is within the valid GoldSrc client range (1..=32).
     #[inline(always)]
     pub const fn is_valid_range(self) -> bool {
-        self.0 >= 1 && self.0 <= 32
+        self.0 >= 1 && self.0 <= Self::MAX_SLOTS
     }
 
     /// Resolves this slot into a live [`Player`] handle on the main thread.
