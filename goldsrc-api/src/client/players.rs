@@ -16,10 +16,7 @@ impl Players {
     /// Automatically filters out disconnected or unallocated client slots.
     #[inline]
     pub fn all() -> impl Iterator<Item = Player> {
-        (1..=32).filter_map(|slot| {
-            let p = Player::new(slot);
-            if p.is_valid() { Some(p) } else { None }
-        })
+        crate::client::PlayerSlot::all().filter_map(|slot| slot.resolve())
     }
 
     /// Iterates over all currently living players (`is_alive() == true`).
@@ -75,13 +72,10 @@ impl Players {
 
         // 1. Direct slot index check (e.g. "5" or "#5")
         let slot_str = q.strip_prefix('#').unwrap_or(q);
-        if let Ok(slot) = slot_str.parse::<i32>()
-            && (1..=32).contains(&slot)
+        if let Ok(slot_idx) = slot_str.parse::<i32>()
+            && let Some(p) = crate::client::PlayerSlot::new(slot_idx).resolve()
         {
-            let p = Player::new(slot);
-            if p.is_valid() {
-                return Some(p);
-            }
+            return Some(p);
         }
 
         // 2. Exact SteamID or exact name
