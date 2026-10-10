@@ -51,6 +51,7 @@ pub mod requirements;
 /// Generic Reactive Rule & Provider Engine.
 #[cfg(feature = "rules")]
 pub mod rules;
+pub mod setting;
 /// Compile-time specifications, logical combinators, and state-guarded refinement.
 pub mod spec;
 /// Unified cross-platform storage abstraction and key-value persistence.
@@ -126,6 +127,9 @@ pub use property::{
 pub use requirements::{CvarOp, Requirement};
 #[cfg(feature = "rules")]
 pub use rules::{Rule, RuleAction, RuleCondition, RuleEngine, RuleRegistry, RuleScope};
+pub use setting::{
+    Setting, SettingBounds, SettingError, SettingMeta, SettingObserver, SettingTree, Settings,
+};
 pub use spec::{
     All, Any, Dormant, NoneOf, Not, RefineExt, Refined, Solid, Spawned, Spec, SpecError,
 };

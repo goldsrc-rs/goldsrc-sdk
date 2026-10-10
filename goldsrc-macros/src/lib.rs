@@ -5,6 +5,7 @@ extern crate proc_macro;
 mod config;
 mod defs;
 mod plugin;
+mod settings;
 mod utils;
 
 use crate::plugin::attr::parse_plugin_and_helpers;
@@ -112,6 +113,18 @@ pub fn menu_action(_attr: TokenStream, _item: TokenStream) -> TokenStream {
 pub fn derive_config_model(item: TokenStream) -> TokenStream {
     let input = parse_macro_input!(item as syn::DeriveInput);
     match crate::config::expand_derive_config_model(input) {
+        Ok(tokens) => tokens.into(),
+        Err(err) => err.to_compile_error().into(),
+    }
+}
+
+/// Derives the [`Settings`] trait for a configuration aggregate struct.
+///
+/// Generates format-agnostic `schema()`, `load_from_tree()`, and `export_tree()`.
+#[proc_macro_derive(Settings, attributes(settings, setting))]
+pub fn derive_settings(item: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(item as syn::DeriveInput);
+    match crate::settings::expand_derive_settings(input) {
         Ok(tokens) => tokens.into(),
         Err(err) => err.to_compile_error().into(),
     }
