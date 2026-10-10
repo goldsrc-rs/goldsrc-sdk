@@ -57,8 +57,3 @@ strip = "debuginfo"
 codegen-units = 16
 overflow-checks = true
 
-[patch."https://github.com/ulquiorracode/stitch-rs.git"]
-stitch-core = { path = "../../stitch-rs/crates/stitch-core" }
-stitch-macros = { path = "../../stitch-rs/crates/stitch-macros" }
-stitch-rs = { path = "../../stitch-rs" }
-

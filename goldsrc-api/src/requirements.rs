@@ -43,9 +43,7 @@ pub enum Requirement {
         optional: bool,
     },
     /// Requirement for a specific engine backend (e.g. `BackendId::METAMOD`).
-    Backend {
-        id: crate::BackendId,
-    },
+    Backend { id: crate::BackendId },
 }
 
 impl Requirement {
