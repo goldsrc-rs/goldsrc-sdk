@@ -338,6 +338,10 @@ pub use goldsrc_api::hud as hud_api;
 pub use goldsrc_api::menu as menu_api;
 pub use goldsrc_api::modifiers as modifiers_api;
 pub use goldsrc_api::pipeline as pipeline_api;
+pub use goldsrc_api::setting as setting_api;
+pub use goldsrc_api::setting::{
+    Setting, SettingBounds, SettingError, SettingMeta, SettingObserver, SettingTree, Settings,
+};
 pub use goldsrc_api::spec as spec_api;
 pub use goldsrc_api::{
     Action, AdminCaps, Alive, All, Angles, AntiSpamAction, Any, Armor, AsLangCode, Auth,
@@ -366,8 +370,8 @@ pub use goldsrc_api::{
 };
 pub use goldsrc_macros as macros;
 pub use goldsrc_macros::{
-    ConfigModel, bundle, command, command_prefix, event, menu_action, on_frame, on_load, on_unload,
-    permission, permissions, plugin, requires, role,
+    ConfigModel, Settings, bundle, command, command_prefix, event, menu_action, on_frame, on_load,
+    on_unload, permission, permissions, plugin, requires, role,
 };
 
 /// Convenient prelude module for plugin authors.
@@ -378,6 +382,7 @@ pub mod prelude {
     pub use crate::hud_api as hud;
     pub use crate::menu_api;
     pub use crate::modifiers_api as modifiers;
+    pub use crate::setting_api as setting;
     pub use crate::storage;
     pub use crate::task;
     pub use crate::tr;
@@ -395,16 +400,17 @@ pub mod prelude {
         MenuPageBuilder, MenuRenderer, MenuRendererKind, MenuStyle, ModifierContribution, NoneOf,
         Not, Origin, Pipeline, PipelineFlow, Placeholder, PlaceholderBuilder, Player, PlayerAction,
         PlayerExt, PlayerSlot, PlayerStateFilter, Players, PrintTarget, Prop, PropGet, PropSet,
-        RefineExt, Refined, RenderedMenuPage, Server, ServerConsole, SlotAction, Solid,
+        RefineExt, Refined, RenderedMenuPage, Server, ServerConsole, Setting, SettingBounds,
+        SettingError, SettingMeta, SettingObserver, SettingTree, Settings, SlotAction, Solid,
         SolidEntity, Spawned, SpawnedEntity, Spec, SpecError, SpectatingPlayer, Spectator, Team,
         TeamTarget, TypedBlackboard, ValidationResult, Vector3, Velocity, VipCaps, VisualDeny,
         action, client_command, config_exec, hud_broadcast, prop, server_command,
         use_command_interceptor,
     };
     pub use crate::{
-        bundle, chat_broadcast, chat_print, command, command_prefix, console_print,
-        console_println, event, extension, menu_action, on_frame, on_load, on_unload, plugin,
-        reapi, role,
+        Settings as DeriveSettings, bundle, chat_broadcast, chat_print, command, command_prefix,
+        console_print, console_println, event, extension, menu_action, on_frame, on_load,
+        on_unload, plugin, reapi, role,
     };
     pub use crate::{log_debug, log_err, log_info, log_warn};
 }
@@ -513,5 +519,60 @@ mod tests {
         assert_eq!(crate::extension::version("reapi"), None);
         assert!(!crate::reapi::has_reapi());
         assert_eq!(crate::reapi::reapi_version(), None);
+    }
+
+    #[derive(Settings)]
+    #[settings(prefix = "vip.")]
+    struct DeclarativePluginSettings {
+        /// Whether VIP features are enabled
+        #[setting(desc = "Toggle VIP features")]
+        pub enabled: Setting<bool>,
+
+        /// Health given on spawn
+        pub spawn_hp: Setting<i32>,
+    }
+
+    #[test]
+    fn test_derive_settings_schema_and_roundtrip() {
+        let settings = DeclarativePluginSettings {
+            enabled: Setting::new(
+                SettingMeta {
+                    key: "vip.enabled",
+                    default_repr: "true",
+                    description: "Toggle VIP features",
+                    section: Some("vip"),
+                },
+                true,
+                SettingBounds::None,
+            ),
+            spawn_hp: Setting::new(
+                SettingMeta {
+                    key: "vip.spawn_hp",
+                    default_repr: "100",
+                    description: "Health given on spawn",
+                    section: Some("vip"),
+                },
+                100,
+                SettingBounds::None,
+            ),
+        };
+
+        let schema = DeclarativePluginSettings::schema();
+        assert_eq!(schema.len(), 2);
+        assert_eq!(schema[0].key, "vip.enabled");
+        assert_eq!(schema[0].description, "Toggle VIP features");
+        assert_eq!(schema[1].key, "vip.spawn_hp");
+
+        let exported = settings.export_tree();
+        assert_eq!(exported.get("vip.enabled").unwrap(), "true");
+        assert_eq!(exported.get("vip.spawn_hp").unwrap(), "100");
+
+        let mut incoming = SettingTree::new();
+        incoming.insert("vip.enabled".to_string(), "false".to_string());
+        incoming.insert("vip.spawn_hp".to_string(), "150".to_string());
+
+        settings.load_from_tree(&incoming).unwrap();
+        assert!(!settings.enabled.get());
+        assert_eq!(settings.spawn_hp.get(), 150);
     }
 }
