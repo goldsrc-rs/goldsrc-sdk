@@ -53,6 +53,8 @@ pub mod requirements;
 pub mod rules;
 /// Compile-time specifications, logical combinators, and state-guarded refinement.
 pub mod spec;
+/// Unified cross-platform storage abstraction and key-value persistence.
+pub mod storage;
 /// Text encoding utilities and chat color escape code converters.
 pub mod text;
 /// Discrete tick and continuous duration task scheduling abstractions.
@@ -74,7 +76,8 @@ pub use chat::{
 pub use client::{
     Alive, AsLangCode, Bot, Client, ClientExt, ClientKind, Connected, ConnectedClient,
     ConnectionState, Dead, DeadPlayer, Hltv, Human, HumanClient, LifeState, LivingHuman,
-    LivingPlayer, Player, PlayerExt, PlayerSlot, PrintTarget, SpectatingPlayer, Spectator, Team,
+    LivingPlayer, Player, PlayerExt, PlayerSlot, Players, PrintTarget, SpectatingPlayer, Spectator,
+    Team,
 };
 pub use command::{
     Command, CommandBuilder, CommandContext, CommandError, CommandHandler, CommandRegistry,
@@ -85,25 +88,29 @@ pub use consts::*;
 pub use cvar::{ConfigModel, Cvar, CvarEngine, CvarField, CvarFlags, FromCvarEngine};
 pub use dag::{DagError, EventPhase, NodeBuilder, OrderNode, Phase, PhasedDag, PluginTier};
 pub use dsl::{Lexer, Token};
-pub use engine::{client_command, config_exec, server_command};
+pub use engine::{Server, ServerConsole, client_command, config_exec, server_command};
 pub use entity::{
     Entity, EntityBuilder, EntityExt, EntityId, EntitySpawner, SolidEntity, SpawnedEntity,
 };
 pub use event::{
-    Event, EventHandler, EventRegistry, EventSubscriberBuilder, EventSubscription, clear_events,
-    dispatch_event, subscribe_event,
+    EngineEvent, Event, EventHandler, EventRegistry, EventSubscriberBuilder, EventSubscription,
+    clear_events, dispatch_event, subscribe_event,
 };
 #[cfg(feature = "gamedata")]
 pub use gamedata::{GameData, MemorySignature, VTableFunc};
+pub use goldsrc_spi::hash::{
+    self, BackendId, CapabilityToken, ExtensionId, FeatureToken, fnv1a32, fnv1a32_str, fnv1a64,
+    fnv1a64_str,
+};
 pub use hud::{
     FadeFlags, HudColor, HudCoord, HudEffect, HudKind, HudMessage, HudMessageBuilder, ScreenFade,
-    ScreenFadeBuilder, ScreenShake, ScreenShakeBuilder,
+    ScreenFadeBuilder, ScreenShake, ScreenShakeBuilder, hud_broadcast,
 };
 pub use menu::{
     AntiSpamAction, ClassicMenuRenderer, Condition, DenyAction, DenyPolicy, DhudMenuRenderer,
     ExitBehavior, Feedback, ItemKind, ItemTitle, Menu, MenuActionHandler, MenuActionRegistry,
-    MenuBuilder, MenuContext, MenuItem, MenuPageBuilder, MenuRenderer, MenuRendererKind, MenuStyle,
-    RenderedMenuPage, SlotAction, VisualDeny, clear_menu_actions, dispatch_menu_action,
+    MenuBuilder, MenuContext, MenuItem, MenuKeys, MenuPageBuilder, MenuRenderer, MenuRendererKind,
+    MenuStyle, RenderedMenuPage, SlotAction, VisualDeny, clear_menu_actions, dispatch_menu_action,
     register_menu_action_id, register_menu_action_name,
 };
 pub use modifiers::{BlackboardValue, CommutativeModifier, ModifierContribution, TypedBlackboard};

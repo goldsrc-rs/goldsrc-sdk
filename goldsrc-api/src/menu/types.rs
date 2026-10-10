@@ -5,6 +5,7 @@ use std::sync::Arc;
 
 /// Context passed to dynamic menu item formatters and conditions during page evaluation.
 #[derive(Debug, Clone)]
+#[repr(C, align(64))]
 pub struct MenuContext {
     pub player_index: i32,
     pub round_number: u32,
@@ -347,10 +348,24 @@ impl<S: Into<String>> From<S> for ItemTitle {
 }
 
 /// Structural kind of a menu element.
+/// Structural kind of a menu element.
 #[derive(Debug, Clone)]
 pub enum ItemKind {
     /// Interactive action item assigned a numbered slot (1..8).
     Action { id: u32, action_name: String },
+    /// Target selector item bound to a specific player slot.
+    Target {
+        slot: crate::client::PlayerSlot,
+        action_name: String,
+    },
+    /// Toggle item displaying `[ON]` / `[OFF]` state.
+    Toggle { enabled: bool, action_name: String },
+    /// Cycling option displaying current selection out of choices.
+    Cycle {
+        current_index: usize,
+        options: Vec<String>,
+        action_name: String,
+    },
     /// Static informational text line without slot assignment.
     Text,
     /// Empty line spacer for visual grouping.
@@ -386,6 +401,26 @@ impl MenuItem {
         }
     }
 
+    /// Creates an interactive action item using a semantic string action name.
+    ///
+    /// Computes a deterministic numeric ID from the action name while retaining the string
+    /// for named callback dispatch and debugging.
+    pub fn action<T: Into<ItemTitle>, S: Into<String>>(title: T, action_name: S) -> Self {
+        let act = action_name.into();
+        let id = crate::hash::fnv1a32(act.as_bytes()) & 0x7FFF_FFFF;
+        Self {
+            title: title.into(),
+            kind: ItemKind::Action {
+                id,
+                action_name: act,
+            },
+            conditions: Vec::new(),
+            deny_policy: DenyPolicy::default(),
+            keep_open: false,
+            cooldown: None,
+        }
+    }
+
     /// Creates an action item with an explicit action name.
     pub fn with_action<T: Into<ItemTitle>, S: Into<String>>(title: T, id: u32, action: S) -> Self {
         Self {
@@ -393,6 +428,65 @@ impl MenuItem {
             kind: ItemKind::Action {
                 id,
                 action_name: action.into(),
+            },
+            conditions: Vec::new(),
+            deny_policy: DenyPolicy::default(),
+            keep_open: false,
+            cooldown: None,
+        }
+    }
+
+    /// Creates an interactive target player selection item.
+    pub fn target<T: Into<ItemTitle>, S: Into<String>>(
+        title: T,
+        slot: crate::client::PlayerSlot,
+        action_name: S,
+    ) -> Self {
+        Self {
+            title: title.into(),
+            kind: ItemKind::Target {
+                slot,
+                action_name: action_name.into(),
+            },
+            conditions: Vec::new(),
+            deny_policy: DenyPolicy::default(),
+            keep_open: false,
+            cooldown: None,
+        }
+    }
+
+    /// Creates an interactive toggle item.
+    pub fn toggle<T: Into<ItemTitle>, S: Into<String>>(
+        title: T,
+        enabled: bool,
+        action_name: S,
+    ) -> Self {
+        Self {
+            title: title.into(),
+            kind: ItemKind::Toggle {
+                enabled,
+                action_name: action_name.into(),
+            },
+            conditions: Vec::new(),
+            deny_policy: DenyPolicy::default(),
+            keep_open: false,
+            cooldown: None,
+        }
+    }
+
+    /// Creates an interactive cycling item.
+    pub fn cycle<T: Into<ItemTitle>, S: Into<String>, O: Into<String>>(
+        title: T,
+        options: impl IntoIterator<Item = O>,
+        current_index: usize,
+        action_name: S,
+    ) -> Self {
+        Self {
+            title: title.into(),
+            kind: ItemKind::Cycle {
+                current_index,
+                options: options.into_iter().map(Into::into).collect(),
+                action_name: action_name.into(),
             },
             conditions: Vec::new(),
             deny_policy: DenyPolicy::default(),
@@ -697,6 +791,99 @@ pub enum SlotAction {
     Noop,
 }
 
+/// Type-safe 10-slot menu keys bitmask (slots 1..=10/0).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+pub struct MenuKeys(pub u16);
+
+impl MenuKeys {
+    /// Empty keys mask (no keys active / closed menu).
+    pub const EMPTY: MenuKeys = MenuKeys(0);
+    /// All 10 keys active (0x3FF).
+    pub const ALL: MenuKeys = MenuKeys(0x3FF);
+    /// Key 1 active (bit 0).
+    pub const KEY_1: MenuKeys = MenuKeys(1 << 0);
+    /// Key 2 active (bit 1).
+    pub const KEY_2: MenuKeys = MenuKeys(1 << 1);
+    /// Key 3 active (bit 2).
+    pub const KEY_3: MenuKeys = MenuKeys(1 << 2);
+    /// Key 4 active (bit 3).
+    pub const KEY_4: MenuKeys = MenuKeys(1 << 3);
+    /// Key 5 active (bit 4).
+    pub const KEY_5: MenuKeys = MenuKeys(1 << 4);
+    /// Key 6 active (bit 5).
+    pub const KEY_6: MenuKeys = MenuKeys(1 << 5);
+    /// Key 7 active (bit 6).
+    pub const KEY_7: MenuKeys = MenuKeys(1 << 6);
+    /// Key 8 active (bit 7).
+    pub const KEY_8: MenuKeys = MenuKeys(1 << 7);
+    /// Key 9 active (bit 8, Next).
+    pub const KEY_9: MenuKeys = MenuKeys(1 << 8);
+    /// Key 0 active (bit 9, Exit).
+    pub const KEY_0: MenuKeys = MenuKeys(1 << 9);
+
+    /// Creates a `MenuKeys` from a raw 16-bit mask.
+    #[inline(always)]
+    pub const fn from_raw(raw: u16) -> Self {
+        Self(raw)
+    }
+
+    /// Returns the raw 16-bit integer value.
+    #[inline(always)]
+    pub const fn raw(self) -> u16 {
+        self.0
+    }
+
+    /// Creates a mask with a single slot enabled (slot 1..=10, where 10 = key 0).
+    #[inline]
+    pub const fn from_slot(slot: u8) -> Self {
+        if slot >= 1 && slot <= 10 {
+            Self(1 << (slot - 1))
+        } else {
+            Self(0)
+        }
+    }
+
+    /// Enables a slot in the mask (slot 1..=10).
+    #[inline]
+    pub fn enable_slot(&mut self, slot: u8) {
+        if (1..=10).contains(&slot) {
+            self.0 |= 1 << (slot - 1);
+        }
+    }
+
+    /// Checks if a slot is enabled in the mask (slot 1..=10).
+    #[inline]
+    pub const fn has_slot(self, slot: u8) -> bool {
+        if slot >= 1 && slot <= 10 {
+            (self.0 & (1 << (slot - 1))) != 0
+        } else {
+            false
+        }
+    }
+
+    /// Returns `true` if the mask is empty (0).
+    #[inline(always)]
+    pub const fn is_empty(self) -> bool {
+        self.0 == 0
+    }
+}
+
+impl std::ops::BitOr for MenuKeys {
+    type Output = Self;
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl std::ops::BitOrAssign for MenuKeys {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
 /// A rendered page ready to be sent over network to client.
 #[derive(Debug, Clone)]
 pub struct RenderedMenuPage {
@@ -714,6 +901,14 @@ pub struct RenderedMenuPage {
     pub timeout: i32,
     /// Rendering target.
     pub renderer: MenuRendererKind,
+}
+
+impl RenderedMenuPage {
+    /// Returns the type-safe menu keys representation.
+    #[inline(always)]
+    pub fn keys(&self) -> MenuKeys {
+        MenuKeys(self.keys_mask)
+    }
 }
 
 /// A declarative menu definition.
@@ -824,7 +1019,13 @@ impl Menu {
         let mut action_count_on_page = 0;
 
         for item in evaluated_items {
-            let is_action = matches!(item.kind, ItemKind::Action { .. });
+            let is_action = matches!(
+                item.kind,
+                ItemKind::Action { .. }
+                    | ItemKind::Target { .. }
+                    | ItemKind::Toggle { .. }
+                    | ItemKind::Cycle { .. }
+            );
 
             if (item.is_forced_break && !current_page.is_empty())
                 || (is_action && action_count_on_page >= per_page)
@@ -893,6 +1094,75 @@ impl Menu {
                                 );
                             }
                         }
+                    }
+                }
+                ItemKind::Target { slot, action_name } => {
+                    let s = slot_counter;
+                    slot_counter += 1;
+                    if item.is_active {
+                        text.push_str(&(self.style.item_format)(s as usize, &item.title));
+                        keys_mask |= 1 << (s - 1);
+                        slots_map.insert(
+                            s,
+                            SlotAction::Execute {
+                                id: slot.index() as u32,
+                                action_name: action_name.clone(),
+                                keep_open: item.keep_open,
+                            },
+                        );
+                    } else {
+                        text.push_str(&(self.style.disabled_item_format)(s as usize, &item.title));
+                    }
+                }
+                ItemKind::Toggle {
+                    enabled,
+                    action_name,
+                } => {
+                    let s = slot_counter;
+                    slot_counter += 1;
+                    let state_str = if *enabled { " \\y[ON]" } else { " \\d[OFF]" };
+                    let full_title = format!("{}{state_str}", item.title);
+                    if item.is_active {
+                        text.push_str(&(self.style.item_format)(s as usize, &full_title));
+                        keys_mask |= 1 << (s - 1);
+                        let id = if *enabled { 1 } else { 0 };
+                        slots_map.insert(
+                            s,
+                            SlotAction::Execute {
+                                id,
+                                action_name: action_name.clone(),
+                                keep_open: item.keep_open,
+                            },
+                        );
+                    } else {
+                        text.push_str(&(self.style.disabled_item_format)(s as usize, &full_title));
+                    }
+                }
+                ItemKind::Cycle {
+                    current_index,
+                    options,
+                    action_name,
+                } => {
+                    let s = slot_counter;
+                    slot_counter += 1;
+                    let opt_str = options
+                        .get(*current_index)
+                        .map(|st| st.as_str())
+                        .unwrap_or("?");
+                    let full_title = format!("{} \\y[{opt_str}]", item.title);
+                    if item.is_active {
+                        text.push_str(&(self.style.item_format)(s as usize, &full_title));
+                        keys_mask |= 1 << (s - 1);
+                        slots_map.insert(
+                            s,
+                            SlotAction::Execute {
+                                id: *current_index as u32,
+                                action_name: action_name.clone(),
+                                keep_open: item.keep_open,
+                            },
+                        );
+                    } else {
+                        text.push_str(&(self.style.disabled_item_format)(s as usize, &full_title));
                     }
                 }
                 ItemKind::Text => {

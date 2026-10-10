@@ -5,7 +5,7 @@ pub mod dsl;
 pub mod registry;
 pub mod roles;
 
-pub use action::{CheckCapability, GrantCapability, RevokeCapability};
+pub use action::{CheckCapability, CheckCapabilityToken, GrantCapability, RevokeCapability};
 pub use dsl::{CapExpr, ValidationResult};
 pub use registry::{CAPS, CapabilityRegistry};
 pub use roles::{AdminCaps, VipCaps, is_root_namespace, namespaces};
@@ -69,6 +69,30 @@ impl Auth {
                     }
                     false
                 })
+        }
+    }
+
+    /// Checks if a player has a specific capability identified by compile-time 64-bit token.
+    #[inline]
+    pub fn has_capability_token(player_index: i32, token: crate::CapabilityToken) -> bool {
+        #[cfg(target_arch = "wasm32")]
+        {
+            api::host_has_feature(token.raw())
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            let caps = CAPS.read().unwrap_or_else(|e| e.into_inner());
+            if let Some(player_caps) = caps.player_capabilities.get(&player_index) {
+                if player_caps.contains("*") {
+                    return true;
+                }
+                for cap in player_caps {
+                    if crate::hash::fnv1a64_str(cap) == token.raw() {
+                        return true;
+                    }
+                }
+            }
+            false
         }
     }
 

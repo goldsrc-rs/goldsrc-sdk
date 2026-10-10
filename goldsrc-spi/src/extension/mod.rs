@@ -6,8 +6,11 @@
 
 use std::any::Any;
 
+use stitch_macros::port;
+
 /// Core trait implemented by engine-level extension providers.
-pub trait EngineExtension: Send + Sync + 'static {
+#[port]
+pub trait ExtensionPort: Send + Sync + 'static {
     /// Canonical identifier of the extension (e.g. "reapi", "metamod", "rehlds", "regamedll").
     fn name(&self) -> &'static str;
 
@@ -34,6 +37,9 @@ pub trait EngineExtension: Send + Sync + 'static {
     /// Lifecycle hook: called when server is shutting down.
     fn on_shutdown(&self) {}
 }
+
+/// Backward compatibility alias for [`ExtensionPort`].
+pub use ExtensionPort as EngineExtension;
 
 #[cfg(test)]
 mod tests {

@@ -8,8 +8,11 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+stitch-core = { workspace = true, default-features = false }
+stitch-macros = { workspace = true }
 serde = { workspace = true, optional = true }
 
 [features]
 default = ["serde"]
 serde = ["dep:serde"]
+

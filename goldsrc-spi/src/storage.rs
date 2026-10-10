@@ -37,10 +37,13 @@ impl std::fmt::Display for StorageError {
 
 impl std::error::Error for StorageError {}
 
+use stitch_macros::port;
+
 /// Key-Value Storage Provider trait (KV Port).
 ///
 /// Implemented by host storage engines (e.g. SQLite WAL, Redb, Mock).
-pub trait StorageProvider: Send + Sync {
+#[port]
+pub trait StoragePort: Send + Sync {
     /// Retrieves a binary value by key in the specified bucket.
     fn get(&self, bucket: &str, key: &str) -> Result<Option<Vec<u8>>, StorageError>;
 
@@ -54,10 +57,14 @@ pub trait StorageProvider: Send + Sync {
     fn fetch_add(&self, bucket: &str, key: &str, delta: i64) -> Result<i64, StorageError>;
 }
 
+/// Backward compatibility alias for [`StoragePort`].
+pub use StoragePort as StorageProvider;
+
 /// Relational / Analytical Query trait (SQL Port).
 ///
 /// Implemented by host engines for complex aggregations (e.g. TOP15, ELO rankings).
-pub trait SqlDatabase: Send + Sync {
+#[port]
+pub trait SqlDatabasePort: Send + Sync {
     /// Executes a SQL statement with parameters and returns affected rows.
     fn execute(
         &self,
@@ -65,6 +72,9 @@ pub trait SqlDatabase: Send + Sync {
         params: &[&dyn rusqlite_param::ToSqlParam],
     ) -> Result<usize, StorageError>;
 }
+
+/// Backward compatibility alias for [`SqlDatabasePort`].
+pub use SqlDatabasePort as SqlDatabase;
 
 /// Mock parameter marker for SQL params across FFI boundaries.
 pub mod rusqlite_param {

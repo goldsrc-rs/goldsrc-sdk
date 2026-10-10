@@ -18,11 +18,14 @@ pub use physics::{EnginePhysics, TraceResult};
 pub use precache::EnginePrecache;
 pub use sound::EngineSound;
 
+use stitch_macros::port;
+
 /// Composite engine Hardware Abstraction Layer (HAL) bridge interface.
 ///
 /// Combines modular sub-system traits into a unified driver interface implemented
 /// by backends (Metamod, Standalone) and consumed by runtime hosts (`Arc<dyn Engine>`).
-pub trait Engine:
+#[port]
+pub trait EnginePort:
     EnginePrecache
     + EngineMessages
     + EngineEntities
@@ -36,8 +39,11 @@ pub trait Engine:
 {
 }
 
+/// Backward compatibility alias for [`EnginePort`].
+pub use EnginePort as Engine;
+
 // Blanket implementation for any type implementing all engine sub-traits.
-impl<T> Engine for T where
+impl<T> EnginePort for T where
     T: EnginePrecache
         + EngineMessages
         + EngineEntities

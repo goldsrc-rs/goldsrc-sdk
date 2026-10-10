@@ -88,7 +88,7 @@ pub fn on_frame(_attr: TokenStream, _item: TokenStream) -> TokenStream {
     marker_outside_plugin("on_frame")
 }
 
-/// Marker attribute for event handlers (`#[event("event_name")]`).
+/// Marker attribute for event handlers (`#[event(EngineEvent::RoundStart)]` or `#[event(RoundStart)]`).
 #[proc_macro_attribute]
 pub fn event(_attr: TokenStream, _item: TokenStream) -> TokenStream {
     marker_outside_plugin("event")
@@ -104,18 +104,6 @@ pub fn command(_attr: TokenStream, _item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn menu_action(_attr: TokenStream, _item: TokenStream) -> TokenStream {
     marker_outside_plugin("menu_action")
-}
-
-/// Marker attribute for ECS system handlers (`#[system(stage = "frame", order = 10)]`).
-#[proc_macro_attribute]
-pub fn system(_attr: TokenStream, _item: TokenStream) -> TokenStream {
-    marker_outside_plugin("system")
-}
-
-/// Marker attribute for contextual placeholder handlers (`#[placeholder(name = "rank", usage = "{rank}")]`).
-#[proc_macro_attribute]
-pub fn placeholder(_attr: TokenStream, _item: TokenStream) -> TokenStream {
-    marker_outside_plugin("placeholder")
 }
 
 /// Derives the [`ConfigModel`] trait for a struct, providing automatic TOML serialization,

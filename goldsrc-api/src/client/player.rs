@@ -33,10 +33,17 @@ pub type PlayerIdentityResolverHook = fn(i32) -> crate::client::PlayerIdentity;
 pub type PlayerSessionTokenResolverHook = fn(i32) -> Option<crate::client::PlayerSessionToken>;
 
 #[cfg(not(target_arch = "wasm32"))]
+pub type PlayerValidityResolverHook = fn(i32) -> bool;
+
+#[cfg(not(target_arch = "wasm32"))]
 pub(crate) static NATIVE_PRINT_HOOK: RwLock<Option<NativePrintHook>> = RwLock::new(None);
 
 #[cfg(not(target_arch = "wasm32"))]
 pub(crate) static PLAYER_RESOLVER_HOOK: RwLock<Option<PlayerResolverHook>> = RwLock::new(None);
+
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) static PLAYER_VALIDITY_RESOLVER_HOOK: RwLock<Option<PlayerValidityResolverHook>> =
+    RwLock::new(None);
 
 #[cfg(not(target_arch = "wasm32"))]
 pub(crate) static PLAYER_NAME_RESOLVER_HOOK: RwLock<Option<PlayerNameResolverHook>> =
@@ -58,6 +65,14 @@ pub(crate) static PLAYER_IDENTITY_RESOLVER_HOOK: RwLock<Option<PlayerIdentityRes
 pub(crate) static PLAYER_SESSION_TOKEN_RESOLVER_HOOK: RwLock<
     Option<PlayerSessionTokenResolverHook>,
 > = RwLock::new(None);
+
+/// Registers the native engine player validity resolver for `Player::is_valid()` on the host.
+#[cfg(not(target_arch = "wasm32"))]
+pub fn set_player_validity_hook(hook: PlayerValidityResolverHook) {
+    if let Ok(mut lock) = PLAYER_VALIDITY_RESOLVER_HOOK.write() {
+        *lock = Some(hook);
+    }
+}
 
 /// Registers the native engine player identity resolver for `Player::identity()` on the host.
 #[cfg(not(target_arch = "wasm32"))]
@@ -170,6 +185,10 @@ impl Player {
     /// Creates a `Player` handle for `index`.
     #[cfg(target_arch = "wasm32")]
     pub fn new(index: i32) -> Self {
+        debug_assert!(
+            (1..=32).contains(&index),
+            "Player index must be in range 1..=32, got {index}. For server console operations use Server::console()"
+        );
         Self {
             index,
             _marker: std::marker::PhantomData,
@@ -179,6 +198,10 @@ impl Player {
     /// Creates a `Player` handle for `index` with backing edict resolved via host engine if available.
     #[cfg(not(target_arch = "wasm32"))]
     pub fn new(index: i32) -> Self {
+        debug_assert!(
+            (1..=32).contains(&index),
+            "Player index must be in range 1..=32, got {index}. For server console operations use Server::console()"
+        );
         if let Ok(lock) = PLAYER_RESOLVER_HOOK.read()
             && let Some(resolver) = *lock
             && let Some(player) = resolver(index)
@@ -211,7 +234,15 @@ impl Player {
         }
         #[cfg(not(target_arch = "wasm32"))]
         {
-            self.inner.is_valid()
+            if self.inner.is_valid() {
+                return true;
+            }
+            if let Ok(lock) = PLAYER_VALIDITY_RESOLVER_HOOK.read()
+                && let Some(resolver) = *lock
+            {
+                return resolver(self.index);
+            }
+            false
         }
     }
 

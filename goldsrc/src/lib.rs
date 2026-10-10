@@ -191,7 +191,7 @@ macro_rules! chat_print {
 #[macro_export]
 macro_rules! chat_broadcast {
     ($fmt:expr) => {
-        $crate::Player::new(0).print($crate::PrintTarget::Chat, $fmt)
+        $crate::Server::broadcast_chat($fmt)
     };
     ($fmt:expr, $( $k:ident = $v:expr ),* $(,)?) => {{
         let __owned_vals = [ $( $v.to_string() ),* ];
@@ -200,8 +200,24 @@ macro_rules! chat_broadcast {
             $( (stringify!($k), __owned_iter.next().unwrap().as_str()) ),*
         ];
         let __s = $crate::substitute_named($fmt, __named);
-        $crate::Player::new(0).print($crate::PrintTarget::Chat, &__s)
+        $crate::Server::broadcast_chat(&__s)
     }};
+}
+
+/// Macro for printing text directly to the dedicated server host console.
+#[macro_export]
+macro_rules! console_print {
+    ($($arg:tt)*) => {
+        $crate::Server::console().print(format!($($arg)*))
+    };
+}
+
+/// Macro for printing a line directly to the dedicated server host console with newline.
+#[macro_export]
+macro_rules! console_println {
+    ($($arg:tt)*) => {
+        $crate::Server::console().println(format!($($arg)*))
+    };
 }
 
 pub mod chat {
@@ -301,6 +317,10 @@ pub mod cvar {
     pub use goldsrc_api::cvar::*;
 }
 
+pub mod storage {
+    pub use goldsrc_api::storage::*;
+}
+
 pub mod extension;
 pub mod reapi;
 
@@ -325,28 +345,29 @@ pub use goldsrc_api::{
     ClassicMenuRenderer, Classname, Client, ClientExt, ClientKind, Command, CommandBuilder,
     CommandContext, CommandError, CommandHandler, CommandRegistry, CommandResult, CommandTarget,
     CommutativeModifier, Condition, Connected, ConnectedClient, ConnectionState, Cvar, CvarFlags,
-    DagError, Dead, DeadPlayer, DenyAction, DenyPolicy, DhudMenuRenderer, Dormant, Entity,
-    EntityExt, EntityId, Event, EventHandler, EventPhase, EventRegistry, EventSubscriberBuilder,
-    EventSubscription, ExitBehavior, Feedback, FromArg, Health, Hltv, HudColor, HudCoord,
-    HudEffect, HudKind, HudMessage, HudMessageBuilder, Human, HumanClient, Interceptor, ItemKind,
-    ItemTitle, LifeState, LivingHuman, LivingPlayer, Menu, MenuActionHandler, MenuActionRegistry,
-    MenuBuilder, MenuContext, MenuItem, MenuPageBuilder, MenuRenderer, MenuRendererKind, MenuStyle,
-    ModifierContribution, NodeBuilder, NoneOf, Not, OrderNode, Origin, Phase, PhasedDag, Pipeline,
-    PipelineFlow, Placeholder, PlaceholderBuilder, PlaceholderCall, PlaceholderHandler,
-    PlaceholderMetadata, PlaceholderRegistry, Player, PlayerAction, PlayerExt, PlayerSlot,
-    PlayerStateFilter, PluginTier, PrintTarget, Prop, PropGet, PropSet, RefineExt, Refined,
-    RenderedMenuPage, SlotAction, Solid, SolidEntity, Spawned, SpawnedEntity, Spec, SpecError,
+    DagError, Dead, DeadPlayer, DenyAction, DenyPolicy, DhudMenuRenderer, Dormant, EngineEvent,
+    Entity, EntityExt, EntityId, Event, EventHandler, EventPhase, EventRegistry,
+    EventSubscriberBuilder, EventSubscription, ExitBehavior, Feedback, FromArg, Health, Hltv,
+    HudColor, HudCoord, HudEffect, HudKind, HudMessage, HudMessageBuilder, Human, HumanClient,
+    Interceptor, ItemKind, ItemTitle, LifeState, LivingHuman, LivingPlayer, Menu,
+    MenuActionHandler, MenuActionRegistry, MenuBuilder, MenuContext, MenuItem, MenuKeys,
+    MenuPageBuilder, MenuRenderer, MenuRendererKind, MenuStyle, ModifierContribution, NodeBuilder,
+    NoneOf, Not, OrderNode, Origin, Phase, PhasedDag, Pipeline, PipelineFlow, Placeholder,
+    PlaceholderBuilder, PlaceholderCall, PlaceholderHandler, PlaceholderMetadata,
+    PlaceholderRegistry, Player, PlayerAction, PlayerExt, PlayerSlot, PlayerStateFilter, Players,
+    PluginTier, PrintTarget, Prop, PropGet, PropSet, RefineExt, Refined, RenderedMenuPage, Server,
+    ServerConsole, SlotAction, Solid, SolidEntity, Spawned, SpawnedEntity, Spec, SpecError,
     SpectatingPlayer, Spectator, Team, TeamTarget, TypedBlackboard, ValidationResult, Vector3,
     Velocity, VipCaps, VisualDeny, clear_commands, clear_events, clear_menu_actions,
     clear_placeholders, client_command, config_exec, dispatch_command, dispatch_event,
-    dispatch_local_placeholder, dispatch_menu_action, register_command, register_menu_action_id,
-    register_menu_action_name, register_placeholder, server_command, split_command_args,
-    subscribe_event, use_command_interceptor,
+    dispatch_local_placeholder, dispatch_menu_action, hud_broadcast, register_command,
+    register_menu_action_id, register_menu_action_name, register_placeholder, server_command,
+    split_command_args, subscribe_event, use_command_interceptor,
 };
 pub use goldsrc_macros as macros;
 pub use goldsrc_macros::{
     ConfigModel, bundle, command, command_prefix, event, menu_action, on_frame, on_load, on_unload,
-    permission, permissions, plugin, requires, role, system,
+    permission, permissions, plugin, requires, role,
 };
 
 /// Convenient prelude module for plugin authors.
@@ -357,6 +378,7 @@ pub mod prelude {
     pub use crate::hud_api as hud;
     pub use crate::menu_api;
     pub use crate::modifiers_api as modifiers;
+    pub use crate::storage;
     pub use crate::task;
     pub use crate::tr;
     pub use crate::{
@@ -365,22 +387,24 @@ pub mod prelude {
         ClassicMenuRenderer, Classname, Client, ClientExt, ClientKind, Command, CommandBuilder,
         CommandContext, CommandError, CommandHandler, CommandResult, CommandTarget,
         CommutativeModifier, Condition, Connected, ConnectedClient, ConnectionState, Dead,
-        DeadPlayer, DenyAction, DenyPolicy, DhudMenuRenderer, Dormant, Entity, EntityExt, EntityId,
-        Event, EventHandler, EventPhase, EventSubscriberBuilder, ExitBehavior, Feedback, FromArg,
-        Health, Hltv, HudColor, HudCoord, HudEffect, HudKind, HudMessage, HudMessageBuilder, Human,
-        HumanClient, Interceptor, ItemKind, ItemTitle, LifeState, LivingHuman, LivingPlayer, Menu,
-        MenuBuilder, MenuContext, MenuItem, MenuPageBuilder, MenuRenderer, MenuRendererKind,
-        MenuStyle, ModifierContribution, NoneOf, Not, Origin, Pipeline, PipelineFlow, Placeholder,
-        PlaceholderBuilder, Player, PlayerAction, PlayerExt, PlayerSlot, PlayerStateFilter,
-        PrintTarget, Prop, PropGet, PropSet, RefineExt, Refined, RenderedMenuPage, SlotAction,
-        Solid, SolidEntity, Spawned, SpawnedEntity, Spec, SpecError, SpectatingPlayer, Spectator,
-        Team, TeamTarget, TypedBlackboard, ValidationResult, Vector3, Velocity, VipCaps,
-        VisualDeny, action, client_command, config_exec, prop, server_command,
+        DeadPlayer, DenyAction, DenyPolicy, DhudMenuRenderer, Dormant, EngineEvent, Entity,
+        EntityExt, EntityId, Event, EventHandler, EventPhase, EventSubscriberBuilder, ExitBehavior,
+        Feedback, FromArg, Health, Hltv, HudColor, HudCoord, HudEffect, HudKind, HudMessage,
+        HudMessageBuilder, Human, HumanClient, Interceptor, ItemKind, ItemTitle, LifeState,
+        LivingHuman, LivingPlayer, Menu, MenuBuilder, MenuContext, MenuItem, MenuKeys,
+        MenuPageBuilder, MenuRenderer, MenuRendererKind, MenuStyle, ModifierContribution, NoneOf,
+        Not, Origin, Pipeline, PipelineFlow, Placeholder, PlaceholderBuilder, Player, PlayerAction,
+        PlayerExt, PlayerSlot, PlayerStateFilter, Players, PrintTarget, Prop, PropGet, PropSet,
+        RefineExt, Refined, RenderedMenuPage, Server, ServerConsole, SlotAction, Solid,
+        SolidEntity, Spawned, SpawnedEntity, Spec, SpecError, SpectatingPlayer, Spectator, Team,
+        TeamTarget, TypedBlackboard, ValidationResult, Vector3, Velocity, VipCaps, VisualDeny,
+        action, client_command, config_exec, hud_broadcast, prop, server_command,
         use_command_interceptor,
     };
     pub use crate::{
-        bundle, chat_broadcast, chat_print, command, command_prefix, event, extension, menu_action,
-        on_frame, on_load, on_unload, plugin, reapi, role, system,
+        bundle, chat_broadcast, chat_print, command, command_prefix, console_print,
+        console_println, event, extension, menu_action, on_frame, on_load, on_unload, plugin,
+        reapi, role,
     };
     pub use crate::{log_debug, log_err, log_info, log_warn};
 }
@@ -420,7 +444,7 @@ mod tests {
         pub enabled: bool,
         #[cvar(name = "vip_bonus_hp", flags = crate::CvarFlags::ARCHIVE | crate::CvarFlags::SERVER, range = 1..=100, description = "Bonus HP")]
         pub bonus_hp: i32,
-        #[cvar(name = "vip_tag", flags = "server", description = "VIP Tag")]
+        #[cvar(name = "vip_tag", flags = crate::CvarFlags::SERVER, description = "VIP Tag")]
         pub tag: String,
     }
 

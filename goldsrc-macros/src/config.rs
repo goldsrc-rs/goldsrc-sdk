@@ -103,39 +103,13 @@ pub fn expand_derive_config_model(input: DeriveInput) -> Result<TokenStream, Err
                     } else if meta.path.is_ident("flags") {
                         let value = meta.value()?;
                         if let Ok(lit_str) = value.parse::<syn::LitStr>() {
-                            let flags_str = lit_str.value();
-                            let mut flag_tokens = Vec::new();
-                            for part in flags_str.split('|') {
-                                let part = part.trim().to_uppercase();
-                                match part.as_str() {
-                                    "ARCHIVE" => flag_tokens
-                                        .push(quote! { ::goldsrc_api::cvar::CvarFlags::ARCHIVE }),
-                                    "SERVER" | "NOTIFY" => flag_tokens
-                                        .push(quote! { ::goldsrc_api::cvar::CvarFlags::SERVER }),
-                                    "USERINFO" => flag_tokens
-                                        .push(quote! { ::goldsrc_api::cvar::CvarFlags::USERINFO }),
-                                    "PROTECTED" => flag_tokens
-                                        .push(quote! { ::goldsrc_api::cvar::CvarFlags::PROTECTED }),
-                                    "SP_ONLY" | "READ_ONLY" => flag_tokens
-                                        .push(quote! { ::goldsrc_api::cvar::CvarFlags::SP_ONLY }),
-                                    "PRINTABLE_ONLY" => flag_tokens.push(
-                                        quote! { ::goldsrc_api::cvar::CvarFlags::PRINTABLE_ONLY },
-                                    ),
-                                    "UNLOGGED" => flag_tokens
-                                        .push(quote! { ::goldsrc_api::cvar::CvarFlags::UNLOGGED }),
-                                    "NO_EXTRA_WHITESPACE" => flag_tokens.push(
-                                        quote! { ::goldsrc_api::cvar::CvarFlags::NO_EXTRA_WHITESPACE },
-                                    ),
-                                    _ => {}
-                                }
-                            }
-                            if !flag_tokens.is_empty() {
-                                flags_expr = quote! { #(#flag_tokens)|* };
-                            }
-                        } else {
-                            let expr: syn::Expr = value.parse()?;
-                            flags_expr = quote! { #expr };
+                            return Err(syn::Error::new_spanned(
+                                lit_str,
+                                "flags must be typed expressions like `flags = CvarFlags::ARCHIVE | CvarFlags::SERVER`, string flags are deprecated and removed"
+                            ));
                         }
+                        let expr: syn::Expr = value.parse()?;
+                        flags_expr = quote! { #expr };
                     } else if meta.path.is_ident("range") {
                         let value = meta.value()?;
                         let expr: syn::Expr = value.parse()?;

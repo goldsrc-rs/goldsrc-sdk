@@ -5,9 +5,8 @@ pub mod command;
 pub mod event;
 pub mod manifest;
 pub mod menu;
-pub mod system;
 
-use crate::defs::{CommandDefInfo, PluginAttr, SystemDefInfo};
+use crate::defs::{CommandDefInfo, PluginAttr};
 use crate::utils::check_handler_args;
 use command::{generate_command_registration, parse_command};
 use event::{EventHandler, generate_event_registrations, parse_event};
@@ -16,7 +15,6 @@ use menu::{MenuActionHandler, generate_menu_registrations, parse_menu_action};
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{Expr, ExprLit, ImplItem, ItemImpl, Lit};
-use system::{generate_system_registrations, parse_system};
 
 pub fn expand_plugin(mut attr: PluginAttr, mut input_impl: ItemImpl) -> TokenStream {
     let struct_name = &input_impl.self_ty;
@@ -25,13 +23,11 @@ pub fn expand_plugin(mut attr: PluginAttr, mut input_impl: ItemImpl) -> TokenStr
     let mut on_unload_fn = quote! {};
     let mut on_frame_fn = quote! {};
     let mut event_handlers: Vec<EventHandler> = Vec::new();
-    let mut registered_events: std::collections::HashSet<Option<String>> =
-        std::collections::HashSet::new();
+    let mut registered_events: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     let mut command_registrations = Vec::new();
     let mut command_defs: Vec<CommandDefInfo> = Vec::new();
     let mut menu_action_matchers: Vec<MenuActionHandler> = Vec::new();
-    let mut system_handlers: Vec<SystemDefInfo> = Vec::new();
 
     // Iterate over the items in the impl block to find our marker attributes
     for item in &mut input_impl.items {
@@ -94,12 +90,6 @@ pub fn expand_plugin(mut attr: PluginAttr, mut input_impl: ItemImpl) -> TokenStr
                         Err(e) => macro_error = Some(e),
                     }
                     false
-                } else if fn_attr.path().is_ident(crate::defs::markers::SYSTEM) {
-                    match parse_system(fn_attr, sig) {
-                        Ok(sys) => system_handlers.push(sys),
-                        Err(e) => macro_error = Some(e),
-                    }
-                    false
                 } else if fn_attr.path().is_ident(crate::defs::markers::MENU_ACTION) {
                     match parse_menu_action(fn_attr, sig) {
                         Ok(action) => menu_action_matchers.push(action),
@@ -153,7 +143,6 @@ pub fn expand_plugin(mut attr: PluginAttr, mut input_impl: ItemImpl) -> TokenStr
 
     let event_registrations = generate_event_registrations(struct_name, &event_handlers);
     let menu_registrations = generate_menu_registrations(struct_name, &menu_action_matchers);
-    let system_registrations = generate_system_registrations(struct_name, &system_handlers);
 
     let manifest_toml = generate_manifest_toml(&attr, &command_defs);
 
@@ -167,7 +156,6 @@ pub fn expand_plugin(mut attr: PluginAttr, mut input_impl: ItemImpl) -> TokenStr
 
             fn on_load() {
                 ::goldsrc::init_guest_logger();
-                #(#system_registrations)*
                 #(#command_registrations)*
                 #(#event_registrations)*
                 #(#menu_registrations)*

@@ -252,7 +252,7 @@ impl<'a> Parser<'a> {
     fn parse_ident_node_or_group(&mut self) -> Result<CapExpr, String> {
         let mut name = match self.next() {
             Some(Token::Ident(s)) => s.to_string(),
-            _ => unreachable!(),
+            other => return Err(format!("Expected identifier, got {:?}", other)),
         };
 
         loop {
@@ -655,5 +655,17 @@ mod tests {
 
         let res4 = CapExpr::parse_with_diagnostics("a | (b & c)").unwrap();
         assert!(res4.warnings.is_empty());
+    }
+
+    #[test]
+    fn test_dsl_negative_and_malformed_inputs() {
+        assert!(CapExpr::parse("").is_err());
+        assert!(CapExpr::parse("admin:").is_err());
+        assert!(CapExpr::parse("*:").is_err());
+        assert!(CapExpr::parse("& admin").is_err());
+        assert!(CapExpr::parse("admin &").is_err());
+        assert!(CapExpr::parse("(admin").is_err());
+        assert!(CapExpr::parse("admin)").is_err());
+        assert!(CapExpr::parse("!").is_err());
     }
 }

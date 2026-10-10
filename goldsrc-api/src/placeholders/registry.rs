@@ -39,13 +39,14 @@ impl PlaceholderRegistry {
     }
 
     /// Resolves and evaluates a placeholder call.
-    pub fn dispatch(&self, name: &str, caller: Player, param: &str) -> Option<String> {
+    pub fn dispatch(&self, name: &str, caller: Option<Player>, param: &str) -> Option<String> {
         let clean_name = name.to_ascii_lowercase();
         let (meta, handler) = self.handlers.get(&clean_name)?;
 
         // Capability check if configured
         if let Some(cap) = &meta.capability
-            && !caller.act(CheckCapability(cap))
+            && let Some(p) = caller
+            && !p.act(CheckCapability(cap))
         {
             return None;
         }
@@ -72,7 +73,7 @@ static GLOBAL_REGISTRY: LazyLock<RwLock<PlaceholderRegistry>> =
 /// Registers a placeholder in the global registry.
 pub fn register_placeholder<F>(name: &str, description: &str, handler: F)
 where
-    F: Fn(Player, &PlaceholderCall) -> String + Send + Sync + 'static,
+    F: Fn(Option<Player>, &PlaceholderCall) -> String + Send + Sync + 'static,
 {
     #[cfg(target_arch = "wasm32")]
     {
@@ -93,7 +94,11 @@ where
 
 /// Resolves a placeholder through the global registry.
 pub fn dispatch_local_placeholder(name: &str, caller_idx: i32, param: &str) -> Option<String> {
-    let caller = Player::new(caller_idx);
+    let caller = if (1..=32).contains(&caller_idx) {
+        Some(Player::new(caller_idx))
+    } else {
+        None
+    };
     GLOBAL_REGISTRY
         .read()
         .unwrap_or_else(|e| e.into_inner())
@@ -156,7 +161,7 @@ impl PlaceholderBuilder {
     /// Registers the placeholder with an evaluation handler.
     pub fn register<F>(self, handler: F)
     where
-        F: Fn(Player, &PlaceholderCall) -> String + Send + Sync + 'static,
+        F: Fn(Option<Player>, &PlaceholderCall) -> String + Send + Sync + 'static,
     {
         #[cfg(target_arch = "wasm32")]
         {
@@ -181,7 +186,7 @@ impl Placeholder {
     /// Registers a simple placeholder with description and handler.
     pub fn register<F>(name: &str, description: &str, handler: F)
     where
-        F: Fn(Player, &PlaceholderCall) -> String + Send + Sync + 'static,
+        F: Fn(Option<Player>, &PlaceholderCall) -> String + Send + Sync + 'static,
     {
         register_placeholder(name, description, handler);
     }

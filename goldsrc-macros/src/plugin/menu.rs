@@ -30,6 +30,14 @@ pub fn parse_menu_action(
         }
     } else if let Ok(Lit::Str(s)) = attr.parse_args::<Lit>() {
         action_str = Some(s.value());
+    } else if let Ok(path) = attr.parse_args::<syn::Path>() {
+        let path_str = path
+            .segments
+            .iter()
+            .map(|s| s.ident.to_string())
+            .collect::<Vec<_>>()
+            .join("::");
+        action_str = Some(path_str);
     } else if let Ok(meta_list) = attr.meta.require_list() {
         meta_list.parse_nested_meta(|meta| {
             if meta.path.is_ident("id") {
@@ -41,6 +49,14 @@ pub fn parse_menu_action(
             } else if meta.path.is_ident("action") || meta.path.is_ident("name") {
                 if let Ok(Lit::Str(s)) = meta.value()?.parse::<Lit>() {
                     action_str = Some(s.value());
+                } else if let Ok(p) = meta.value()?.parse::<syn::Path>() {
+                    let path_str = p
+                        .segments
+                        .iter()
+                        .map(|s| s.ident.to_string())
+                        .collect::<Vec<_>>()
+                        .join("::");
+                    action_str = Some(path_str);
                 }
             }
             Ok(())

@@ -42,9 +42,33 @@ pub enum Requirement {
         version_req: Option<String>,
         optional: bool,
     },
+    /// Requirement for a specific engine backend (e.g. `BackendId::METAMOD`).
+    Backend { id: crate::BackendId },
 }
 
 impl Requirement {
+    /// Constructs a typed backend requirement.
+    #[inline(always)]
+    pub const fn backend(id: crate::BackendId) -> Self {
+        Self::Backend { id }
+    }
+
+    /// Constructs a typed extension requirement.
+    #[inline(always)]
+    pub fn extension(id: crate::ExtensionId) -> Self {
+        Self::Extension {
+            name: id.as_str().to_string(),
+            version_req: None,
+            optional: false,
+        }
+    }
+
+    /// Constructs a typed feature requirement.
+    #[inline(always)]
+    pub fn feature(name: impl Into<String>) -> Self {
+        Self::Feature { name: name.into() }
+    }
+
     /// Returns true if this requirement represents an inter-plugin DAG dependency.
     pub fn is_plugin_dependency(&self) -> bool {
         matches!(self, Requirement::Plugin { .. })
@@ -58,6 +82,15 @@ impl FromStr for Requirement {
         let trimmed = s.trim();
         if trimmed.is_empty() {
             return Err("Empty requirement string".to_string());
+        }
+
+        if let Some(rest) = trimmed.strip_prefix("backend:") {
+            let id = match rest.trim() {
+                "metamod" => crate::BackendId::METAMOD,
+                "standalone" => crate::BackendId::STANDALONE,
+                other => crate::BackendId::custom(Box::leak(other.to_string().into_boxed_str())),
+            };
+            return Ok(Requirement::Backend { id });
         }
 
         if let Some(rest) = trimmed.strip_prefix("ext:") {

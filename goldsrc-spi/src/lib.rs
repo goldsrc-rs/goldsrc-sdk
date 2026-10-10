@@ -8,6 +8,7 @@ pub mod cvar;
 pub mod engine;
 pub mod entity;
 pub mod extension;
+pub mod hash;
 pub mod identity;
 pub mod storage;
 
@@ -19,6 +20,10 @@ pub use engine::{
 };
 pub use entity::{EntitySpawner, edict_t};
 pub use extension::EngineExtension;
+pub use hash::{
+    BackendId, CapabilityToken, ExtensionId, FeatureToken, fnv1a32, fnv1a32_str, fnv1a64,
+    fnv1a64_str,
+};
 pub use identity::{
     AuthIdentity, AuthState, AuthSubject, PlayerGuid, PlayerIdentity, PlayerSessionToken, SteamId,
     murmur3_128,
