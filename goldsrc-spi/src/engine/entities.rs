@@ -8,9 +8,17 @@ pub trait EngineEntities: EntitySpawner + Send + Sync {
     /// Whether an entity index is valid (0 = world, 1..=N = players, >N = entities).
     fn entity_is_valid(&self, index: i32) -> bool;
 
+    /// Maximum client slot capacity supported by GoldSrc engine architecture.
+    const MAX_CLIENTS: usize = 32;
+
     /// Checks whether the given slot index represents a valid, active player (1..=32).
     fn player_is_valid(&self, index: i32) -> bool {
-        (1..=32).contains(&index) && self.entity_is_valid(index)
+        (1..=Self::MAX_CLIENTS as i32).contains(&index) && self.entity_is_valid(index)
+    }
+
+    /// Iterates over all valid active player slot indices (1..=MAX_CLIENTS).
+    fn active_player_slots(&self) -> impl Iterator<Item = i32> {
+        (1..=Self::MAX_CLIENTS as i32).filter(|&slot| self.entity_is_valid(slot))
     }
 
     /// Entity classname (e.g. "info_player_start", "hostage_entity").
