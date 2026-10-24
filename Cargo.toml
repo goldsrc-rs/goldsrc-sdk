@@ -1,10 +1,10 @@
 [workspace]
 members = [
-    "goldsrc-sys",
-    "goldsrc-spi",
-    "goldsrc-api",
-    "goldsrc-macros",
-    "goldsrc",
+    "crates/goldsrc-sys",
+    "crates/goldsrc-spi",
+    "crates/goldsrc-api",
+    "crates/goldsrc-macros",
+    "crates/goldsrc",
     "examples/test_chat",
     "examples/test_ecs",
     "examples/test_hud",
@@ -12,11 +12,11 @@ members = [
     "examples/test_menu",
 ]
 default-members = [
-    "goldsrc-sys",
-    "goldsrc-spi",
-    "goldsrc-api",
-    "goldsrc-macros",
-    "goldsrc",
+    "crates/goldsrc-sys",
+    "crates/goldsrc-spi",
+    "crates/goldsrc-api",
+    "crates/goldsrc-macros",
+    "crates/goldsrc",
 ]
 resolver = "3"
 
@@ -29,11 +29,11 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/goldsrc-rs/goldsrc-sdk"
 
 [workspace.dependencies]
-goldsrc-sys = { path = "goldsrc-sys", version = "0.20.0" }
-goldsrc = { path = "goldsrc", version = "0.20.0" }
-goldsrc-api = { path = "goldsrc-api", version = "0.20.0" }
-goldsrc-spi = { path = "goldsrc-spi", version = "0.20.0" }
-goldsrc-macros = { path = "goldsrc-macros", version = "0.20.0" }
+goldsrc-sys = { path = "crates/goldsrc-sys", version = "0.20.0" }
+goldsrc = { path = "crates/goldsrc", version = "0.20.0" }
+goldsrc-api = { path = "crates/goldsrc-api", version = "0.20.0" }
+goldsrc-spi = { path = "crates/goldsrc-spi", version = "0.20.0" }
+goldsrc-macros = { path = "crates/goldsrc-macros", version = "0.20.0" }
 
 wit-bindgen = "0.63.0"
 crossbeam-channel = "0.5"
@@ -54,6 +54,6 @@ overflow-checks = true
 lto = "thin"
 opt-level = "z"
 strip = "debuginfo"
-codegen-units = 16
+panic = "abort"
+codegen-units = 1
 overflow-checks = true
-
