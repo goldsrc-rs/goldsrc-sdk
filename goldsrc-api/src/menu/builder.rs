@@ -18,6 +18,8 @@ impl MenuBuilder {
                 style: MenuStyle::classic(),
                 renderer: MenuRendererKind::Text,
                 exit_behavior: ExitBehavior::PopParent,
+                presentation: MenuPresentationIntent::UserInteractive,
+                preemption: PreemptionStrategy::SuspendAndResume,
                 timeout_seconds: -1,
                 required_capability: None,
                 debounce: None,
@@ -121,6 +123,18 @@ impl MenuBuilder {
     /// Sets exit behavior to return to parent menu on a specific page number (e.g. `1` = page 1, `-1` = last page).
     pub fn exit_to_parent_page(mut self, page: isize) -> Self {
         self.menu.exit_behavior = ExitBehavior::PopParentPage(page);
+        self
+    }
+
+    /// Sets the semantic presentation intent for this menu.
+    pub fn presentation(mut self, intent: MenuPresentationIntent) -> Self {
+        self.menu.presentation = intent;
+        self
+    }
+
+    /// Sets the preemption and conflict resolution strategy for this menu.
+    pub fn preemption(mut self, strategy: PreemptionStrategy) -> Self {
+        self.menu.preemption = strategy;
         self
     }
 
