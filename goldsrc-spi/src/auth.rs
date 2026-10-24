@@ -6,7 +6,7 @@
 use crate::identity::AuthIdentity;
 use std::net::IpAddr;
 
-/// Decision returned by an [`AuthProvider`] when evaluating a client connection handshake.
+/// Decision returned by an [`AuthPort`] when evaluating a client connection handshake.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HandshakeDecision {
     /// Provider does not recognize or handle this client packet/ticket; pass to the next provider in chain.
@@ -20,7 +20,7 @@ pub enum HandshakeDecision {
     },
 }
 
-/// Network context provided to an [`AuthProvider`] during connection handshake.
+/// Network context provided to an [`AuthPort`] during connection handshake.
 #[repr(C, align(64))]
 #[derive(Debug, Clone)]
 pub struct HandshakeContext<'a> {
@@ -55,9 +55,6 @@ pub trait AuthPort: Send + Sync {
     fn handle_handshake(&self, ctx: &HandshakeContext<'_>) -> HandshakeDecision;
 }
 
-/// Backward compatibility alias for [`AuthPort`].
-pub use AuthPort as AuthProvider;
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -65,7 +62,7 @@ mod tests {
 
     struct DummySteamProvider;
 
-    impl AuthProvider for DummySteamProvider {
+    impl AuthPort for DummySteamProvider {
         fn name(&self) -> &'static str {
             "dummy_steam"
         }

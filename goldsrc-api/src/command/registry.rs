@@ -46,12 +46,6 @@ impl RegisteredCommand {
             .unwrap_or(&self.default_handler)
     }
 
-    /// Legacy getter for direct handler invocation.
-    #[inline]
-    pub fn handler(&self) -> &CommandHandler {
-        self.active_handler()
-    }
-
     /// Returns `true` if an external plugin has registered an active monopoly override.
     #[inline]
     pub fn is_overridden(&self) -> bool {

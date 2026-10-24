@@ -13,14 +13,14 @@ pub mod identity;
 pub mod pipeline;
 pub mod storage;
 
-pub use auth::{AuthProvider, HandshakeContext, HandshakeDecision};
-pub use cvar::{CvarEngine, CvarFlags};
+pub use auth::{AuthPort, HandshakeContext, HandshakeDecision};
+pub use cvar::{CvarFlags, CvarPort};
 pub use engine::{
-    Engine, EngineConsole, EngineCvars, EngineEntities, EngineExtensions, EngineMessages,
-    EnginePhysics, EnginePrecache, EngineSound, MessageBuilder, MessageDest, TraceResult,
+    EngineConsole, EngineCvars, EngineEntities, EngineExtensions, EngineMessages, EnginePhysics,
+    EnginePort, EnginePrecache, EngineSound, MessageBuilder, MessageDest, TraceResult,
 };
 pub use entity::{EntitySpawner, edict_t};
-pub use extension::EngineExtension;
+pub use extension::ExtensionPort;
 pub use hash::{
     BackendId, CapabilityToken, ExtensionId, FeatureToken, fnv1a32, fnv1a32_str, fnv1a64,
     fnv1a64_str,
@@ -30,4 +30,4 @@ pub use identity::{
     murmur3_128,
 };
 pub use pipeline::*;
-pub use storage::{SqlDatabase, StorageError, StorageProvider};
+pub use storage::{SqlDatabase, SqlDatabasePort, StorageError, StoragePort};

@@ -1,6 +1,6 @@
 //! Storage Service Provider Interface (Storage SPI).
 //!
-//! Provides decoupled KV storage ([`StorageProvider`]) with atomic operations
+//! Provides decoupled KV storage ([`StoragePort`]) with atomic operations
 //! and relational query interface ([`SqlDatabase`]). Implemented by storage
 //! engines (e.g. SQLite WAL, Redb, Mock).
 
@@ -56,9 +56,6 @@ pub trait StoragePort: Send + Sync {
     /// Atomically increments/decrements a 64-bit signed integer value and returns the new value.
     fn fetch_add(&self, bucket: &str, key: &str, delta: i64) -> Result<i64, StorageError>;
 }
-
-/// Backward compatibility alias for [`StoragePort`].
-pub use StoragePort as StorageProvider;
 
 /// Relational / Analytical Query trait (SQL Port).
 ///
@@ -144,7 +141,7 @@ mod tests {
     #[derive(Default)]
     struct MockStorage(RwLock<HashMap<(String, String), Vec<u8>>>);
 
-    impl StorageProvider for MockStorage {
+    impl StoragePort for MockStorage {
         fn get(&self, bucket: &str, key: &str) -> Result<Option<Vec<u8>>, StorageError> {
             let map = self.0.read().unwrap();
             Ok(map.get(&(bucket.to_string(), key.to_string())).cloned())

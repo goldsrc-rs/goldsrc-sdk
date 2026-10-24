@@ -4,7 +4,7 @@
 //! synchronization flags (archive, server, protected), and the [`ConfigModel`]
 //! trait for bidirectional synchronization between engine `cvar_t` and disk TOML.
 
-pub use goldsrc_spi::cvar::{CvarEngine, CvarFlags};
+pub use goldsrc_spi::cvar::{CvarFlags, CvarPort};
 use std::sync::{Arc, Mutex};
 
 /// Metadata descriptor for a configuration field bound to an engine CVAR.
@@ -32,13 +32,13 @@ pub trait ConfigModel: Send + Sync {
     fn to_cvars(&self) -> String;
 
     /// Registers all associated CVARs in the given engine interface.
-    fn register_cvars(&self, engine: &dyn CvarEngine);
+    fn register_cvars(&self, engine: &dyn CvarPort);
 
     /// Synchronizes local fields from the current engine CVAR values.
-    fn sync_from_cvars(&mut self, engine: &dyn CvarEngine);
+    fn sync_from_cvars(&mut self, engine: &dyn CvarPort);
 
     /// Writes local field values into the engine's CVARs.
-    fn sync_to_cvars(&self, engine: &dyn CvarEngine);
+    fn sync_to_cvars(&self, engine: &dyn CvarPort);
 }
 
 /// Type alias for an observer callback invoked when a [`Cvar`] value changes.
@@ -395,75 +395,75 @@ impl ClampRange<std::ops::RangeInclusive<f64>> for f64 {
 }
 
 /// Helper trait for reading and writing typed configuration values to/from the GoldSrc engine.
-pub trait FromCvarEngine {
+pub trait FromCvarPort {
     /// Reads current cvar value from the engine and updates `current`.
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self);
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self);
 
     /// Writes `self` into the engine cvar.
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str);
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str);
 }
 
-impl FromCvarEngine for i32 {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for i32 {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         *current = engine.cvar_get_float(name) as i32;
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_float(name, *self as f32);
     }
 }
 
-impl FromCvarEngine for u32 {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for u32 {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         *current = engine.cvar_get_float(name) as u32;
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_float(name, *self as f32);
     }
 }
 
-impl FromCvarEngine for usize {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for usize {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         *current = engine.cvar_get_float(name) as usize;
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_float(name, *self as f32);
     }
 }
 
-impl FromCvarEngine for f32 {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for f32 {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         *current = engine.cvar_get_float(name);
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_float(name, *self);
     }
 }
 
-impl FromCvarEngine for f64 {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for f64 {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         *current = engine.cvar_get_float(name) as f64;
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_float(name, *self as f32);
     }
 }
 
-impl FromCvarEngine for bool {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for bool {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         *current = engine.cvar_get_float(name) > 0.0;
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_float(name, if *self { 1.0 } else { 0.0 });
     }
 }
 
-impl FromCvarEngine for String {
-    fn read_cvar(engine: &dyn CvarEngine, name: &str, current: &mut Self) {
+impl FromCvarPort for String {
+    fn read_cvar(engine: &dyn CvarPort, name: &str, current: &mut Self) {
         if let Some(val) = engine.cvar_get_string(name) {
             *current = val;
         }
     }
-    fn write_cvar(&self, engine: &dyn CvarEngine, name: &str) {
+    fn write_cvar(&self, engine: &dyn CvarPort, name: &str) {
         engine.cvar_set_string(name, self);
     }
 }

@@ -1,8 +1,8 @@
 //! Engine console variables (cvar) operations.
 
-pub use crate::cvar::{CvarEngine, CvarFlags};
+pub use crate::cvar::{CvarFlags, CvarPort};
 
-/// Console variable operations extending the base [`CvarEngine`] capability.
-pub trait EngineCvars: CvarEngine + Send + Sync {}
+/// Console variable operations extending the base [`CvarPort`] capability.
+pub trait EngineCvars: CvarPort + Send + Sync {}
 
-impl<T: CvarEngine + Send + Sync> EngineCvars for T {}
+impl<T: CvarPort + Send + Sync> EngineCvars for T {}
