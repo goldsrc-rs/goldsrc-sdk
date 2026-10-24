@@ -86,7 +86,7 @@ pub const FL_PROXY: i32 = 1 << 10;
 pub const DEFAULT_CONFIG_FILE_NAME: &str = "goldsrc.toml";
 
 /// Default mod directory (e.g., "cstrike", "valve").
-pub const DEFAULT_MOD_DIR: &str = "cstrike";
+pub const DEFAULT_MOD_DIR: &str = "valve";
 
 /// Standard Metamod addons directory name.
 pub const ADDONS_DIR_NAME: &str = "addons";

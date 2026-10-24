@@ -30,4 +30,4 @@ pub use identity::{
     murmur3_128,
 };
 pub use pipeline::*;
-pub use storage::{SqlDatabase, SqlDatabasePort, StorageError, StoragePort};
+pub use storage::{StorageError, StoragePort};
