@@ -35,7 +35,7 @@ goldsrc-api = { path = "goldsrc-api", version = "0.20.0" }
 goldsrc-spi = { path = "goldsrc-spi", version = "0.20.0" }
 goldsrc-macros = { path = "goldsrc-macros", version = "0.20.0" }
 
-wit-bindgen = "0.62.0"
+wit-bindgen = "0.63.0"
 crossbeam-channel = "0.5"
 serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
