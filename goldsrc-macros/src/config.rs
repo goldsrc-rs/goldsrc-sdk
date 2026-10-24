@@ -190,7 +190,7 @@ pub fn expand_derive_config_model(input: DeriveInput) -> Result<TokenStream, Err
             quote! {}
         };
         quote! {
-            ::goldsrc_api::cvar::FromCvarEngine::read_cvar(engine, #cvar_name, &mut self.#ident);
+            ::goldsrc_api::cvar::FromCvarPort::read_cvar(engine, #cvar_name, &mut self.#ident);
             #range_clamp
         }
     });
@@ -199,7 +199,7 @@ pub fn expand_derive_config_model(input: DeriveInput) -> Result<TokenStream, Err
         let ident = &f.ident;
         let cvar_name = &f.cvar_name;
         quote! {
-            ::goldsrc_api::cvar::FromCvarEngine::write_cvar(&self.#ident, engine, #cvar_name);
+            ::goldsrc_api::cvar::FromCvarPort::write_cvar(&self.#ident, engine, #cvar_name);
         }
     });
 
@@ -218,15 +218,15 @@ pub fn expand_derive_config_model(input: DeriveInput) -> Result<TokenStream, Err
                 out
             }
 
-            fn register_cvars(&self, engine: &dyn ::goldsrc_api::cvar::CvarEngine) {
+            fn register_cvars(&self, engine: &dyn ::goldsrc_api::cvar::CvarPort) {
                 #(#reg_lines)*
             }
 
-            fn sync_from_cvars(&mut self, engine: &dyn ::goldsrc_api::cvar::CvarEngine) {
+            fn sync_from_cvars(&mut self, engine: &dyn ::goldsrc_api::cvar::CvarPort) {
                 #(#sync_from_lines)*
             }
 
-            fn sync_to_cvars(&self, engine: &dyn ::goldsrc_api::cvar::CvarEngine) {
+            fn sync_to_cvars(&self, engine: &dyn ::goldsrc_api::cvar::CvarPort) {
                 #(#sync_to_lines)*
             }
         }

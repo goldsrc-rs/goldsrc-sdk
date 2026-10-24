@@ -15,8 +15,6 @@ impl CvarFlags {
     pub const USERINFO: Self = Self(1 << 1);
     /// Server cvar, notifies players when changed.
     pub const SERVER: Self = Self(1 << 2);
-    /// Backward-compatible alias for [`SERVER`](Self::SERVER).
-    pub const NOTIFY: Self = Self(1 << 2);
     /// Defined by external DLL plugin (`FCVAR_EXTDLL`).
     pub const EXT_DLL: Self = Self(1 << 3);
     /// Defined by the client DLL (`FCVAR_CLIENTDLL`).
@@ -105,6 +103,3 @@ pub trait CvarPort: Send + Sync {
     /// Registers an engine console variable with the given name, default string value, and behavior flags.
     fn cvar_register(&self, name: &str, default_value: &str, flags: CvarFlags) -> bool;
 }
-
-/// Backward compatibility alias for [`CvarPort`].
-pub use CvarPort as CvarEngine;

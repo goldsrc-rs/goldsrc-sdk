@@ -38,9 +38,6 @@ pub trait ExtensionPort: Send + Sync + 'static {
     fn on_shutdown(&self) {}
 }
 
-/// Backward compatibility alias for [`ExtensionPort`].
-pub use ExtensionPort as EngineExtension;
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -49,7 +46,7 @@ mod tests {
         active: bool,
     }
 
-    impl EngineExtension for MockExtension {
+    impl ExtensionPort for MockExtension {
         fn name(&self) -> &'static str {
             "mock_ext"
         }

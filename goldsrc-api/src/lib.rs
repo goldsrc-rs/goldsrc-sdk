@@ -86,7 +86,7 @@ pub use command::{
     register_command, split_command_args, use_command_interceptor,
 };
 pub use consts::*;
-pub use cvar::{ConfigModel, Cvar, CvarEngine, CvarField, CvarFlags, FromCvarEngine};
+pub use cvar::{ConfigModel, Cvar, CvarField, CvarFlags, CvarPort, FromCvarPort};
 pub use dag::{DagError, EventPhase, NodeBuilder, OrderNode, Phase, PhasedDag, PluginTier};
 pub use dsl::{Lexer, Token};
 pub use engine::{Server, ServerConsole, client_command, config_exec, server_command};

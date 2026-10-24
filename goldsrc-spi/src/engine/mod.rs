@@ -39,9 +39,6 @@ pub trait EnginePort:
 {
 }
 
-/// Backward compatibility alias for [`EnginePort`].
-pub use EnginePort as Engine;
-
 // Blanket implementation for any type implementing all engine sub-traits.
 impl<T> EnginePort for T where
     T: EnginePrecache
