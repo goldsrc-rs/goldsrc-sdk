@@ -7,7 +7,8 @@ description = "Raw FFI bindings for GoldSrc engine and Metamod (generated via bi
 links = "goldsrc"
 
 [build-dependencies]
-bindgen = "0.73"
+bindgen = { version = "0.73", default-features = false, features = ["runtime"] }
 
 [package.metadata.docs.rs]
 rustdoc-args = ["--cfg", "docsrs"]
+
