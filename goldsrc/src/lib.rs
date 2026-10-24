@@ -222,10 +222,28 @@ macro_rules! console_println {
 
 pub mod chat {
     pub use goldsrc_api::chat::*;
-    use std::sync::RwLock;
+    use goldsrc_api::pipeline::FlowControl;
+    use std::sync::{Arc, RwLock};
+
+    /// Trait for intercepting, filtering, or modifying chat messages conforming to SMA U-cycle.
+    pub trait ChatLayer: Send + Sync {
+        /// Descent phase: inspect message, modify text, set prefix, or suppress/block.
+        fn on_enter(&self, msg: &mut ChatMessage) -> FlowControl<(), (), ()>;
+
+        /// Ascent phase: telemetry, logging, reaction.
+        fn on_exit(&self, msg: &mut ChatMessage, outcome: &mut Result<(), ()>);
+    }
 
     type ChatMiddlewareFn = Box<dyn Fn(&mut ChatMessage) -> bool + Send + Sync + 'static>;
     static CHAT_MIDDLEWARE: RwLock<Vec<ChatMiddlewareFn>> = RwLock::new(Vec::new());
+    static CHAT_LAYERS: RwLock<Vec<Arc<dyn ChatLayer>>> = RwLock::new(Vec::new());
+
+    /// Registers a typed SMA chat middleware layer inside a WASM plugin.
+    pub fn register_chat_layer(layer: Arc<dyn ChatLayer>) {
+        if let Ok(mut list) = CHAT_LAYERS.write() {
+            list.push(layer);
+        }
+    }
 
     /// Registers a local chat middleware inside a WASM plugin.
     pub fn register_chat_middleware<F>(middleware: F)
@@ -240,24 +258,61 @@ pub mod chat {
     /// Dispatches incoming chat through local middleware pipeline.
     /// Returns Some(final_text) if allowed, or None if blocked/suppressed.
     pub fn dispatch_local_chat(sender: i32, text: &str, is_team: bool) -> Option<String> {
-        let Ok(list) = CHAT_MIDDLEWARE.read() else {
-            return Some(text.to_string());
-        };
-        if list.is_empty() {
-            return Some(text.to_string());
-        }
         let scope = if is_team {
             ChatScope::same_team()
         } else {
             ChatScope::all()
         };
         let mut msg = ChatMessage::new(crate::Player::new(sender), text, scope);
-        for mw in list.iter() {
-            let allow = mw(&mut msg);
-            if !allow || msg.is_blocked {
+
+        // 1. Dispatch through legacy closures
+        if let Ok(list) = CHAT_MIDDLEWARE.read() {
+            for mw in list.iter() {
+                let allow = mw(&mut msg);
+                if !allow || msg.is_blocked {
+                    return None;
+                }
+            }
+        }
+
+        // 2. Dispatch through SMA layers U-cycle
+        if let Ok(layers) = CHAT_LAYERS.read()
+            && !layers.is_empty()
+        {
+            let mut entered_count = 0;
+            let mut halted = false;
+
+            for layer in layers.iter() {
+                match layer.on_enter(&mut msg) {
+                    FlowControl::Proceed(()) => {
+                        entered_count += 1;
+                    }
+                    FlowControl::ShortCircuit(()) => {
+                        entered_count += 1;
+                        break;
+                    }
+                    FlowControl::Halt(()) => {
+                        halted = true;
+                        break;
+                    }
+                }
+            }
+
+            let mut outcome = if halted || msg.is_blocked {
+                Err(())
+            } else {
+                Ok(())
+            };
+
+            for layer in layers.iter().take(entered_count).rev() {
+                layer.on_exit(&mut msg, &mut outcome);
+            }
+
+            if outcome.is_err() || msg.is_blocked {
                 return None;
             }
         }
+
         let final_text = if let Some(ref p) = msg.prefix {
             format!("{p}{}", msg.formatted_text)
         } else {

@@ -10,6 +10,7 @@ pub mod entity;
 pub mod extension;
 pub mod hash;
 pub mod identity;
+pub mod pipeline;
 pub mod storage;
 
 pub use auth::{AuthProvider, HandshakeContext, HandshakeDecision};
@@ -28,4 +29,5 @@ pub use identity::{
     AuthIdentity, AuthState, AuthSubject, PlayerGuid, PlayerIdentity, PlayerSessionToken, SteamId,
     murmur3_128,
 };
+pub use pipeline::*;
 pub use storage::{SqlDatabase, StorageError, StorageProvider};
