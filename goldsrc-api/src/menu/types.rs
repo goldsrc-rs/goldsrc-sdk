@@ -619,6 +619,36 @@ pub enum ExitBehavior {
     PopParentPage(isize),
 }
 
+/// Semantic presentation intent determining how menu requests are prioritized and handled.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum MenuPresentationIntent {
+    /// Explicit user interaction (player triggered `/menu`, `/vip`, opened shop, etc.).
+    /// The player's active attention is invested in this interface.
+    #[default]
+    UserInteractive,
+    /// Proactive system offer or vote (e.g. map voting, team-balance prompt, feedback survey).
+    ProactiveOffer,
+    /// Critical modal gate (e.g. initial server rules acceptance, anti-bot verification, forced team pick).
+    ModalGate,
+}
+
+/// Preemption and conflict resolution strategy when an active menu is already displayed.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum PreemptionStrategy {
+    /// Soft preemption with frozen timeout: the current menu pauses, the new menu displays,
+    /// and upon closure/timeout of the new menu, the previous menu automatically wakes up.
+    #[default]
+    SuspendAndResume,
+    /// Enqueue into the player's personal FIFO menu queue to display after active menus conclude.
+    Enqueue,
+    /// Reject opening if the player is currently occupied with another interactive menu.
+    RejectIfBusy,
+    /// Hard replacement: forcibly terminate previous menu without suspension.
+    Replace,
+}
+
 /// Visual formatting style configuration for rendered menus.
 #[derive(Clone)]
 pub struct MenuStyle {
@@ -920,6 +950,8 @@ pub struct Menu {
     pub style: MenuStyle,
     pub renderer: MenuRendererKind,
     pub exit_behavior: ExitBehavior,
+    pub presentation: MenuPresentationIntent,
+    pub preemption: PreemptionStrategy,
     pub timeout_seconds: i32,
     pub required_capability: Option<String>,
     pub debounce: Option<std::time::Duration>,
