@@ -380,12 +380,12 @@ checksum = "f8fadd59c855ef2080decdef8ff161eb6661b86933c9d82e5ba29dc602a55aba"
 [[package]]
 name = "stitch-core"
 version = "0.3.0"
-source = "git+https://github.com/ulquiorracode/stitch-rs.git?branch=main#20d7223aa7ae0c0a8399f0f2bde41231c9aaf545"
+source = "git+https://github.com/ulquiorracode/stitch-rs.git?branch=main#89de13aedcc61e13af97ccb8cc07f543080071ad"
 
 [[package]]
 name = "stitch-macros"
 version = "0.3.0"
-source = "git+https://github.com/ulquiorracode/stitch-rs.git?branch=main#20d7223aa7ae0c0a8399f0f2bde41231c9aaf545"
+source = "git+https://github.com/ulquiorracode/stitch-rs.git?branch=main#89de13aedcc61e13af97ccb8cc07f543080071ad"
 dependencies = [
  "proc-macro2",
  "quote",

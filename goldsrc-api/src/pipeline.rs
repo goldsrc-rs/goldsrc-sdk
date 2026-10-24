@@ -3,6 +3,11 @@
 //! Provides a composable middleware chain for intercepting, authorizing, mutating,
 //! and conditionally suppressing engine actions, command dispatches, and hook callbacks.
 
+pub use goldsrc_spi::pipeline::{
+    Blackboard, FlowControl, Layer as SmaLayer, Pipeline as SmaPipeline, Terminal as SmaTerminal,
+    adapter, blackboard, define_pipeline, layer, port, provider, terminal,
+};
+
 /// Flow control outcome returned by each link in an [`Interceptor`] pipeline.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PipelineFlow {
