@@ -150,7 +150,11 @@ impl CommandContext {
         raw_args: impl Into<String>,
     ) -> Self {
         let raw = raw_args.into();
-        let args = raw.split_whitespace().map(|s| s.to_string()).collect();
+        let args = if raw.is_empty() {
+            Vec::new()
+        } else {
+            raw.split_whitespace().map(|s| s.to_string()).collect()
+        };
         Self {
             player,
             target,
