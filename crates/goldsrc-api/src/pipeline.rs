@@ -8,6 +8,8 @@ pub use goldsrc_spi::pipeline::{
     adapter, blackboard, define_pipeline, layer, port, provider, terminal,
 };
 
+use std::sync::Arc;
+
 /// Flow control outcome returned by each link in an [`Interceptor`] pipeline.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PipelineFlow {
@@ -56,8 +58,9 @@ where
 }
 
 /// Composable Chain of Responsibility pipeline for a specific context type `Ctx`.
+#[derive(Clone)]
 pub struct Pipeline<Ctx> {
-    interceptors: Vec<Box<dyn Interceptor<Ctx> + Send + Sync>>,
+    interceptors: Vec<Arc<dyn Interceptor<Ctx> + Send + Sync>>,
 }
 
 impl<Ctx> Default for Pipeline<Ctx> {
@@ -79,7 +82,7 @@ impl<Ctx> Pipeline<Ctx> {
     where
         I: Interceptor<Ctx> + Send + Sync + 'static,
     {
-        self.interceptors.push(Box::new(interceptor));
+        self.interceptors.push(Arc::new(interceptor));
         self
     }
 
@@ -88,7 +91,7 @@ impl<Ctx> Pipeline<Ctx> {
     where
         F: Fn(&mut Ctx) -> PipelineFlow + Send + Sync + 'static,
     {
-        self.interceptors.push(Box::new(f));
+        self.interceptors.push(Arc::new(f));
         self
     }
 
