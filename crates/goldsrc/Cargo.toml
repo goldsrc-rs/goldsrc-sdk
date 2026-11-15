@@ -13,7 +13,8 @@ serde = { workspace = true, optional = true }
 log = { workspace = true }
 
 [features]
-default = ["ecs", "menu", "task", "serde"]
+default = ["ecs", "menu", "task", "serde", "builder"]
+builder = ["goldsrc-api/builder"]
 ecs = []
 menu = []
 task = ["dep:crossbeam-channel"]

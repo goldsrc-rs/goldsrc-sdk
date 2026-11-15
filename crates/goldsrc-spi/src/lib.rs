@@ -19,7 +19,7 @@ pub use engine::{
     EngineConsole, EngineCvars, EngineEntities, EngineExtensions, EngineMessages, EnginePhysics,
     EnginePort, EnginePrecache, EngineSound, MessageBuilder, MessageDest, TraceResult,
 };
-pub use entity::{EntitySpawner, edict_t};
+pub use entity::{EdictHandle, EntitySpawner, edict_t};
 pub use extension::ExtensionPort;
 pub use hash::{
     BackendId, CapabilityToken, ExtensionId, FeatureToken, fnv1a32, fnv1a32_str, fnv1a64,
