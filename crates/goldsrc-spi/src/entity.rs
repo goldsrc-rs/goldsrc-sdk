@@ -20,13 +20,18 @@ pub trait EntitySpawner: Send + Sync {
     fn dispatch_spawn(&self, index: i32) -> i32;
 }
 
-/// Minimal C-ABI compatible memory representation of an entity dictionary slot (`edict_t`).
-/// Enables pointer-level validation and memory checks across the engine boundary without depending on HLSDK C++ headers.
-#[repr(C)]
-#[derive(Debug, Clone, Copy)]
-pub struct edict_t {
-    /// Non-zero if this edict slot is currently unallocated/free.
-    pub free: i32,
-    /// Engine serial number incremented upon every slot re-use.
-    pub serialnumber: i32,
-}
+/// Opaque handle representing the raw GoldSrc engine `edict_t` pointer.
+///
+/// Prevents accidental sizeof/offset mismatches across the engine boundary
+/// while allowing safe pointer transfer between SPI drivers and hosts.
+#[repr(transparent)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct EdictHandle(pub *mut core::ffi::c_void);
+
+// SAFETY: Edict handles represent raw engine pointers managed by the engine thread.
+unsafe impl Send for EdictHandle {}
+unsafe impl Sync for EdictHandle {}
+
+/// Backward compatibility alias for `EdictHandle`.
+#[allow(non_camel_case_types)]
+pub type edict_t = EdictHandle;

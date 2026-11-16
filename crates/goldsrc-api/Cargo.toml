@@ -14,7 +14,8 @@ serde = { workspace = true, optional = true }
 log = { workspace = true }
 
 [features]
-default = ["serde", "toml", "rules", "gamedata"]
+default = ["serde", "toml", "rules", "gamedata", "builder"]
+builder = []
 serde = ["dep:serde", "goldsrc-spi/serde"]
 toml = ["dep:toml"]
 rules = ["serde", "toml"]
